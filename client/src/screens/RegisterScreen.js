@@ -1,6 +1,6 @@
-import { RegisterAction }  from'../../actions/userAction';
+import { RegisterAction }  from'../actions/userAction';
 import { connect } from 'react-redux';
-import { clearErrors } from '../../actions/errorActions';
+import { clearErrors } from '../actions/errorActions';
 import React, { Component } from 'react';
 import {
     StyleSheet,
