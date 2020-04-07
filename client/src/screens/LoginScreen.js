@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { login } from '../actions/authAction';
 import { clearErrors } from '../actions/errorActions';
+
 class LoginScreen extends React.Component {
     state = {
         modal: false,
@@ -49,11 +50,30 @@ class LoginScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <Image
-                    source={require('../public/images/logo.png')}
+                    source={require('../public/images/logo8.jpg')}
                     style={styles.imgLogo}
                 />
-                <Text style={styles.logo}>PLANT ID</Text>
-                <View style={styles.inputView} >
+                <TouchableOpacity style={styles.iconSocial} onPress={() =>
+                    this.props.navigation.navigate('Tab')}>
+                    <SocialIcon
+                        title='Sign In With Facebook'
+                        button
+                        type='facebook'
+                    />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.iconSocial} onPress={() =>
+                    this.props.navigation.navigate('Tab')}>
+                    <SocialIcon
+                        title='Sign In With Google'
+                        button
+                        type='google'
+                        onPress={() =>
+                            this.props.navigation.navigate('Tab')}
+                    />
+                </TouchableOpacity>
+                
+                
+                {/* <View style={styles.inputView} >
                     <TextInput
                         id="login"
                         name="email"
@@ -81,33 +101,12 @@ class LoginScreen extends React.Component {
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.loginBtn} onPress={this.onSubmit}>
                     <Text style={styles.loginText}>LOGIN</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 {/* <TouchableOpacity onPress={() =>
                     this.props.navigation.navigate('Register')}>
                     <Text style={styles.loginText}>Signup</Text>
                 </TouchableOpacity> */}
-                <Grid style={styles.iconLogin}>
-                    <Row>
-                        <SocialIcon
-                            type="google"
-                            onPress={() =>
-                                this.props.navigation.navigate('Tab', {
-                                    screen: 'Home',
-                                })
-                            }
-                        />
-                        <Text style={styles.txtOr}>or</Text>
-                        <SocialIcon
-                            raised={false}
-                            type="facebook"
-                            onPress={() =>
-                                this.props.navigation.navigate('Tab', {
-                                    screen: 'Home',
-                                })
-                            }
-                        />
-                    </Row>
-                </Grid>
+                <Text style={styles.txtTemp}>By using our Services, you are agreeing to these terms</Text>
             </View>
         );
     }
