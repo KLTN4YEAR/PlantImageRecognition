@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { SearchBar, Button, Avatar } from 'react-native-elements';
-import { View } from 'react-native';
+import { View, TouchableOpacity, Text } from 'react-native';
 import { styles } from '../public/styleSheets/styleSearchBar';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 export default class App extends Component {
@@ -30,6 +30,10 @@ export default class App extends Component {
                                 containerStyle={styles.container}
                             />
                         </Col>
+                        {/* <Button onPress={() => this.props.navigation.navigate('User')} title="Presss"/>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('User')}> 
+                            <Text>Press</Text>
+                        </TouchableOpacity> */}
                     </Row>
                 </Grid>
             </View>
