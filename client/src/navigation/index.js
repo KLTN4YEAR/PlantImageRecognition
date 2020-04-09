@@ -3,8 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import LoginScreen from './../screens/LoginScreen';
-import SearchHeader from './../components/SearchHeader';
-import HomeScreen from './../screens/HomeScreen';
+import PostScreen from '../screens/PostScreen';
+import AddDetailScreen from '../screens/AddDetailScreen';
 import CameraScreen from './../screens/CameraScreen';
 import SearchScreen from './../screens/SearchScreen';
 // import UserScreen from './../screens/UserScreen'
@@ -37,7 +37,7 @@ function TabScreen() {
           <Tab.Screen name="Home" component={HomeScreen} />
           <Tab.Screen name="User" component={UserScreen} />
           <Tab.Screen name="Camera" component={CameraScreen} />
-          <Tab.Screen name="Search" component={CameraScreen} />
+          <Tab.Screen name="Search" component={SearchScreen} />
         </Tab.Navigator>
     );
 }
@@ -92,6 +92,33 @@ function NavigationScreen() {
 				  />
 			  </Stack.Navigator>
 		  </NavigationContainer>
+  );
+}
+const HomeStack = createStackNavigator();
+
+function HomeScreen() {
+  return (
+      <HomeStack.Navigator initialRouteName="Home">
+        <HomeStack.Screen
+          name="Post"
+          options={{ headerShown: false }}
+          component={PostScreen}
+        />
+        <Stack.Screen
+          name="AddDetail"
+          options={{
+            title: 'Đóng góp thông tin',
+            headerStyle: {
+              backgroundColor: '#f4511e',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+          component={AddDetailScreen}
+        />
+      </HomeStack.Navigator>
   );
 }
 export default NavigationScreen;
