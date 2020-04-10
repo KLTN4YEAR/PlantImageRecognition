@@ -1,11 +1,10 @@
-import * as React from 'react';
-import { View, Text } from 'react-native';
-import { styles } from '../public/styleSheets/styleViewInfo';
-
-export default function UserScreen({ navigation }) {
-    return (
-        <View style={styles.container}>
-            <Text>Camera Screen</Text>
-        </View>
-    );
+import React, {Component} from 'react';
+import {Platform, StyleSheet, Text, View, Button} from 'react-native';
+import ImagePickerScreen from '../components/ImagePicker';
+export default function CameraScreen({navigation}) {
+  return (
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <ImagePickerScreen />
+    </View>
+  );
 }
