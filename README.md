@@ -1,16 +1,19 @@
-Khởi động react-native app:
-- Bật trình gỡ lỗi và kết nối với điện thoại
-* Phần server:
-chạy :  - cd server
-        - npm install
-        - npm start
-* Phần client:
-Chạy:   - cd client
-        - npm cache clean --force
-        - npm install
+# RecognitionImagePlant Project
+This is an app help users plant identification with images
+## Table of Contents
+* [Technologies](#technologies)
+* [Dependencies](#dependencies)
+* [Installation](#installation)
+## Technologies <a name="technologies"></a> : 
+|  Frontend  | Backend  |    DB    |
+|------------|:--------:|---------:|
+|React Native| ExpessJS |MongoAtlas|
+             |  Nodejs  |
+## Dependencies <a name="dependencies"></a> :
+|  dependencies  | version  |
+|------------|--------:|
+|node|v10.16.0|
+## Installation <a name="installation"></a> :
 
-Chạy cmd: ipconfig sao chép ip v4 của mạng đang sài.
-Cài đặt: đi đến ..\client\src\config\helper
-Sửa API_URL thành 'http://[_địa chỉ ip v4_]:4000';
-Tắt tường lửa của máy tính
-Chạy:   - npm react-native run-android
+
+  
