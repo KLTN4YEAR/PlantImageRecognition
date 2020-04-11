@@ -2,50 +2,10 @@ import React from 'react';
 import { Image, View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { styles } from '../public/styleSheets/styleLoginScreen';
 import { SocialIcon } from 'react-native-elements';
-import { Col, Row, Grid } from 'react-native-easy-grid';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { login } from '../actions/authAction';
-import { clearErrors } from '../actions/errorActions';
+
 
 class LoginScreen extends React.Component {
-    state = {
-        modal: false,
-        email: '',
-        password: '',
-        msg: null
-    };
-    //định nghĩa các prop
-    static propTypes = {
-        isAuthenticated: PropTypes.bool,
-        error: PropTypes.object.isRequired,
-        login: PropTypes.func.isRequired,
-        clearErrors: PropTypes.func.isRequired
-    };
 
-    onSubmit = e => {
-        e.preventDefault();//chấp nó bấm submit liên tục nè
-        const { email, password } = this.state;
-        const user = {
-            email,
-            password
-        };
-        // Attempt to login
-        this.props.login(user);
-        this.props.navigation.navigate('Tab')
-
-    };
-    //lưu những thay đổi nơi input vào state
-    onChange = e => {
-        this.setState({ [e.target.name]: e.target.value });
-    };
-    renderAlert() {
-        if (this.props.error.msg.error)
-            return (
-                <Text>
-                    {this.props.error.msg.error}
-                </Text>);
-    }
     render() {
         return (
             <View style={styles.container}>
@@ -111,12 +71,6 @@ class LoginScreen extends React.Component {
         );
     }
 }
-const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
-    error: state.error
-});
 
-export default connect(
-    mapStateToProps,
-    { login, clearErrors }
-)(LoginScreen);
+
+export default (LoginScreen);

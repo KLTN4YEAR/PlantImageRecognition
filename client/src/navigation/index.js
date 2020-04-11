@@ -5,7 +5,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import LoginScreen from './../screens/LoginScreen';
 import PostScreen from '../screens/PostScreen';
 import AddDetailScreen from '../screens/AddDetailScreen';
-import CameraScreen from './../screens/CameraScreen';
+import ImagePickerScreen from '../screens/ImagePickerScreen';
+import ResultCameraScreen from '../screens/ResultCameraScreen'
 import SearchScreen from './../screens/SearchScreen';
 // import UserScreen from './../screens/UserScreen'
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -69,6 +70,41 @@ function UserScreen({navigation}) {
   );
 }
 
+const StackCamera = createStackNavigator();
+function CameraScreen({navigation}) {
+  return (
+          <StackCamera.Navigator initialRouteName="ImagePicker">
+            <StackUser.Screen
+              name="ImagePicker"
+              options={{
+                title: 'Chọn hình ảnh từ camera hoặc gallery',
+                headerStyle: {
+                  backgroundColor: '#f4511e',
+                },
+                headerTintColor: '#fff',
+                headerTitleStyle: {
+                  fontWeight: 'bold',
+                },
+              }}
+              component={ImagePickerScreen}
+            />
+            <StackUser.Screen
+              name="ResultCamera"
+              options={{
+                title: 'Kết quả',
+                headerStyle: {
+                  backgroundColor: '#f4511e',
+                },
+                headerTintColor: '#fff',
+                headerTitleStyle: {
+                  fontWeight: 'bold',
+                },
+              }}
+              component={ResultCameraScreen}
+            />
+          </StackCamera.Navigator>
+  );
+}
 const Stack = createStackNavigator();
 
 function NavigationScreen() {
