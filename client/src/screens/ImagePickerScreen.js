@@ -174,12 +174,12 @@ export default class App extends Component {
                 </Row>
 
                 {/* Kết quả */}
-              {/* <Row style={styles.rowImage}>
+              <Row style={styles.rowImage}>
                 <TouchableOpacity onPress={() =>
                   this.props.navigation.navigate('ResultCamera')} style={styles.btnSection}>
                  <Text>Result</Text>
                </TouchableOpacity>
-              </Row> */}
+              </Row>
                 
                 <Row style={styles.btnParentSection}>
                   {/* <Row size={1} style={styles.rowSection}>
