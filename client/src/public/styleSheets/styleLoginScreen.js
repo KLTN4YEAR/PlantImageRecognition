@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#003f5c',
+        backgroundColor: '#ffffff',
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -11,6 +11,20 @@ export const styles = StyleSheet.create({
         fontSize: 50,
         color: "#fb5b5a",
         marginBottom: 40
+    },
+    iconSocial: {
+        width: '80%',
+    },
+    txtTemp: {
+        width: '90%',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        position: 'absolute',
+        bottom: 15,
+        textAlign: 'center',
+        fontSize: 14,
+        fontFamily: 'Sans Serif',
+        color: '#568c8c',
     },
     inputView: {
         width: "80%",
