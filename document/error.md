@@ -1,5 +1,7 @@
+```js
 {
     code,
     type, 
     message
 }
+```
