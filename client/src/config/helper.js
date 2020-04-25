@@ -1,41 +1,46 @@
-import AsyncStorage from '@react-native-community/async-storage';
-export const API_URL = 'http://192.168.1.6:4000';
-export const CLIENT_ROOT_URL = 'http://localhost:3000';
+import { AsyncStorage } from 'react-native';
+export const API_URL = 'http://192.168.1.36:4000'; //đổi theo ip config và tắt tường lửa
+export const CLIENT_ROOT_URL = 'http://192.168.1.6:3000';
 export const auth = {
-    isAuthenticated() {
+    async isAuthenticated() {
         if (typeof window == "undefined")
             return false
 
-        if (AsyncStorage.getItem('jwt'))
-            return AsyncStorage.getItem('jwt')
-        else
+        if (await AsyncStorage.getItem('jwt')) {
+            const value = JSON.parse(await AsyncStorage.getItem('jwt'));
+            return value
+        } else
             return false
     },
 
-    getAvatar() {
-        if (AsyncStorage.getItem('avatar'))
-            AsyncStorage.getItem('avatar')
-        else
+    async getAvatar() {
+        if (await AsyncStorage.getItem('avatar')) {
+            const value = JSON.parse(await AsyncStorage.getItem('avatar'));
+            return value
+        } else
             return false
     },
-    getName() {
+    async getName() {
         if (typeof window == "undefined")
             return false
-        if (AsyncStorage.getItem('name'))
-            return AsyncStorage.getItem('name')
-        else
+        if (await AsyncStorage.getItem('name')) {
+            const value = JSON.parse(await AsyncStorage.getItem('name'));
+            return value
+        } else
             return false
     },
-    setAvatar(avatar) {
-        AsyncStorage.setItem('avatar', JSON.stringify(avatar));
+    async setAvatar(avatar) {
+        await AsyncStorage.setItem('avatar', JSON.stringify(avatar));
     },
-    authenticate(jwt) {
-        AsyncStorage.setItem('jwt', JSON.stringify(jwt));
-        if (jwt.user.avatar) {
-            AsyncStorage.setItem('avatar', JSON.stringify(jwt.user.avatar));
-        }
+
+    async authenticate(jwt) {
+        await AsyncStorage.setItem('jwt', JSON.stringify(jwt));
+        console.log(jwt)
         if (jwt.user.name) {
-            AsyncStorage.setItem('name', JSON.stringify(jwt.user.name));
+            await AsyncStorage.setItem('name', JSON.stringify(jwt.user.name))
+        }
+        if (jwt.user.avatar) {
+            await AsyncStorage.setItem('avatar', JSON.stringify(jwt.user.avatar))
         }
     },
 

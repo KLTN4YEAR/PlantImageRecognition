@@ -1,25 +1,27 @@
 import * as React from 'react';
-import { Text, View, SafeAreaView, ScrollView, TouchableHighlight, TouchableOpacity} from 'react-native';
-import {Button, Avatar, Input} from 'react-native-elements';
+import { Text, ScrollView, TouchableOpacity} from 'react-native';
 import {Col, Row, Grid} from 'react-native-easy-grid';
 import {styles} from '../public/styleSheets/styleViewInfo';
-import RadioForm, {
-  RadioButton,
-  RadioButtonInput,
-  RadioButtonLabel,
-} from 'react-native-simple-radio-button';
 import { Icon } from 'react-native-elements'
 import AvatarCard from '../components/AvatarCard';
-const gender = [{label: 'Male', value: 0}, {label: 'FeMale', value: 1}];
+import { connect } from 'react-redux';
+import { fetch } from '../action/userAction';
+import { auth} from '../config/helper';
 
-export default function ViewInfo({navigation}) {
+class ViewInfo extends React.Component {
+  componentDidMount = async () => {
+    const data = await auth.isAuthenticated();
+    await this.props.fetch(data.user._id);
+    
+  }
+  render(){
   return (
     <ScrollView style={styles.container}>
-      <AvatarCard />
+      <AvatarCard state={this.state} props={this.props}/>
       <Row size={60} style={styles.viewInfo}>
         <Grid>
           <Row style={styles.rowEdit}>
-            <TouchableOpacity style={styles.touchEdit} onPress={() => navigation.navigate('EditInfo')}>
+            <TouchableOpacity style={styles.touchEdit} onPress={() => this.props.navigation.navigate('EditInfo')}>
               <Col size={30} style={styles.colBtnEdit}>
                 <Icon
                 size={20}
@@ -42,7 +44,7 @@ export default function ViewInfo({navigation}) {
               <Text style={styles.labelTxt}>Tên:</Text>
             </Col>
             <Col size={70}>
-              <Text style={styles.contentTxt}>Nguyen Tuan Vu</Text>
+              <Text style={styles.contentTxt}>{this.props.profile.name}</Text>
             </Col>
           </Row>
           <Row style={styles.rowInfo}>
@@ -102,20 +104,16 @@ export default function ViewInfo({navigation}) {
           </Row>
         </Grid>
       </Row>
-      {/* <Row size={20} style={styles.viewButton}>
-        <Button
-          icon={
-            <Icon
-              name="edit"
-              size={15}
-              color="white"
-            />
-          }
-          buttonStyle={styles.btnEdit}
-          title="Chỉnh sửa"
-          onPress={() => navigation.navigate('EditInfo')}
-        />
-      </Row> */}
     </ScrollView>
   );
 }
+}
+function mapStateToProp(state) {
+  return {
+    authenticate: state.auth.isAuthenticated,
+    profile: state.user.profile,
+    avatar: state.user.avatar
+  }
+}
+
+export default connect(mapStateToProp, { fetch })(ViewInfo);

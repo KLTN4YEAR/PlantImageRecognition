@@ -1,5 +1,6 @@
 import React, { Fragment, Component } from 'react';
-import ImagePicker from 'react-native-image-picker';
+// import ImagePicker from 'react-native-image-picker';
+import * as ImagePicker from 'expo-image-picker';
 import {
   SafeAreaView,
   ScrollView,

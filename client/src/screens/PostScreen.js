@@ -4,7 +4,7 @@ import {
   View,
   TouchableOpacity,
   Image,
-  Button,
+  AsyncStorage,
   SafeAreaView,
   ScrollView,
 } from 'react-native';

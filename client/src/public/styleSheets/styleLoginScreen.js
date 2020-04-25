@@ -23,7 +23,6 @@ export const styles = StyleSheet.create({
         bottom: 15,
         textAlign: 'center',
         fontSize: 14,
-        fontFamily: 'Sans Serif',
         color: '#568c8c',
     },
     inputView: {
@@ -62,7 +61,6 @@ export const styles = StyleSheet.create({
         alignItems: 'flex-end',
     },
     txtLogin: {
-        fontFamily: 'arial',
         fontWeight: 'bold',
         fontSize: 24,
         marginLeft: 'auto',
@@ -74,7 +72,6 @@ export const styles = StyleSheet.create({
         color: '#000',
         marginLeft: 'auto',
         marginRight: 'auto',
-        fontFamily: 'arial',
         alignContent: 'center',
     },
     imgLogo: {
