@@ -19,8 +19,8 @@ This is an app help users plant identification with images
    After intstalled and created project done. Let's config for client project
    First, move to project by command:
    ```
-  cd [project_client_name]
-  ```
+    cd [project_client_name]
+   ```
   Second, install module package and expo package:
   ```
   npm install
