@@ -2,10 +2,12 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const apiRouter = require('./routes/v1.api');
+
 const mongoose = require('mongoose');
-const mongo=require('./config/mongo');
+const config=require('./config');
 //connect mongo
-const mongoUri = mongo.mongoUri;
+const mongoUri = config.mongoUri;
 
 mongoose.connect(mongoUri, {
     useNewUrlParser: true,
@@ -15,7 +17,7 @@ mongoose.connect(mongoUri, {
 });
 
 mongoose.connection.once('open', function () {
-    console.log("MongoDB database connection established successfully: ");
+    console.log("MongoDB database connection established successfully");
 })
 
 //config app
@@ -36,5 +38,7 @@ app.use(cors({
     'origin': '*',
     'preflightContinue': true
 }))
+
+app.use('/api', apiRouter);
 
 module.exports = app;
