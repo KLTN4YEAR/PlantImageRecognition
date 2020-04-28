@@ -1,4 +1,4 @@
-class Users {
+class User {
   constructor(db, data) {
     this.db = db;
     this.data = data;
@@ -26,10 +26,16 @@ class Users {
 
     return user;
   }
+
+  getInfoUser(){
+    return this.db.User.findOne({ "google.googleId": this.data.googleId }).then((user) => {
+      return user;
+    });
+  }
   
   createAccount() {
     const user = this.getAccount();
-    return this.db.Users.create(user).then(() => {
+    return this.db.User.create(user).then(() => {
       return user;
     });
   }
@@ -37,5 +43,5 @@ class Users {
 }
 
 module.exports = {
-  Users
+  User
 };

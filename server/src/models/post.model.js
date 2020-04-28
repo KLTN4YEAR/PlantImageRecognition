@@ -6,13 +6,11 @@ const PostSchema = new Schema({
 
     images: [{ type: String }],
 
-    state: { type: Boolean, default: false },
-
-    hiden: { type: Boolean },
+    hiden: { type: Boolean, default: false },
 
     postedBy: { type: mongoose.Schema.ObjectId, ref: 'User' },
 
-    mentionedPlant: { type: mongoose.Schema.ObjectId, ref: 'Plant' },
+    mentionedPlant: { type: mongoose.Schema.ObjectId, ref: 'Plant'},
 
     created: { type: Date, default: Date.now },
 })

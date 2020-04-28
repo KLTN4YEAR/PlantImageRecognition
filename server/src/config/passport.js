@@ -2,7 +2,7 @@ const passport = require('passport');
 const GooglePlusTokenStrategy = require('passport-google-plus-token');
 const FacebookTokenStrategy = require('passport-facebook-token');
 const config = require('./index');
-const AuthService = require('../services/auth.service').Users;
+const AuthService = require('../services/auth.service').User;
 const db = require('../db');
 
 // Google OAuth Strategy
@@ -11,10 +11,6 @@ passport.use('googleToken', new GooglePlusTokenStrategy({
   clientSecret: config.oauth.google.clientSecret
 }, async (accessToken, refreshToken, profile, done) => {
   try {
-    const existingUser = await User.findOne({ "google.googleId": profile.id });
-    if (existingUser) {
-      return done(null, existingUser);
-    }
 
     const formatData = {
       fullName: profile.displayName,
@@ -24,9 +20,14 @@ passport.use('googleToken', new GooglePlusTokenStrategy({
     };
 
     const authService = new AuthService(db, formatData);
-    let user = authService.createAccount();
-    done(null, user);
 
+    const existingUser = await authService.getInfoUser();
+    if (existingUser) {
+      return done(null, existingUser);
+    }
+
+    let user =await authService.createAccount();
+    done(null, user);
   }
   catch (error) {
     console.log(error);
@@ -39,7 +40,7 @@ passport.use('facebookToken', new FacebookTokenStrategy({
   clientSecret: config.oauth.facebook.clientSecret
 }, async (accessToken, refreshToken, profile, done) => {
   try {
-    const existingUser = await User.findOne({ "facebook.id": profile.id });
+    const existingUser = await User.findOne({ "facebook.facebookId": profile.id });
     if (existingUser) {
       return done(null, existingUser);
     }
