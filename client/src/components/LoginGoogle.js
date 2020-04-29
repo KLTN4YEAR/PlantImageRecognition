@@ -13,7 +13,8 @@ class LoginGoogle extends React.Component {
         try {
 
             const result = await Google.logInAsync({
-                androidClientId: OauthKey,
+                // webClientId:OauthKey,
+                clientId: OauthKey,
                 // iosClientId: YOUR_CLIENT_ID_HERE,
                 scopes: ['profile', 'email'],
             });
