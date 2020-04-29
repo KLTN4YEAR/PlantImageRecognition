@@ -1,5 +1,5 @@
 const db = require('../db');
-const PlantService = require('../services/plant.service').Plant;
+const { PlantService } = require('../services');
 
 const searchPlant = async (req, res) => {
     let formatData = {

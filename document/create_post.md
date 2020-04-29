@@ -18,11 +18,10 @@ body={
 
 ```js
 {
-    message: "Created was successful",
     post: {
         content,
         postedBy,
-        images: [pathImage] //link image from google cloud
+        images: [pathImage]     //link image from google cloud
     }
 }
 ```

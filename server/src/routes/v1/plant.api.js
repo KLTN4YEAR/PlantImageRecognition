@@ -1,5 +1,5 @@
 const express = require('express');
-const controllerPlant = require('../../controllers/plant.controller');
+const { controllerPlant } = require('../../controllers');
 const authMiddleware = require('../../middlewares/auth.middleware');
 
 const plant_api_route = express.Router();

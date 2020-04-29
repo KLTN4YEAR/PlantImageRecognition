@@ -1,7 +1,6 @@
-//upload image
 const multer = require('multer')
 const uploadImage = require('../helpers/cloud.helper');
-const PostService = require('../services/post.service').Post;
+const { PostService } = require('../services');
 const db = require('../db');
 
 //config multer
@@ -31,9 +30,9 @@ const createPost = async (req, res) => {
 
     //nếu k biết tên thực vật 
     let namePlant = req.body.namePlant;
-    if(!namePlant){
-        typePlant='undefined';
-        namePlant=null
+    if (!namePlant) {
+        typePlant = 'undefined';
+        namePlant = null
     }
 
     for (let i = 0; i < myFile.length; i++) {

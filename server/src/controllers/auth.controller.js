@@ -1,6 +1,3 @@
-// Libs
-const AuthService = require('../services/auth.service').User;
-const db = require('../db');
 const jwt = require('../helpers/jwt.helper');
 const config = require('../config');
 

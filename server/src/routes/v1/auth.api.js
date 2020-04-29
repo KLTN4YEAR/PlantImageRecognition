@@ -1,6 +1,6 @@
 // Libs
 const express = require('express');
-const controllerAuth=require('../../controllers/auth.controller');
+const {controllerAuth}=require('../../controllers');
 const passport = require('passport');
 const passportConfig = require('../../config/passport');    //config passport
 

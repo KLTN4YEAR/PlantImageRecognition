@@ -12,7 +12,7 @@ class Post {
   }
 
   async getInfoPost() {
-    const postId = this.data._id;
+    const postId = this.data.postId;
     return await this.db.Post.findById(postId);
   }
 
