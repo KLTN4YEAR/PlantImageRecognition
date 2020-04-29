@@ -8,10 +8,7 @@ import {
     CLEAR_ERRORS,
     CLEAN_PROFILE,
     GET_AVATAR,
-    LOGIN_SUCCESS_ADMIN
 } from '../config/type';
-
-
 
 export const loginSocial = (accessToken) => dispatch => {
     const config = {
@@ -22,8 +19,9 @@ export const loginSocial = (accessToken) => dispatch => {
     const body = {
         access_token: accessToken
     }
-    axios.post(`${API_URL}/auth/oauth/google`, body, config)
+    axios.post(`${API_URL}/api/auth/oauth/google`, body, config)
         .then((response) => {
+            console.log('gg');
             auth.authenticate(response.data);
             dispatch({
                 type: LOGIN_SUCCESS
@@ -50,9 +48,10 @@ export const loginWithFacebook = (accessToken) => dispatch => {
     };
     const body = {
         access_token: accessToken
-    }
-    axios.post(`${API_URL}/auth/oauth/facebook`, body, config)
+    };
+    axios.post(`${API_URL}/api/auth/oauth/facebook`, body, config)
         .then((response) => {
+            console.log('scfb');
             auth.authenticate(response.data);
             dispatch({
                 type: LOGIN_SUCCESS
@@ -62,6 +61,7 @@ export const loginWithFacebook = (accessToken) => dispatch => {
             });
         })
         .catch(err => {
+            console.log('fberr');
             dispatch(
                 returnErrors(err.response.data, err.response.status, 'GET_ERRORS')
             );

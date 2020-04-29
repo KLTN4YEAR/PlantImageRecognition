@@ -20,6 +20,7 @@ export const styles = StyleSheet.create({
     },
     searchBar: {
         backgroundColor: 'tomato',
+        borderColor: 'transparent',
     },
     inputSearchBar: {
         backgroundColor: 'white',
@@ -27,7 +28,8 @@ export const styles = StyleSheet.create({
     },
     viewSafeArea: {
         flex: 1,
-        marginTop: 5,
+        marginTop: 0,
+        borderColor: 'transparent'
     },
     viewScroll: {
         backgroundColor: 'transparent',
@@ -114,8 +116,8 @@ export const styles = StyleSheet.create({
         maxHeight: 50,
     },
     imgCard: {
-        height: 180,
-        width: 180,
+        height: 120,
+        width: 155,
         marginLeft: 'auto',
         marginRight: 'auto',
     },

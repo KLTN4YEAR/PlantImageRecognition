@@ -3,19 +3,31 @@ import { Card, Icon } from 'react-native-elements'
 import {
     Image,
     ImageBackground,
-    Linking,
-    ListView,
-    Platform,
-    ScrollView,
-    StyleSheet,
     Text,
     View,
 } from 'react-native';
 import {styles} from '../public/styleSheets/styleAvatarCard';
+import { connect } from 'react-redux';
+import { fetch } from '../action/userAction';
+import { auth } from '../config/helper';
 
 
-export default class AvatarCard extends Component {
+class AvatarCard extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { photoURL: ''};
+    }
+    // componentDidMount = async () => {
+    //     const data = await auth.isAuthenticated();
+    //     if(data.user._id){
+    //         await this.props.fetch(data.user._id);
+    //         this.setState({
+    //             photoURL: data.user.photoURL
+    //         });
+    //         console.log(this.state.photoURL);
 
+    //     }
+    // }
     render() {
 
         return (
@@ -56,3 +68,12 @@ export default class AvatarCard extends Component {
         );
     }
 }
+function mapStateToProp(state) {
+    return {
+        authenticate: state.auth.isAuthenticated,
+        profile: state.user.profile,
+        avatar: state.user.avatar
+    }
+}
+
+export default connect(mapStateToProp, { fetch })(AvatarCard);

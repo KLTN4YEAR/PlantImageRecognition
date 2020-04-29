@@ -150,7 +150,6 @@ export default class SearchScreen extends React.Component {
     );
     else
       return(
-        
           <ScrollView style={styles.viewScroll}>
             <Grid>
               <Row>

@@ -9,15 +9,16 @@ import { fetch } from '../action/userAction';
 import { auth} from '../config/helper';
 
 class ViewInfo extends React.Component {
+
   componentDidMount = async () => {
     const data = await auth.isAuthenticated();
-    await this.props.fetch(data.user._id);
-    
+    console.log(data)
+    // await this.props.fetch(data.user._id);
   }
   render(){
   return (
     <ScrollView style={styles.container}>
-      <AvatarCard state={this.state} props={this.props}/>
+      <AvatarCard navigation={this.props.navigation}/>
       <Row size={60} style={styles.viewInfo}>
         <Grid>
           <Row style={styles.rowEdit}>
@@ -44,7 +45,7 @@ class ViewInfo extends React.Component {
               <Text style={styles.labelTxt}>Tên:</Text>
             </Col>
             <Col size={70}>
-              <Text style={styles.contentTxt}>{this.props.profile.name}</Text>
+              <Text style={styles.contentTxt}>Nguyễn Vũ</Text>
             </Col>
           </Row>
           <Row style={styles.rowInfo}>
@@ -112,7 +113,8 @@ function mapStateToProp(state) {
   return {
     authenticate: state.auth.isAuthenticated,
     profile: state.user.profile,
-    avatar: state.user.avatar
+    avatar: state.user.avatar,
+    
   }
 }
 

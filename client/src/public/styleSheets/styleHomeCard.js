@@ -1,20 +1,20 @@
 import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
     imgCard: {
-        height: 135,
-        width: 155,
-        marginLeft: 'auto',
+        height: 150,
+        width: 330,
         marginRight: 'auto',
+        marginLeft: 'auto',
     },
     viewCard: {
         width: 'auto',
         height: 280,
         marginTop: 10,
         borderWidth: 1,
-        padding: 5,
-        margin: 3,
+        padding: 10,
         borderRadius: 3,
         borderColor: '#d1d1d1',
+        backgroundColor: 'white',
     },
     viewPostBy: {
         marginTop: 5,
@@ -28,14 +28,13 @@ export const styles = StyleSheet.create({
     },
     txtUserName: {
         fontSize: 14,
-        width: 120,
-        marginLeft: 'auto',
-        marginRight: 'auto',
         fontWeight: 'bold',
+        textAlign: 'left',
+        alignItems: 'flex-start',
+        alignContent: 'flex-start',
     },
 
     viewImg: {
-        width: 'auto',
         marginLeft: 'auto',
         marginRight: 'auto',
         marginBottom: 10,
@@ -100,12 +99,10 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     viewDetail: {
-
         position: 'relative',
-
         display: 'flex',
-
-        margin: 10,
+        marginTop: 10,
+        padding: 5,
 
     },
 
@@ -134,14 +131,55 @@ export const styles = StyleSheet.create({
         color: '#1c1e21',
         fontSize: 14,
         maxHeight: 50,
+        marginBottom: 10,
+        textAlign: 'left',
+        alignContent: 'flex-start',
+        alignItems: 'flex-start',
+        marginLeft: 10,
     },
     viewSafeArea: {
+        backgroundColor: '#d1d1d1',
         flex: 1,
-        marginTop: 5,
     },
     viewScroll: {
         backgroundColor: 'transparent',
         marginHorizontal: 5,
 
+    },
+    viewCreatePost: {
+        position: 'absolute',
+        zIndex: 1,
+        bottom: 15,
+        right: 15,
+        zIndex: 1,
+
+    },
+    btnCreate: {
+        borderRadius: 25,
+        height: 50,
+        width: 50,
+        backgroundColor: 'white',
+        opacity: 0.7,
+        alignContent: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+        elevation: 1,
+    },
+    labelIconCreate: {
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        alignContent: 'center',
+        alignSelf: 'center',
+        textAlign: 'center',
+        marginHorizontal: 'auto',
+        marginBottom: 'auto',
+        marginTop: 'auto',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontWeight: 'bold',
     },
 });

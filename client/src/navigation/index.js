@@ -12,6 +12,7 @@ import SearchScreen from './../screens/SearchScreen';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ViewInfo from '../screens/ViewInfoScreen';
 import EditInfo from '../screens/EditInfoScreen';
+import CreatePostScreen from '../screens/CreatePostScreen';
 
 const Tab = createBottomTabNavigator();
 function TabScreen() {
@@ -118,12 +119,7 @@ function NavigationScreen() {
 				  />
 				  <Stack.Screen
             name="Tab"
-            options={{
-                headerShown: false,
-              }}
-          //   options={({ navigation, route }) => ({
-          //   header: props => <SearchHeader {...props} navigation={navigation} />,
-          // })}
+            options={{headerShown: false}}
 					  component={TabScreen}
 				  />
 			  </Stack.Navigator>
@@ -154,6 +150,20 @@ function HomeScreen() {
           }}
           component={AddDetailScreen}
         />
+      <Stack.Screen
+        name="CreatePost"
+        options={{
+          title: 'Tạo bài viết mới',
+          headerStyle: {
+            backgroundColor: '#f4511e',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}
+        component={CreatePostScreen}
+      />
       </HomeStack.Navigator>
   );
 }

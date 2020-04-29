@@ -1,6 +1,7 @@
 import React, { Fragment, Component } from 'react';
 // import ImagePicker from 'react-native-image-picker';
 import * as ImagePicker from 'expo-image-picker';
+import * as Permissions from 'expo-permissions';
 import {
   SafeAreaView,
   ScrollView,
@@ -33,8 +34,17 @@ export default class App extends Component {
       fileUri: ''
     }
   }
-
+  componentDidMount() {
+    this.getPermissionAsync();
+  }
+  getPermissionAsync = async () => {
+    const { status } = await Permissions.askAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL);
+    if (status !== 'granted') {
+      alert('Hey! You might want to enable notifications for my app, they are good.');
+    }
+  };
   chooseImage = () => {
+    
     let options = {
       title: 'Select Image',
       customButtons: [
@@ -45,6 +55,12 @@ export default class App extends Component {
         path: 'images',
       },
     };
+    const { status } = Permissions.getAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL);
+    if (status !== 'granted') {
+      // this.getPermissionAsync();
+      // this.chooseImage();
+    }
+    else{
     ImagePicker.showImagePicker(options, (response) => {
       console.log('Response = ', response);
 
@@ -68,19 +84,23 @@ export default class App extends Component {
           fileUri: response.uri
         });
       }
-    });
+    });}
   }
 
-  launchCamera = () => {
+  launchCamera = async() => {
     let options = {
       storageOptions: {
         skipBackup: true,
         path: 'images',
       },
     };
-    ImagePicker.launchCamera(options, (response) => {
-      console.log('Response = ', response);
-
+    const { status } = await Permissions.getAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL);
+    if (status !== 'granted') {
+      // this.getPermissionAsync();
+      // this.launchCamera();
+    }
+    else{
+      let response = await ImagePicker.launchCameraAsync(options);
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
@@ -97,20 +117,28 @@ export default class App extends Component {
           fileUri: response.uri
         });
       }
-    });
+    }
 
   }
 
-  launchImageLibrary = () => {
+  launchImageLibrary = async() => {
+    
     let options = {
       storageOptions: {
         skipBackup: true,
         path: 'images',
       },
     };
-    ImagePicker.launchImageLibrary(options, (response) => {
-      console.log('Response = ', response);
-
+    const { status, expires, permissions } = await Permissions.getAsync(
+      Permissions.CAMERA,
+      Permissions.CAMERA_ROLL
+    );
+    if (status !== 'granted') {
+      // this.getPermissionAsync();
+      // this.launchImageLibrary();
+    }
+    else{
+      let response = await ImagePicker.launchImageLibraryAsync(options);
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
@@ -126,8 +154,8 @@ export default class App extends Component {
           fileData: response.data,
           fileUri: response.uri
         });
+        }
       }
-    });
 
   }
 
