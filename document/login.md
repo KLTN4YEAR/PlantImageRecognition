@@ -1,4 +1,6 @@
 # Login google or facebook
+***URL login google: localhost:4000/api/auth/oauth/google***
+***URL login facebook: localhost:4000/api/auth/oauth/facebook***
 
 ***Input*** :
 
@@ -16,6 +18,7 @@ req.body={
         _id,
         fullName,
         avatar//if exist
-    }
+    },
+    token
 }
 ```

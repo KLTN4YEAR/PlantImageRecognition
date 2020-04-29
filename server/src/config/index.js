@@ -12,8 +12,8 @@ const config = {
   jwtSecret: 'your tokenSerect',
   oauth: {
     google: {
-      clientID: '185189707578-c9cj84i6p7cjnhgpglik4nda5f6r45eh.apps.googleusercontent.com',
-      clientSecret: 'r9xosB6GZANmP4cpXnDPWgH-'
+      clientID: '242010101479-3agf57mh6kaoagi90mi154k8l6i9ouf2.apps.googleusercontent.com',
+      clientSecret: 'ijBlI-T_30EiM-Dy8PWq70zr'
     },
     facebook: {
       clientID: '835692456850679',

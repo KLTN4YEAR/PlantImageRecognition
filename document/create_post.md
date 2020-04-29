@@ -1,13 +1,16 @@
 # create post
+***URL create post: localhost:4000/api/post/create***
+
+***Author: required login and must have token attach Bearer in header***
 
 ***Input*** :
 
 ```js
 body={
     mentionedPlant,//id_plant of plant be metioned
-    namePlant,//    name of plant (required)
+    namePlant,//    name of plant
     content,// content of post      (required)
-    image:[] // list image of post maximum 5 item (required)
+    plant_images:[] // list image of post maximum 5 item (required)
 }
 ```
 
@@ -19,7 +22,7 @@ body={
     post: {
         content,
         postedBy,
-        image: [pathImage] //link image from google cloud
+        images: [pathImage] //link image from google cloud
     }
 }
 ```

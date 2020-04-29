@@ -12,8 +12,13 @@ const bucket = gc.bucket('recognition-plant') // should be your bucket name
 
 const uploadImage = (file, typePlant, plant) => new Promise((resolve, reject) => {
   const { originalname, buffer } = file
+  let blob;
+  if (!plant) {
+    blob = bucket.file(`imagePost/${typePlant}/` + originalname.replace(/ /g, "_"))
+  }
+  else
+    blob = bucket.file(`imagePost/${typePlant}/${plant}/` + originalname.replace(/ /g, "_"))
 
-  const blob = bucket.file(`imagePost/${typePlant}/${plant}/` + originalname.replace(/ /g, "_"))
 
   const blobStream = blob.createWriteStream({
     contentType: file.mimetype,
