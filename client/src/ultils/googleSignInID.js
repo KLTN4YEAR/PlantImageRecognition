@@ -1,1 +1,1 @@
-export const OauthKey = "185189707578-c9cj84i6p7cjnhgpglik4nda5f6r45eh.apps.googleusercontent.com";
+export const OauthKey = "352114005992-ptjd587pv6e6f0fg5btpink3a9qup5f5.apps.googleusercontent.com";

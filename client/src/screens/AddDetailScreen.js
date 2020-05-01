@@ -1,15 +1,9 @@
 import * as React from 'react';
-import { Text, View, ScrollView, Image } from 'react-native';
-import { Button, Avatar, Input } from 'react-native-elements';
+import { Text, ScrollView, Image } from 'react-native';
+import { Button, Input } from 'react-native-elements';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { styles } from '../public/styleSheets/styleAddDetail';
-import RadioForm, {
-    RadioButton,
-    RadioButtonInput,
-    RadioButtonLabel,
-} from 'react-native-simple-radio-button';
 import { Icon } from 'react-native-elements'
-const gender = [{ label: 'Nam', value: 0 }, { label: 'Nữ', value: 1 }];
 
 export default function AddDetailScreen({ navigation }) {
     React.useLayoutEffect(() => {
@@ -26,6 +20,7 @@ export default function AddDetailScreen({ navigation }) {
             ),
         });
     });
+
     return (
         <ScrollView style={styles.container}>
             <Row size={60} style={styles.viewInfo}>
@@ -104,7 +99,6 @@ export default function AddDetailScreen({ navigation }) {
                     </Row>
                 </Grid>
             </Row>
-
         </ScrollView>
     );
 }

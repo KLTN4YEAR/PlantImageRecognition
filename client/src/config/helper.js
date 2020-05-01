@@ -1,13 +1,15 @@
 import { AsyncStorage } from 'react-native';
-export const API_URL = 'http://192.168.1.36:4000'; //đổi theo ip config và tắt tường lửa
-export const CLIENT_ROOT_URL = 'http://192.168.1.6:3000';
+export const API_URL = '192.168.39.161:4000'; //đổi theo ip config và tắt tường lửa
+export const CLIENT_ROOT_URL = 'http://192.168.1.7:3000';
+
 export const auth = {
+
     async isAuthenticated() {
         if (typeof window == "undefined")
             return false
-
         if (await AsyncStorage.getItem('jwt')) {
             const value = JSON.parse(await AsyncStorage.getItem('jwt'));
+            console.log(value);
             return value
         } else
             return false
@@ -20,6 +22,7 @@ export const auth = {
         } else
             return false
     },
+    
     async getName() {
         if (typeof window == "undefined")
             return false
@@ -29,13 +32,13 @@ export const auth = {
         } else
             return false
     },
+
     async setAvatar(avatar) {
         await AsyncStorage.setItem('avatar', JSON.stringify(avatar));
     },
 
     async authenticate(jwt) {
         await AsyncStorage.setItem('jwt', JSON.stringify(jwt));
-        console.log(jwt)
         if (jwt.user.name) {
             await AsyncStorage.setItem('name', JSON.stringify(jwt.user.name))
         }

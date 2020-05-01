@@ -1,29 +1,33 @@
 import { StyleSheet } from 'react-native';
+
 export const styles = StyleSheet.create({
     container: {
         backgroundColor: 'white',
         height: '100%',
         marginTop: 0,
     },
+
     viewInfo: {
         marginLeft: 'auto',
         marginRight: 'auto',
         marginTop: 50,
     },
+
     viewAvatar: {
         marginLeft: 'auto',
         marginRight: 'auto',
     },
+
     viewButton: {
         marginLeft: 'auto',
         marginRight: 20,
         marginTop: 50,
-
-
     },
+
     btnEdit: {
         backgroundColor: 'tomato',
     },
+
     labelTxt: {
         marginLeft: 'auto',
         marginRight: 'auto',
@@ -31,6 +35,7 @@ export const styles = StyleSheet.create({
         marginBottom: 'auto',
         color: '#9C9C9C'
     },
+
     contentTxt: {
         marginTop: 'auto',
         marginBottom: 'auto',
@@ -42,6 +47,7 @@ export const styles = StyleSheet.create({
         paddingBottom: 8,
         textAlign: 'center',
     },
+
     rowInfo: {
         backgroundColor: '#ffff',
         marginTop: 5,
@@ -54,6 +60,7 @@ export const styles = StyleSheet.create({
         marginLeft: 'auto',
         marginRight: 'auto',
     },
+
     rowEdit: {
         backgroundColor: '#ffff',
         marginTop: 5,
@@ -65,6 +72,7 @@ export const styles = StyleSheet.create({
         marginLeft: 'auto',
         marginRight: 'auto',
     },
+
     radioGender: {
         marginLeft: 'auto',
         marginRight: 20,
@@ -72,6 +80,7 @@ export const styles = StyleSheet.create({
         alignSelf: 'center',
         justifyContent: 'center',
     },
+
     viewGender: {
         marginLeft: 'auto',
         marginRight: 'auto',
@@ -81,10 +90,11 @@ export const styles = StyleSheet.create({
         marginTop: 'auto',
         marginBottom: 'auto',
     },
+
     btnDone: {
         backgroundColor: 'transparent',
-
     },
+
     touchEdit: {
         width: '70%',
         marginLeft: 'auto',
@@ -97,10 +107,12 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+
     colInfo: {
         marginLeft: 'auto',
         marginRight: 'auto',
     },
+
     colBtnEdit: {
         marginLeft: 'auto',
         marginRight: 'auto',
@@ -113,6 +125,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         alignContent: 'center',
     },
+
     labelIconEdit: {
         marginLeft: 'auto',
         marginRight: 'auto',
@@ -120,6 +133,7 @@ export const styles = StyleSheet.create({
         marginLeft: 'auto',
 
     },
+
     labelEdit: {
         color: '#fff',
         fontSize: 18,
@@ -134,6 +148,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         fontWeight: 'bold',
     },
+
     labelIcon: {
         marginLeft: 'auto',
         marginRight: 'auto',

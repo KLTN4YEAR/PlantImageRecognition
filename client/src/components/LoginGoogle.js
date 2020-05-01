@@ -1,5 +1,5 @@
 import React from 'react';
-import {  TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { styles } from '../public/styleSheets/styleLoginScreen';
 import { SocialIcon } from 'react-native-elements';
 import * as Google from 'expo-google-app-auth';
@@ -7,18 +7,16 @@ import { OauthKey } from '../ultils/googleSignInID';
 import { connect } from 'react-redux';
 import { loginSocial } from '../action/authAction';
 
-
 class LoginGoogle extends React.Component {
+
     signInWithGoogleAsync = async () => {
         try {
-
             const result = await Google.logInAsync({
                 // webClientId:OauthKey,
                 clientId: OauthKey,
                 // iosClientId: YOUR_CLIENT_ID_HERE,
                 scopes: ['profile', 'email'],
             });
-            console.log(result)
 
             if (result.type === 'success') {
                 await this.props.loginSocial(result.accessToken);
@@ -39,21 +37,21 @@ class LoginGoogle extends React.Component {
             console.log("Something went wrong", error);
         }
     }
-   
+
 
     render() {
         return (
-                <TouchableOpacity style={styles.iconSocial} onPress={this.signInWithGoogleAsync} >
-                    <SocialIcon
-                        title='Sign In With Google'
-                        button
-                        type='google'
-                    />
-                </TouchableOpacity>
-                
+            <TouchableOpacity style={styles.iconSocial} onPress={this.signInWithGoogleAsync} >
+                <SocialIcon
+                    title='Sign In With Google'
+                    button
+                    type='google'
+                />
+            </TouchableOpacity>
         );
     }
 }
+
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
     error: state.error

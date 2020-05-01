@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, AsyncStorage } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { styles } from '../public/styleSheets/styleLoginScreen';
 import { SocialIcon } from 'react-native-elements';
 import { OauthKey } from '../ultils/facebookSignInID';
@@ -8,14 +8,16 @@ import * as Facebook from 'expo-facebook';
 import { loginWithFacebook } from '../action/authAction';
 
 class LoginFacebook extends React.Component {
+    
     constructor(props) {
         super(props);
         this.state = {
             name: null,
         };
-    }; 
+    };
+
     facebookLogIn = async () => {
-        await Facebook.initializeAsync(OauthKey,'plant');
+        await Facebook.initializeAsync(OauthKey, 'plant');
         try {
             const {
                 type,
@@ -39,22 +41,21 @@ class LoginFacebook extends React.Component {
     }
 
     render() {
-        
         return (
-            
-                <TouchableOpacity style={styles.iconSocial} onPress={this.facebookLogIn}>
-                    <SocialIcon
-                        title='Sign In With Facebook'
-                        button
-                        type='facebook'
-                    />
-                </TouchableOpacity>
+            <TouchableOpacity style={styles.iconSocial} onPress={this.facebookLogIn}>
+                <SocialIcon
+                    title='Sign In With Facebook'
+                    button
+                    type='facebook'
+                />
+            </TouchableOpacity>
         );
     }
 }
+
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
     error: state.error
 });
 
-export default connect(mapStateToProps,{loginWithFacebook })(LoginFacebook);
+export default connect(mapStateToProps, { loginWithFacebook })(LoginFacebook);

@@ -7,9 +7,9 @@
 
 ```js
 body={
-    mentionedPlant,//id_plant of plant be metioned
-    namePlant,//    name of plant
-    content,// content of post      (required)
+    mentionedPlant, //  id_plant of plant be metioned (if have required 12 characters)
+    namePlant,      //  name of plant
+    content,        //  content of post      (required)
     plant_images:[] // list image of post maximum 5 item (required)
 }
 ```

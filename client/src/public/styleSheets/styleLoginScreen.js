@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -6,15 +7,18 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+
     logo: {
         fontWeight: "bold",
         fontSize: 50,
         color: "#fb5b5a",
         marginBottom: 40
     },
+
     iconSocial: {
         width: '80%',
     },
+
     txtTemp: {
         width: '90%',
         marginLeft: 'auto',
@@ -25,6 +29,7 @@ export const styles = StyleSheet.create({
         fontSize: 14,
         color: '#568c8c',
     },
+
     inputView: {
         width: "80%",
         backgroundColor: "#465881",
@@ -34,14 +39,17 @@ export const styles = StyleSheet.create({
         justifyContent: "center",
         padding: 20
     },
+
     inputText: {
         height: 50,
         color: "white"
     },
+
     forgot: {
         color: "white",
         fontSize: 11
     },
+
     loginBtn: {
         width: "80%",
         backgroundColor: "#fb5b5a",
@@ -52,14 +60,17 @@ export const styles = StyleSheet.create({
         marginTop: 40,
         marginBottom: 10
     },
+
     loginText: {
         color: "white"
     },
+
     btnGoogle: {
         marginLeft: 'auto',
         marginRight: 'auto',
         alignItems: 'flex-end',
     },
+
     txtLogin: {
         fontWeight: 'bold',
         fontSize: 24,
@@ -67,6 +78,7 @@ export const styles = StyleSheet.create({
         marginRight: 'auto',
         marginBottom: 60,
     },
+
     txtOr: {
         fontSize: 9,
         color: '#000',
@@ -74,6 +86,7 @@ export const styles = StyleSheet.create({
         marginRight: 'auto',
         alignContent: 'center',
     },
+
     imgLogo: {
         width: 200,
         height: 200,
@@ -82,16 +95,19 @@ export const styles = StyleSheet.create({
         marginLeft: 'auto',
         marginRight: 'auto',
     },
+
     viewBtn: {
         marginTop: 36,
         marginLeft: 'auto',
         marginRight: 'auto',
     },
+
     viewBottom: {
         flex: 1,
         justifyContent: 'flex-end',
         marginBottom: 36,
     },
+
     txtBottom: {
         marginLeft: 'auto',
         marginRight: 'auto',

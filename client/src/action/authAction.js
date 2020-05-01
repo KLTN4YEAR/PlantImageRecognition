@@ -8,12 +8,9 @@ import {
     CLEAR_ERRORS,
     CLEAN_PROFILE,
     GET_AVATAR,
-    LOGIN_SUCCESS_ADMIN
 } from '../config/type';
 
-
-
-export const loginSocial = (accessToken) => dispatch => {
+export const loginWithGoogle = (accessToken) => dispatch => {
     const config = {
         headers: {
             'Content-Type': 'application/json'
@@ -22,7 +19,7 @@ export const loginSocial = (accessToken) => dispatch => {
     const body = {
         access_token: accessToken
     }
-    axios.post(`${API_URL}/auth/oauth/google`, body, config)
+    axios.post(`${API_URL}/api/auth/google`, body, config)
         .then((response) => {
             auth.authenticate(response.data);
             dispatch({
@@ -50,9 +47,10 @@ export const loginWithFacebook = (accessToken) => dispatch => {
     };
     const body = {
         access_token: accessToken
-    }
-    axios.post(`${API_URL}/auth/oauth/facebook`, body, config)
+    };
+    axios.post(`${API_URL}/api/auth/facebook`, body, config)
         .then((response) => {
+            console.log('scfb');
             auth.authenticate(response.data);
             dispatch({
                 type: LOGIN_SUCCESS
@@ -81,5 +79,4 @@ export const logout = () => dispatch => {
     dispatch({
         type: CLEAR_ERRORS
     });
-    // window.location.href = `${CLIENT_ROOT_URL}`;
 };

@@ -1,23 +1,21 @@
 import React, { Component } from 'react';
-import { Card, Icon } from 'react-native-elements'
+import { Icon } from 'react-native-elements'
 import {
     Image,
     ImageBackground,
-    Linking,
-    ListView,
-    Platform,
-    ScrollView,
-    StyleSheet,
     Text,
     View,
 } from 'react-native';
-import {styles} from '../public/styleSheets/styleAvatarCard';
+import { styles } from '../public/styleSheets/styleAvatarCard';
+import { connect } from 'react-redux';
 
-
-export default class AvatarCard extends Component {
+class AvatarCard extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { photoURL: '' };
+    }
 
     render() {
-
         return (
             <View style={styles.headerContainer}>
                 <ImageBackground
@@ -41,7 +39,7 @@ export default class AvatarCard extends Component {
                                     name="place"
                                     underlayColor="transparent"
                                     iconStyle={styles.placeIcon}
-                                    // onPress={this.onPressPlace}
+                                // onPress={this.onPressPlace}
                                 />
                             </View>
                             <View style={styles.userCityRow}>
@@ -56,3 +54,13 @@ export default class AvatarCard extends Component {
         );
     }
 }
+
+function mapStateToProp(state) {
+    return {
+        authenticate: state.auth.isAuthenticated,
+        profile: state.user.profile,
+        avatar: state.user.avatar
+    }
+}
+
+export default connect(mapStateToProp)(AvatarCard);
