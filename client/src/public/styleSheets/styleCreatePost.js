@@ -55,6 +55,12 @@ export const styles = StyleSheet.create({
         borderBottomWidth: 1,
         width: windowWidth,
     },
+    viewPlantName: {
+        marginBottom: 3,
+        borderBottomColor: '#d1d1d1',
+        borderBottomWidth: 1,
+        width: windowWidth,
+    },
     inputMention: {
         padding: 10,
     },

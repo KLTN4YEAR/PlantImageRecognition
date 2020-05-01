@@ -18,6 +18,7 @@ class CreatePostScreen extends React.Component {
         multipleUrl: [],
         content:'',
         mentionedPlant:'',
+        namePlant:'',
         post: {
             mentionedPlant:'',
             namePlant:'',
@@ -49,7 +50,7 @@ class CreatePostScreen extends React.Component {
         e.preventDefault();//chấp nó bấm submit liên tục nè
         const post = this.state.post;
         post["mentionedPlant"] = this.state.mentionedPlant;
-        post["namePlant"] = 'rose';
+        post["namePlant"] = this.state.namePlant;
         post["content"] = this.state.content;
         post["plant_images"]=this.state.LocalImage;
         // create fromData to create post
@@ -219,11 +220,20 @@ class CreatePostScreen extends React.Component {
                         <View style={styles.viewInputContent}>
                             <View style={styles.viewMentioned}>
                                 <TextInput
-                                    placeholder="Thực vật này trong thế nào nhỉ?"
+                                    placeholder="Id của thực vật (trên 12 ký tự số)?"
                                     style={styles.inputMention}
                                     underlineColorAndroid="transparent"
                                     multiline={true}
                                     onChangeText={text => this.setState({ mentionedPlant: text })} 
+                                />
+                            </View>
+                            <View style={styles.viewPlantName}>
+                                <TextInput
+                                    placeholder="Bạn có biết thực vật này tên gì không?"
+                                    style={styles.inputMention}
+                                    underlineColorAndroid="transparent"
+                                    multiline={true}
+                                    onChangeText={text => this.setState({ namePlant: text })}
                                 />
                             </View>
                             <View style={styles.viewContent}>
