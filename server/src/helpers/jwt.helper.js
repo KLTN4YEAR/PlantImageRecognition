@@ -1,8 +1,10 @@
 const jwt = require("jsonwebtoken");
 
-let generateToken = (userData, secretSignature, tokenLife) => {
+let generateToken = (user, secretSignature, tokenLife) => {
   return new Promise((resolve, reject) => {
-    // Thực hiện ký và tạo token
+    let userData={
+      _id:user._id,
+    }
     jwt.sign(
       {data: userData},
       secretSignature,

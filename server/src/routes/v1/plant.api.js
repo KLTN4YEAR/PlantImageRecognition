@@ -4,6 +4,6 @@ const authMiddleware = require('../../middlewares/auth.middleware');
 
 const plant_api_route = express.Router();
 
-plant_api_route.route('/searchPlant').post(controllerPlant.searchPlant);
+plant_api_route.route('/searchPlant').post(authMiddleware, controllerPlant.searchPlant);
 
 module.exports = plant_api_route;
