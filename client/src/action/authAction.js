@@ -60,6 +60,7 @@ export const loginWithFacebook = (accessToken) => dispatch => {
             });
         })
         .catch(err => {
+            console.log('err: ',err)
             dispatch(
                 returnErrors(err.response.data, err.response.status, 'GET_ERRORS')
             );

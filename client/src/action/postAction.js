@@ -11,14 +11,11 @@ export const newPost = (post) => {
     const body = post;
     return axios.post(`${API_URL}/api/post/create`, body, config)
         .then(res => {
-            // console.log('create2');
-            // console.log(res.data);
             successMess = res.data.message;
             return true;
         })
         .catch(error => {
-            console.log(error)
-            console.log(error.response);
+            console.log('error: ',error)
             return error.response.data;
         });
 }

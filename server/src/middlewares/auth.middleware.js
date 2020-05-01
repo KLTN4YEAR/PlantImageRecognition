@@ -22,12 +22,15 @@ module.exports = (req, res, next) => {
                 }
             });
         } else {
+            console.log('Dont have token')
+
             return res.status(403).json({
                 message: "No token provied."
             });
         }
     }
     catch (error) {
+        console.log('Auth failed')
         return res.status(401).json({
             message: "Auth failed"
         });
