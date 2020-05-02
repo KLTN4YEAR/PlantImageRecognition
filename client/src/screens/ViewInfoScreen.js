@@ -6,11 +6,16 @@ import { Icon } from 'react-native-elements'
 import AvatarCard from '../components/AvatarCard';
 import { connect } from 'react-redux';
 import { auth } from '../config/helper';
-
+import { getInfo } from '../action/userAction';
 class ViewInfo extends React.Component {
 
   componentDidMount = async () => {
     const data = await auth.isAuthenticated();
+    if (data) {
+      if (this.props.authenticate)
+        //console.log('profile',data.user._id)
+        this.props.getInfo(data, data.user._id);
+    }
   }
 
   render() {
@@ -119,4 +124,4 @@ function mapStateToProp(state) {
   }
 }
 
-export default connect(mapStateToProp)(ViewInfo);
+export default connect(mapStateToProp, { getInfo })(ViewInfo);

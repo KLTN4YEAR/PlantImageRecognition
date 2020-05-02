@@ -8,6 +8,7 @@ import { Text, Button, Avatar } from 'react-native-elements';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Icon } from 'react-native-elements'
 import { newPost, successMess } from '../action/postAction';
+import { auth } from '../config/helper';
 
 class CreatePostScreen extends React.Component {
     state = {
@@ -58,9 +59,9 @@ class CreatePostScreen extends React.Component {
         post["plant_images"] = this.state.LocalImage;
         // create fromData to create post
         let formData = new FormData();
-        formData.append('mentionedPlant', post.mentionedPlant);
-        formData.append('namePlant', post.namePlant);
-        formData.append('content', post.content);
+        formData.append("mentionedPlant", post.mentionedPlant);
+        formData.append("namePlant", post.namePlant);
+        formData.append("content", post.content);
         this.state.LocalImage.map((item, index) => {
             let fileType = item.substring(item.lastIndexOf(".") + 1);
             let fileName = item.substring(item.lastIndexOf('/') + 1);
@@ -70,11 +71,15 @@ class CreatePostScreen extends React.Component {
                 type: `image/${fileType}`
             });
         });
+
+        // console.log(formData);
         this.addPost(formData);
     };
 
     addPost = async (formatData) => {
-        newPost(formatData);
+        const credentials = await auth.isAuthenticated();
+        // console.log('post', credentials);
+        newPost(credentials, formatData);
         console.log(successMess);
         if (successMess == 'Created was successful') {
             this.successAlert();

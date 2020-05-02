@@ -10,10 +10,32 @@ import {
 import { styles } from '../public/styleSheets/styleHomeCard';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Avatar } from 'react-native-elements';
-import { Icon } from 'react-native-elements'
+import { Icon } from 'react-native-elements';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { auth } from '../config/helper';
 
-export default class HomeScreen extends React.Component {
-
+class HomeScreen extends React.Component {
+  //định nghĩa các prop
+  static propTypes = {
+    isAuthenticated: PropTypes.bool,
+  };
+  componentDidMount() {
+    this.checkLogin();
+    // const jwt = auth.isAuthenticated();
+    // // const userID = jwt.user._id;
+    // console.log('a',jwt);
+  }
+  checkLogin = async () => {
+    const data = await auth.isAuthenticated();
+    if (!data) {
+      console.log("Chưa login!");
+      await this.props.navigation.navigate('Login');
+    }
+    else{
+      console.log("Đã login!");
+    }
+  }
   render() {
     return (
       <SafeAreaView style={styles.viewSafeArea}>
@@ -179,3 +201,8 @@ export default class HomeScreen extends React.Component {
     );
   }
 }
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps)(HomeScreen);
