@@ -1,5 +1,5 @@
 import { AsyncStorage } from 'react-native';
-export const API_URL = 'http://192.168.1.36:4000'; //đổi theo ip config và tắt tường lửa
+export const API_URL = 'http://192.168.43.238:4000'; //đổi theo ip config và tắt tường lửa
 export const CLIENT_ROOT_URL = 'http://192.168.1.6:3000';
 export const auth = {
     async isAuthenticated() {

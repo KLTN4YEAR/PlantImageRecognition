@@ -27,11 +27,6 @@ export default function(state = initialState, action) {
                 isAuthenticated: true
 
             };
-        case LOGIN_SUCCESS_ADMIN:
-            return {
-                ...state,
-                isAuthenticatedAdmin: true
-            };
         case LOGIN_FAIL:
         case LOGOUT_SUCCESS:
         case REGISTER_FAIL:
