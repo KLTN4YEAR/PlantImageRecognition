@@ -10,7 +10,7 @@ class Auth {
   }
 
   async getInfoFacebook() {
-    return await this.db.User.findOne({ "google.facebookId": this.data.facebookId });
+    return await this.db.User.findOne({ "facebook.facebookId": this.data.facebookId });
   }
 
 
