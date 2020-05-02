@@ -1,8 +1,18 @@
-class User {
+class Auth {
   constructor(db, data) {
     this.db = db;
     this.data = data;
   }
+
+  
+  async getInfoGoogle() {
+    return await this.db.User.findOne({ "google.googleId": this.data.googleId });
+  }
+
+  async getInfoFacebook() {
+    return await this.db.User.findOne({ "google.facebookId": this.data.facebookId });
+  }
+
 
   getAccount() {
     let user={
@@ -19,7 +29,7 @@ class User {
     }
     else{
       user.facebook={
-        googleId: this.data.facebookId,
+        facebookId: this.data.facebookId,
         email: this.data.email
       }
     }
@@ -27,21 +37,13 @@ class User {
     return user;
   }
 
-  getInfoUser(){
-    return this.db.User.findOne({ "google.googleId": this.data.googleId }).then((user) => {
-      return user;
-    });
-  }
-  
-  createAccount() {
+  async createAccount() {
     const user = this.getAccount();
-    return this.db.User.create(user).then(() => {
-      return user;
-    });
+    return await this.db.User.create(user);
   }
   
 }
 
 module.exports = {
-  User
+  Auth
 };

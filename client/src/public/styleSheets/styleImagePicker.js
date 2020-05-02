@@ -3,7 +3,6 @@ export const styles = StyleSheet.create({
     scrollView: {
         width: '100%',
         height: '100%',
-
     },
 
     body: {
@@ -17,6 +16,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+
     ImageSections: {
         marginLeft: 'auto',
         marginRight: 'auto',
@@ -28,8 +28,8 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingHorizontal: 10,
         paddingBottom: 5,
-
     },
+
     images: {
         width: 150,
         height: 150,
@@ -46,6 +46,7 @@ export const styles = StyleSheet.create({
         marginRight: 'auto',
 
     },
+
     colSection: {
         margin: '100%',
         marginLeft: 'auto',
@@ -53,6 +54,7 @@ export const styles = StyleSheet.create({
         marginTop: 10,
         padding: 5,
     },
+
     btnSection: {
         width: '100%',
         height: 50,
@@ -62,6 +64,7 @@ export const styles = StyleSheet.create({
         borderRadius: 3,
         marginBottom: 10
     },
+
     btnSectionCamera: {
         marginLeft: 'auto',
         marginRight: 'auto',
@@ -72,8 +75,8 @@ export const styles = StyleSheet.create({
         borderRadius: 5,
         width: 120,
         height: 80,
-
     },
+
     btnSectionGallery: {
         marginLeft: 'auto',
         marginRight: 'auto',
@@ -85,12 +88,14 @@ export const styles = StyleSheet.create({
         width: 120,
         height: 80,
     },
+
     btnText: {
         textAlign: 'center',
         color: 'gray',
         fontSize: 14,
         fontWeight: 'bold'
     },
+
     rowImage: {
         width: '100%',
         marginLeft: 'auto',
@@ -100,8 +105,8 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         alignContent: 'center',
         padding: 5,
-
     },
+
     colImage: {
         width: '100%',
         marginLeft: 'auto',

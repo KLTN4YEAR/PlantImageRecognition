@@ -3,6 +3,7 @@ const config = require('../config');
 
 module.exports = (req, res, next) => {
     try {
+        console.log('req', req.headers['authorization']);
         let token = req.headers['x-access-token'] || req.headers['authorization'];
 
         if (token.startsWith('Bearer ')) {
@@ -11,23 +12,25 @@ module.exports = (req, res, next) => {
         //decode token
         if (token) {
             // verifies secret and check exp
-            jwt.verify(token, config.jwtSecret, function (err, decoded) {
+            jwt.verify(token, config.jwtSecret, function(err, decoded) {
                 if (err) {
                     return res.status(401).json({
                         message: "Failed to authenticate token."
                     });
                 } else {
                     req.user = decoded;
-                    next();// go to the next routes and dont shtop here
+                    next(); // go to the next routes and dont shtop here
                 }
             });
         } else {
+            console.log('Dont have token')
+
             return res.status(403).json({
                 message: "No token provied."
             });
         }
-    }
-    catch (error) {
+    } catch (error) {
+        console.log('Auth failed')
         return res.status(401).json({
             message: "Auth failed"
         });

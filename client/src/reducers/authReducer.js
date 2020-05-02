@@ -4,14 +4,12 @@ import {
     LOGIN_FAIL,
     LOGOUT_SUCCESS,
     REGISTER_SUCCESS,
-    REGISTER_FAIL,
-    LOGIN_SUCCESS_ADMIN
+    REGISTER_FAIL
 } from '../config/type';
 
 const initialState = {
     isAuthenticated: false,
-    isAuthorized: false,
-    isAuthorizedSubcomment: false
+    isAuthorized: false
 };
 
 export default function(state = initialState, action) {
@@ -21,6 +19,7 @@ export default function(state = initialState, action) {
                 ...state,
                 ...action.payload,
             };
+
         case LOGIN_SUCCESS:
             return {
                 ...state,
@@ -37,9 +36,9 @@ export default function(state = initialState, action) {
                 ...state,
                 token: null,
                 isAuthenticated: false,
-                isAuthorized: false,
-                isAuthenticatedAdmin: false
+                isAuthorized: false
             };
+
         default:
             return state;
     }

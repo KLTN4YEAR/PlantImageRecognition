@@ -1,12 +1,16 @@
 # Login google or facebook
-***URL login google: localhost:4000/api/auth/oauth/google***
-***URL login facebook: localhost:4000/api/auth/oauth/facebook***
+***URL login google: localhost:4000/api/auth/google***
+***URL login facebook: localhost:4000/api/auth/facebook***
 
 ***Input*** :
 
 ```js
 req.body={
-    access_token:"string_access token from fb, gg"
+    fullName,   //(required)
+    googleId,   //if login with gg  (required)
+    facebookId, //if login with fb  (required)
+    email,
+    avatar,     //(required)
 }
 ```
 

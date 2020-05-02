@@ -1,17 +1,13 @@
 import * as React from 'react';
-import { Text, View, ScrollView} from 'react-native';
-import {Button, Avatar, Input} from 'react-native-elements';
-import {Col, Row, Grid} from 'react-native-easy-grid';
-import {styles} from '../public/styleSheets/styleViewInfo';
-import RadioForm, {
-  RadioButton,
-  RadioButtonInput,
-  RadioButtonLabel,
-} from 'react-native-simple-radio-button';
+import { Text, View, ScrollView } from 'react-native';
+import { Button, Input } from 'react-native-elements';
+import { Col, Row, Grid } from 'react-native-easy-grid';
+import { styles } from '../public/styleSheets/styleViewInfo';
 import { Icon } from 'react-native-elements'
-const gender = [{label: 'Nam', value: 0}, {label: 'Nữ', value: 1}];
+const gender = [{ label: 'Nam', value: 0 }, { label: 'Nữ', value: 1 }];
 
-export default function EditInfo({navigation}) {
+export default function EditInfo({ navigation }) {
+
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -25,7 +21,8 @@ export default function EditInfo({navigation}) {
           iconRight />
       ),
     });
-  }, );
+  });
+
   return (
     <ScrollView style={styles.container}>
       <Row size={60} style={styles.viewInfo}>
@@ -46,6 +43,7 @@ export default function EditInfo({navigation}) {
               />
             </Col>
           </Row>
+
           <Row style={styles.rowInfo}>
             <Col size={30} style={styles.colInfo}>
               <Icon
@@ -70,9 +68,9 @@ export default function EditInfo({navigation}) {
                   formHorizontal={true}
                 />
               </View>
-              
             </Col>
           </Row>
+
           <Row style={styles.rowInfo}>
             <Col size={30} style={styles.colInfo}>
               <Icon
@@ -89,6 +87,7 @@ export default function EditInfo({navigation}) {
               />
             </Col>
           </Row>
+
           <Row style={styles.rowInfo}>
             <Col size={30} style={styles.colInfo}>
               <Icon
@@ -107,7 +106,6 @@ export default function EditInfo({navigation}) {
           </Row>
         </Grid>
       </Row>
-
     </ScrollView>
   );
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, AsyncStorage } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { styles } from '../public/styleSheets/styleLoginScreen';
 import { SocialIcon } from 'react-native-elements';
 import { OauthKey } from '../ultils/facebookSignInID';
@@ -9,27 +9,30 @@ import { loginWithFacebook } from '../action/authAction';
 import PropTypes from 'prop-types';
 
 class LoginFacebook extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            name: null,
-        };
-    }; 
+    state = {  
+        profile: {
+            fullName: '',  
+            facebookId: '', 
+            email: '',
+            avatar: '', 
+        },
+    }
     //định nghĩa các prop
     static propTypes = {
         isAuthenticated: PropTypes.bool,
-        error: PropTypes.object.isRequired,
-        login: PropTypes.func.isRequired,
-        clearErrors: PropTypes.func.isRequired
     };
+    componentDidMount() {
+        this.checkLogin();
+    }
     checkLogin= async()=>{
-        if (this.props.isAuthenticated) {
+        const data = await this.props.isAuthenticated
+        if (data) {
             console.log("Đã login!");
             await this.props.navigation.navigate('Tab');
         }
     }
     facebookLogIn = async () => {
-        await Facebook.initializeAsync(OauthKey,'plant');
+        await Facebook.initializeAsync(OauthKey, 'plant');
         try {
             const {
                 type,
@@ -41,13 +44,7 @@ class LoginFacebook extends React.Component {
                 permissions: ['public_profile'],
             });
             if (type === 'success') {
-                const response = await fetch(
-                    `https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,about,picture`
-                );
-                const responseJSON = JSON.stringify(await response.json());
-                await console.log(responseJSON);
-                await this.props.loginWithFacebook(token);
-                await this.props.navigation.navigate('Tab');
+                await this.getInfo(token);  
             } else {
                 // type === 'cancel'
             }
@@ -55,24 +52,39 @@ class LoginFacebook extends React.Component {
             alert(`Facebook Login Error: ${message}!`);
         }
     }
-
-    render() {
+    getInfo= async(token)=>{
+        const response = await fetch(
+            `https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,about,picture`
+        );
         
+        const JsonReturn=JSON.stringify(await response.json());
+        var obj = JSON.parse(JsonReturn);
+
+        console.log(obj.picture.data.url);
+        
+        const profile = this.state.profile;
+        profile["fullName"] = obj.name;
+        profile["facebookId"] = obj.id;
+        profile["email"] = obj.email;
+        profile["avatar"] = obj.picture.data.url;
+        await this.props.loginWithFacebook(profile);
+        await this.props.navigation.navigate('Tab');
+    };
+    render() {
         return (
-            
-                <TouchableOpacity style={styles.iconSocial} onPress={this.facebookLogIn}>
-                    <SocialIcon
-                        title='Sign In With Facebook'
-                        button
-                        type='facebook'
-                    />
-                </TouchableOpacity>
+            <TouchableOpacity style={styles.iconSocial} onPress={this.facebookLogIn}>
+                <SocialIcon
+                    title='Sign In With Facebook'
+                    button
+                    type='facebook'
+                />
+            </TouchableOpacity>
         );
     }
 }
+
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
-    error: state.error
+    isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps,{loginWithFacebook })(LoginFacebook);
+export default connect(mapStateToProps, { loginWithFacebook })(LoginFacebook);

@@ -17,7 +17,7 @@ mongoose.connect(mongoUri, {
     useUnifiedTopology: true
 });
 
-mongoose.connection.once('open', function () {
+mongoose.connection.once('open', function() {
     console.log("MongoDB database connection established successfully");
 });
 
@@ -26,13 +26,13 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-//config our app  to handle CORS requests
-app.use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Method', 'GET', 'POST', 'PUT', 'DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Request-With, content-type, Authorization');
-    next();
-});
+// //config our app  to handle CORS requests
+// app.use(function (req, res, next) {
+//     res.setHeader('Access-Control-Allow-Origin', '*');
+//     res.setHeader('Access-Control-Allow-Method', 'GET', 'POST', 'PUT', 'DELETE');
+//     res.setHeader('Access-Control-Allow-Headers', 'X-Request-With, content-type, Authorization');
+//     next();
+// });
 
 app.use(cors({
     'allowedHeaders': ['Content-Type'],
