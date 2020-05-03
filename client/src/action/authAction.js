@@ -31,7 +31,7 @@ export const loginWithGoogle = (profile) => dispatch => {
         })
         .catch(err => {
             dispatch(
-                returnErrors(err.response.data, err.response.status, 'GET_ERRORS')
+                returnErrors(err.response.data.message, 'GET_ERRORS')
             );
             dispatch({
                 type: LOGIN_FAIL
@@ -61,7 +61,7 @@ export const loginWithFacebook = (profile) => dispatch => {
         .catch(err => {
             console.log('err: ', err)
             dispatch(
-                returnErrors(err.response.data, err.response.status, 'GET_ERRORS')
+                returnErrors(err.response.data.message, 'GET_ERRORS')
             );
             dispatch({
                 type: LOGIN_FAIL
