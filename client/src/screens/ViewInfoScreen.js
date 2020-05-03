@@ -78,7 +78,7 @@ class ViewInfo extends React.Component {
                 <Text style={styles.labelTxt}>Email:</Text>
               </Col>
               <Col size={70}>
-                <Text style={styles.contentTxt}>{this.props.email}</Text>
+                <Text style={styles.contentTxt}>{this.props.profile.facebook.email}</Text>
               </Col>
             </Row>
 
@@ -118,15 +118,10 @@ class ViewInfo extends React.Component {
 }
 
 function mapStateToProp(state) {
-  var email;
-  if (state.user.profile.facebook !== undefined) {
-    email = state.user.profile.facebook.email
-  }
   return {
     authenticate: state.auth.isAuthenticated,
     profile: state.user.profile,
     avatar: state.user.avatar,
-    email: email,
   }
 }
 

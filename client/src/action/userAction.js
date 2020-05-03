@@ -17,14 +17,13 @@ export const getInfo = (credentials, uid) => {
     return function(dispatch) {
         axios.get(`${API_URL}/api/user/getInfo/${uid}`, config)
             .then((response) => {
-                console.log('res', response)
+                //console.log('res', response)
                 dispatch({
                     type: GET_INFO_USER,
                     payload: response.data.result.user
                 });
             })
             .catch(err => {
-                console
                 dispatch({
                     type: ERROR_RESPONSE
                 });

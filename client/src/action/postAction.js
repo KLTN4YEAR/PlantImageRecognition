@@ -17,6 +17,6 @@ export const newPost = (credentials, post) => {
         })
         .catch(error => {
             console.log('error: ', error)
-            return error.response.data;
+            return error;
         });
 }
