@@ -9,17 +9,27 @@ import {
 } from 'react-native';
 import { styles } from '../public/styleSheets/styleSearchView';
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import { Icon } from 'react-native-elements'
+import { Icon } from 'react-native-elements';
+import {searchPlant} from '../action/plantAction';
+import { auth } from '../config/helper';
 
-export default class SearchScreen extends React.Component {
+
+class SearchScreen extends React.Component {
   state = {
     search: '',
+    plants:[],
   };
-
   updateSearch = search => {
     this.setState({ search });
+    this.handleSearch(search);
+    
   };
-
+  handleSearch = async(namePlant)=>{
+    const data = await auth.isAuthenticated();
+    if (data) {
+      searchPlant(data, namePlant);
+    }
+  };
   renderSort() {
     if (this.state.search != '')
       return (
@@ -524,3 +534,9 @@ export default class SearchScreen extends React.Component {
     );
   }
 }
+// function mapStateToProp(state) {
+//   return {
+//     plants:state.plants,
+//   }
+// }
+export default SearchScreen;

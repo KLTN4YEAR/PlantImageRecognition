@@ -2,11 +2,24 @@ import React from 'react';
 import { Image, View, Text } from 'react-native';
 import { styles } from '../public/styleSheets/styleLoginScreen';
 import { connect } from 'react-redux';
-import Facebook from '../components/LoginFacebook';
+import PropTypes from 'prop-types';
+import Facebook from '../components/LoginFaceBook';
 import Google from '../components/LoginGoogle';
 
 class LoginScreen extends React.Component {
-    
+    static propTypes = {
+        isAuthenticated: PropTypes.bool,
+    };
+    componentDidMount() {
+        this.checkLogin();
+    }
+    checkLogin = async () => {
+        const data = await this.props.isAuthenticated
+        if (data) {
+            console.log("Đã login!");
+            await this.props.navigation.navigate('Tab');
+        }
+    }
     render() {
         return (
             <View style={styles.container}>
@@ -23,8 +36,7 @@ class LoginScreen extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
-    error: state.error
+    isAuthenticated: state.auth.isAuthenticated
 });
 
 export default connect(mapStateToProps)(LoginScreen);

@@ -10,18 +10,18 @@ import {
     GET_AVATAR,
 } from '../config/type';
 
-export const loginWithGoogle = (accessToken) => dispatch => {
+export const loginWithGoogle = (profile) => dispatch => {
     const config = {
         headers: {
             'Content-Type': 'application/json'
         }
     };
-    const body = {
-        access_token: accessToken
-    }
+    const body = profile;
+    console.log(body);
     axios.post(`${API_URL}/api/auth/google`, body, config)
         .then((response) => {
-            auth.authenticate(response.data);
+            //console.log(response.result);
+            auth.authenticate(response.data.result);
             dispatch({
                 type: LOGIN_SUCCESS
             });
@@ -30,8 +30,9 @@ export const loginWithGoogle = (accessToken) => dispatch => {
             });
         })
         .catch(err => {
+            console.log(err)
             dispatch(
-                returnErrors(err.response.data, err.response.status, 'GET_ERRORS')
+                returnErrors(err, 'GET_ERRORS')
             );
             dispatch({
                 type: LOGIN_FAIL
@@ -39,19 +40,18 @@ export const loginWithGoogle = (accessToken) => dispatch => {
         });
 }
 
-export const loginWithFacebook = (accessToken) => dispatch => {
+export const loginWithFacebook = (profile) => dispatch => {
     const config = {
         headers: {
             'Content-Type': 'application/json'
         }
     };
-    const body = {
-        access_token: accessToken
-    };
+    const body = profile;
+    console.log(body);
     axios.post(`${API_URL}/api/auth/facebook`, body, config)
         .then((response) => {
-            console.log('scfb');
-            auth.authenticate(response.data);
+            auth.authenticate(response.data.result);
+            // console.log('res', response.data.result);
             dispatch({
                 type: LOGIN_SUCCESS
             });
@@ -60,9 +60,9 @@ export const loginWithFacebook = (accessToken) => dispatch => {
             });
         })
         .catch(err => {
-            console.log('err: ',err)
+            console.log('err: ', err)
             dispatch(
-                returnErrors(err.response.data, err.response.status, 'GET_ERRORS')
+                returnErrors(err, 'GET_ERRORS')
             );
             dispatch({
                 type: LOGIN_FAIL
