@@ -4,10 +4,10 @@ mongoose.Promise = require('bluebird');
 const config = require('../config');
 
 let option = {
-    useNewUrlParser: true,
-    useFindAndModify: false,
-    useCreateIndex: true,
-    useUnifiedTopology: true
+  useNewUrlParser: true,
+  useFindAndModify: false,
+  useCreateIndex: true,
+  useUnifiedTopology: true
 };
 
 let uri = config.mongoUri;
@@ -29,7 +29,8 @@ mongoose.connection.on('reconnect', () => { console.log('->MongoDB reconnected')
 // events are interchangeable.
 mongoose.connection.on('connected', () => {
   connection = mongoose.connection;
-  console.log('->MongoDB connected'); });
+  console.log('->MongoDB connected: ',uri);
+});
 
 // If the Node process ends, close the Mongoose connection
 process.on('SIGINT', () => {

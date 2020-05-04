@@ -1,12 +1,14 @@
-# create post
-***URL create post: localhost:4000/api/plant/searchPlant?filter="name_plant"***
+# Search plant
+***URL search plant: localhost:4000/api/plant/searchPlant?filter="name_plant"***
 
 ***Author: required login and must have token attach Bearer in header***
+
+***Method: get***
 
 ***Input*** :
 filter on url
 
-***Ouput*** :
+***Ouput*** : limit 5 element
 
 ```js
 {

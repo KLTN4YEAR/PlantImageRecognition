@@ -3,7 +3,6 @@ class Auth {
     this.db = db;
     this.data = data;
   }
-
   
   async getInfoGoogle() {
     return await this.db.User.findOne({ "google.googleId": this.data.googleId });
@@ -13,24 +12,22 @@ class Auth {
     return await this.db.User.findOne({ "facebook.facebookId": this.data.facebookId });
   }
 
-
   getAccount() {
     let user={
       fullName: this.data.fullName,
       avatar: this.data.avatar,
       birthday: this.data.birthday,
+      email: this.data.email
     }
 
     if(this.data.googleId){
       user.google={
-        googleId: this.data.googleId,
-        email: this.data.email
+        googleId: this.data.googleId
       }
     }
     else{
       user.facebook={
-        facebookId: this.data.facebookId,
-        email: this.data.email
+        facebookId: this.data.facebookId
       }
     }
 
@@ -41,7 +38,6 @@ class Auth {
     const user = this.getAccount();
     return await this.db.User.create(user);
   }
-  
 }
 
 module.exports = {

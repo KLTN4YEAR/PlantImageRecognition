@@ -4,14 +4,14 @@ const Schema = mongoose.Schema;
 // Create a schema
 const userSchema = new Schema({
     google: {
-        googleId: { type: String },
-        email: { type: String, trim: true, lowercase: true }
+        googleId: { type: String }
     },
 
     facebook: {
-        facebookId: { type: String },
-        email: { type: String, trim: true, lowercase: true }
+        facebookId: { type: String }
     },
+
+    email: { type: String, trim: true, lowercase: true },
 
     fullName: { type: String, trim: true },
 
@@ -24,6 +24,8 @@ const userSchema = new Schema({
     avatar: { type: String },
 
     created: { type: Date, default: Date.now },
+
+    updated: { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model('User', userSchema);

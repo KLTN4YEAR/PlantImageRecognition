@@ -1,7 +1,10 @@
-# create post
+# Create post
 ***URL create post: localhost:4000/api/post/create***
 
 ***Author: required login and must have token attach Bearer in header***
+
+***Method: post***
+
 
 ***Input*** :
 

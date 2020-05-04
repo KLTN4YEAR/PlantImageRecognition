@@ -5,8 +5,12 @@ class User {
   }
 
   async getInfo() {
-    const userId = this.data.userId;
-    return await this.db.User.findOne({ _id: userId });
+    const _id = this.data._id;
+    return await this.db.User.findById(_id);
+  }
+
+  async updateInfo() {
+    return await this.db.User.create(this.data);
   }
 }
 

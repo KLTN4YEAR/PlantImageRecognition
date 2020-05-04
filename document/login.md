@@ -1,6 +1,9 @@
 # Login google or facebook
 ***URL login google: localhost:4000/api/auth/google***
+
 ***URL login facebook: localhost:4000/api/auth/facebook***
+
+***Method: post***
 
 ***Input*** :
 

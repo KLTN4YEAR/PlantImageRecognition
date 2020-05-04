@@ -1,4 +1,4 @@
-const multer = require('multer')
+const multer = require('multer');
 const uploadImage = require('../helpers/cloud.helper');
 const { PostService } = require('../services');
 const db = require('../db');
@@ -58,7 +58,6 @@ const createPost = async (req, res) => {
                 post
             }
         })
-
 }
 
 const getInfoPost = async (req, res) => {

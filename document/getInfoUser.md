@@ -1,7 +1,9 @@
 # Get info User
-***URL create post: localhost:4000/api/user/getInfo/5ea90d94130f0a1aa4516f0d***
+***URL Get info user: localhost:4000/api/user/getInfo/5ea90d94130f0a1aa4516f0d***
 
 ***Author: required login and must have token attach Bearer in header***
+
+***Method: get***
 
 ***Input*** :
 
@@ -14,20 +16,14 @@
 ```js
 {
     user: {
-        //if google
-        google: {
-            googleId,
-            email
-        },
-        //if facebook
-        facebook: {
-            facebookId,
-            email
-        },
-        _id,
+        email,
         fullName,
+        birthday,
+        gender,
+        address,
         avatar,     // path_image,
-        created,    // day created account
+        created,    // day created account,
+        updated     // day updated account,
     }
 }
 ```

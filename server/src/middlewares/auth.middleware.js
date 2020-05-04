@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config');
 
-module.exports = (req, res, next) => {
+const checkAuthor = (req, res, next) => {
     try {
         let token = req.headers['x-access-token'] || req.headers['authorization'];
 
@@ -37,3 +37,18 @@ module.exports = (req, res, next) => {
     }
 
 };
+
+const hasAuthorization = (req, res, next) => {
+    const authorized = req.profile && req.user && req.profile._id == req.user.data._id
+    if (!(authorized)) {
+        return res.status('403').json({
+            message: "User is not authorized"
+        })
+    }
+    next()
+}
+
+module.exports = {
+    checkAuthor,
+    hasAuthorization
+}
