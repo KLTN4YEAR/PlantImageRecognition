@@ -11,11 +11,12 @@ class ViewInfo extends React.Component {
 
   componentDidMount = async () => {
     const data = await auth.isAuthenticated();
+    //console.log('info',data);
     if (data) {
-      if (this.props.authenticate)
-        //console.log('profile',data.user._id)
-        this.props.getInfo(data, data.user._id);
+        //console.log('profile',data.user._id);
+         await this.props.getInfo(data, data.user._id);
     }
+    
   }
 
   render() {
@@ -48,7 +49,7 @@ class ViewInfo extends React.Component {
                 <Text style={styles.labelTxt}>Tên:</Text>
               </Col>
               <Col size={70}>
-                <Text style={styles.contentTxt}>Nguyễn Vũ</Text>
+                <Text style={styles.contentTxt}>{this.props.profile.fullName}</Text>
               </Col>
             </Row>
 
@@ -77,7 +78,7 @@ class ViewInfo extends React.Component {
                 <Text style={styles.labelTxt}>Email:</Text>
               </Col>
               <Col size={70}>
-                <Text style={styles.contentTxt}>Nguyetuanvu231198@gmail.com</Text>
+                <Text style={styles.contentTxt}>{this.props.profile.facebook.email}</Text>
               </Col>
             </Row>
 
@@ -123,5 +124,6 @@ function mapStateToProp(state) {
     avatar: state.user.avatar,
   }
 }
+
 
 export default connect(mapStateToProp, { getInfo })(ViewInfo);

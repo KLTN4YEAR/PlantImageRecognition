@@ -16,27 +16,31 @@ class AvatarCard extends Component {
     }
 
     render() {
+        const date=this.props.profile.created;
+        var d = new Date(date);
+        //format ngày tham gia
+        var dateFormat = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() + " " ; 
         return (
             <View style={styles.headerContainer}>
                 <ImageBackground
                     style={styles.headerBackgroundImage}
                     blurRadius={10}
                     source={{
-                        uri: 'https://scontent.fhan3-1.fna.fbcdn.net/v/t1.0-9/p960x960/50688968_787150878305428_8692489284222976000_o.jpg?_nc_cat=103&_nc_sid=85a577&_nc_ohc=teY0b-GLvoMAX-ICFRK&_nc_ht=scontent.fhan3-1.fna&_nc_tp=6&oh=b9b2f59cc238b18dcd1b6b312f7a9975&oe=5EB28331',
+                        uri: this.props.avatar,
                     }}
                 >
                     <View style={styles.headerColumn}>
                         <Image
                             style={styles.userImage}
                             source={{
-                                uri: 'https://scontent.fhan3-1.fna.fbcdn.net/v/t1.0-9/p960x960/50688968_787150878305428_8692489284222976000_o.jpg?_nc_cat=103&_nc_sid=85a577&_nc_ohc=teY0b-GLvoMAX-ICFRK&_nc_ht=scontent.fhan3-1.fna&_nc_tp=6&oh=b9b2f59cc238b18dcd1b6b312f7a9975&oe=5EB28331',
+                                uri: this.props.profile.avatar,
                             }}
                         />
-                        <Text style={styles.userNameText}>Nguyen Tuan Vu</Text>
+                        <Text style={styles.userNameText}>{this.props.profile.fullName}</Text>
                         <View style={styles.userAddressRow}>
                             <View>
                                 <Icon
-                                    name="place"
+                                    name="check"
                                     underlayColor="transparent"
                                     iconStyle={styles.placeIcon}
                                 // onPress={this.onPressPlace}
@@ -44,7 +48,7 @@ class AvatarCard extends Component {
                             </View>
                             <View style={styles.userCityRow}>
                                 <Text style={styles.userCityText}>
-                                    HCM City, VietNam
+                                   {dateFormat}
                                 </Text>
                             </View>
                         </View>
@@ -56,10 +60,11 @@ class AvatarCard extends Component {
 }
 
 function mapStateToProp(state) {
+    
     return {
         authenticate: state.auth.isAuthenticated,
         profile: state.user.profile,
-        avatar: state.user.avatar
+        avatar: state.user.profile.avatar
     }
 }
 
