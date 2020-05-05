@@ -3,8 +3,10 @@ import { API_URL, auth } from '../config/helper';
 import { returnErrors } from './errorActions';
 import {
     GET_INFO_USER,
+    UPDATE_USER,
     ERROR_RESPONSE
 } from '../config/type';
+export var successMess = '';
 //get info user
 export const getInfo = (credentials, uid) => {
     const config = {
@@ -17,7 +19,7 @@ export const getInfo = (credentials, uid) => {
     return function(dispatch) {
         axios.get(`${API_URL}/api/user/getInfo/${uid}`, config)
             .then((response) => {
-                //console.log('res', response)
+                //console.log('res', response.data.result.user)
                 dispatch({
                     type: GET_INFO_USER,
                     payload: response.data.result.user
@@ -30,3 +32,24 @@ export const getInfo = (credentials, uid) => {
             });
     }
 };
+export const UpdateUserInfo = (credentials, uid, profile) => dispatch => {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + credentials.token
+        }
+    }
+
+    const body = profile;
+    axios.put(`${API_URL}/api/user/updateInfo/${uid}`, body, config)
+        .then(res => {
+            successMess = res.data.message;
+            dispatch({
+                type: UPDATE_USER,
+                payload: res.data.result.user
+            });
+        })
+        .catch(err => {
+            console.log('err', err);
+        });
+}

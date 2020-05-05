@@ -8,18 +8,51 @@ import {
 } from 'react-native';
 import { styles } from '../public/styleSheets/styleAvatarCard';
 import { connect } from 'react-redux';
+import { auth } from '../config/helper';
+import { getInfo } from '../action/userAction';
 
 class AvatarCard extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { photoURL: '' };
-    }
+    state = {
+        fullName: '',
+        address: '',
+        avatar: '',
+    
+    };
 
+    componentDidMount = async () => {
+        await this.loadData();
+    };
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        //console.log(nextProps);
+        if(nextProps.profile!=this.props.profile)
+        {   
+            this.setState({ fullName: nextProps.profile.fullName });
+            this.setState({ address: nextProps.profile.address });
+        }
+    };
+    loadData = async () => {
+        const data = await auth.isAuthenticated();
+        if (data) {
+            await this.props.getInfo(data, data.user._id);
+            await this.initValueForUser();
+        }
+    };
+    initValueForUser = async () => {
+        if (this.props.profile.fullName == undefined || this.props.profile.fullName == null) {
+            this.setState({ fullName: 'Đang cập nhật!' })
+        }
+        else {
+            this.setState({ fullName: this.props.profile.fullName })
+        }
+        if (this.props.profile.address == undefined || this.props.profile.address == null) {
+            this.setState({ address: 'Đang cập nhật!' })
+        }
+        else {
+            this.setState({ address: this.props.profile.address })
+        }
+    };
     render() {
-        const date=this.props.profile.created;
-        var d = new Date(date);
-        //format ngày tham gia
-        var dateFormat = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() + " " ; 
+       
         return (
             <View style={styles.headerContainer}>
                 <ImageBackground
@@ -33,14 +66,14 @@ class AvatarCard extends Component {
                         <Image
                             style={styles.userImage}
                             source={{
-                                uri: this.props.profile.avatar,
+                                uri: this.props.avatar,
                             }}
                         />
-                        <Text style={styles.userNameText}>{this.props.profile.fullName}</Text>
+                        <Text style={styles.userNameText}>{this.state.fullName}</Text>
                         <View style={styles.userAddressRow}>
                             <View>
                                 <Icon
-                                    name="check"
+                                    name="place"
                                     underlayColor="transparent"
                                     iconStyle={styles.placeIcon}
                                 // onPress={this.onPressPlace}
@@ -48,7 +81,7 @@ class AvatarCard extends Component {
                             </View>
                             <View style={styles.userCityRow}>
                                 <Text style={styles.userCityText}>
-                                   {dateFormat}
+                                   {this.state.address}
                                 </Text>
                             </View>
                         </View>
@@ -60,7 +93,6 @@ class AvatarCard extends Component {
 }
 
 function mapStateToProp(state) {
-    
     return {
         authenticate: state.auth.isAuthenticated,
         profile: state.user.profile,
@@ -68,4 +100,4 @@ function mapStateToProp(state) {
     }
 }
 
-export default connect(mapStateToProp)(AvatarCard);
+export default connect(mapStateToProp,{getInfo})(AvatarCard);

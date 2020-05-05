@@ -30,7 +30,7 @@ class HomeScreen extends React.Component {
     const data = await auth.isAuthenticated();
     if (!data) {
       console.log("Chưa login!");
-      await this.props.navigation.navigate('Login');
+      //await this.props.navigation.navigate('Login');
     }
     else{
       console.log("Đã login!");

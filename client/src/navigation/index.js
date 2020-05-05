@@ -54,6 +54,12 @@ function UserScreen({ navigation }) {
         name="ViewInfo"
         options={{ headerShown: false }}
         component={ViewInfo}
+        listeners={{
+          tabPress: e => {
+            // Prevent default action
+            e.preventDefault();
+          },
+        }}
       />
       <StackUser.Screen
         name="EditInfo"
