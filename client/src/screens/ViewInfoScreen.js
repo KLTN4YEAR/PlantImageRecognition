@@ -20,6 +20,7 @@ class ViewInfo extends React.Component {
   };
  
   componentDidMount = async () => {
+    console.log('vu')
     this.loadData();
     
   };

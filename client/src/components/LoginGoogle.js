@@ -45,7 +45,7 @@ class LoginGoogle extends React.Component {
     loginGG = async (result) => {
         const profile = this.state.profile;
         profile["fullName"] = result.user.name;
-        profile["facebookId"] = result.user.id;
+        profile["googleId"] = result.user.id;
         profile["email"] = result.user.email;
         profile["avatar"] = result.user.photoUrl;
         this.props.loginWithGoogle(profile);
