@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { Image, View, ScrollView, TouchableOpacity, TextInput, Alert, SafeAreaView } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
-import Constants from 'expo-constants';
-import * as Permissions from 'expo-permissions';
+import ImagePicker from 'react-native-image-picker';
 import { styles } from '../public/styleSheets/styleCreatePost';
 import { Text, Button, Avatar } from 'react-native-elements';
 import { Col, Row, Grid } from 'react-native-easy-grid';
@@ -39,9 +37,7 @@ class CreatePostScreen extends React.Component {
     }
 
     componentDidMount() {
-        this.getPermissionAsync();
         this.useLayoutEffect();
-        //this.postData = new FormData();
     }
 
     //lưu những thay đổi nơi input vào state
@@ -78,9 +74,7 @@ class CreatePostScreen extends React.Component {
 
     addPost = async (formatData) => {
         const credentials = await auth.isAuthenticated();
-        // console.log('post', credentials);
         newPost(credentials, formatData);
-        console.log(successMess);
         if (successMess == 'Created was successful') {
             this.successAlert();
             this.props.navigation.goBack();
@@ -90,26 +84,19 @@ class CreatePostScreen extends React.Component {
         }
     }
 
-    getPermissionAsync = async () => {
-        if (Constants.platform.ios) {
-            const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL)
-            if (status !== 'granted') {
-                alert('Sorry, we need camera roll permissions to make this             work!')
-            }
-        }
-    }
+
 
     useLayoutEffect = async () => {
         this.props.navigation.setOptions({
             headerRight: () => (
-                <Button buttonStyle={styles.btnDone} onPress={this.onSubmit} iconRight title="ĐĂNG" />
+                <Button buttonStyle={styles.btnDone} onPress={this.onSubmit} iconRight title="ĐĂNG"/>
                 // onPress={() => this.props.navigation.goBack()}
             ),
         });
     };
 
     _pickImage = async () => {
-        let pickerResult = await ImagePicker.launchImageLibraryAsync({
+        let pickerResult = await ImagePicker.launchImageLibrary({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             base64: true,
             allowsEditing: true,
@@ -124,15 +111,9 @@ class CreatePostScreen extends React.Component {
     }
 
     _takePhoto = async () => {
-        const {
-            status: cameraPerm
-        } = await Permissions.askAsync(Permissions.CAMERA)
-        const {
-            status: cameraRollPerm
-        } = await Permissions.askAsync(Permissions.CAMERA_ROLL)
-        // only if user allows permission to camera AND camera roll
-        if (cameraPerm === 'granted' && cameraRollPerm === 'granted') {
-            let pickerResult = await ImagePicker.launchCameraAsync({
+        
+    
+        let pickerResult = await ImagePicker.launchCamera({
                 base64: true,
                 allowsEditing: true,
                 aspect: [4, 3],
@@ -144,7 +125,7 @@ class CreatePostScreen extends React.Component {
                     LocalImage: this.state.LocalImage.concat([pickerResult.uri]),
                 })
             }
-        }
+        
     }
 
     _renderImages() {
@@ -170,7 +151,7 @@ class CreatePostScreen extends React.Component {
                                         type='material'
                                         name='photo-library'
                                         style={styles.labelIcon}
-                                        color='tomato' />
+                                        color='#59c393' />
                                 </Col>
                                 <Col size={80}>
                                     <Text style={styles.labelTxt}>Ảnh từ thư viện</Text>
@@ -186,7 +167,7 @@ class CreatePostScreen extends React.Component {
                                         type='material'
                                         name='photo-camera'
                                         style={styles.labelIcon}
-                                        color='tomato' />
+                                        color='#59c393' />
                                 </Col>
                                 <Col size={80}>
                                     <Text style={styles.labelTxt}>Camera</Text>
@@ -202,7 +183,7 @@ class CreatePostScreen extends React.Component {
                                         type='material'
                                         name='cancel'
                                         style={styles.labelIcon}
-                                        color='tomato' />
+                                        color='#59c393' />
                                 </Col>
                                 <Col size={80}>
                                     <Text style={styles.labelTxt}>Huỷ</Text>

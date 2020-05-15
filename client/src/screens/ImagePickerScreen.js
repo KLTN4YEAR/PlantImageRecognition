@@ -1,6 +1,5 @@
 import React, { Fragment, Component } from 'react';
-import * as ImagePicker from 'expo-image-picker';
-import * as Permissions from 'expo-permissions';
+import ImagePicker from 'react-native-image-picker';
 import {
   ScrollView,
   View,
@@ -13,7 +12,7 @@ import { styles } from '../public/styleSheets/styleImagePicker';
 import { Icon } from 'react-native-elements';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 
-export default class App extends Component {
+export default class ImagePickerScreen extends Component {
 
   constructor(props) {
     super(props)
@@ -28,15 +27,9 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    this.getPermissionAsync();
   }
 
-  getPermissionAsync = async () => {
-    const { status } = await Permissions.askAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL);
-    if (status !== 'granted') {
-      alert('Hey! You might want to enable notifications for my app, they are good.');
-    }
-  };
+ 
 
   chooseImage = () => {
     let options = {
@@ -49,12 +42,6 @@ export default class App extends Component {
         path: 'images',
       },
     };
-    const { status } = Permissions.getAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL);
-    if (status !== 'granted') {
-      // this.getPermissionAsync();
-      // this.chooseImage();
-    }
-    else {
       ImagePicker.showImagePicker(options, (response) => {
         console.log('Response = ', response);
 
@@ -77,7 +64,7 @@ export default class App extends Component {
           });
         }
       });
-    }
+    
   }
 
   launchCamera = async () => {
@@ -87,13 +74,8 @@ export default class App extends Component {
         path: 'images',
       },
     };
-    const { status } = await Permissions.getAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL);
-    if (status !== 'granted') {
-      // this.getPermissionAsync();
-      // this.launchCamera();
-    }
-    else {
-      let response = await ImagePicker.launchCameraAsync(options);
+    
+      let response = await ImagePicker.launchCamera(options);
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
@@ -110,7 +92,6 @@ export default class App extends Component {
           fileUri: response.uri
         });
       }
-    }
 
   }
 
@@ -121,16 +102,8 @@ export default class App extends Component {
         path: 'images',
       },
     };
-    const { status, expires, permissions } = await Permissions.getAsync(
-      Permissions.CAMERA,
-      Permissions.CAMERA_ROLL
-    );
-    if (status !== 'granted') {
-      // this.getPermissionAsync();
-      // this.launchImageLibrary();
-    }
-    else {
-      let response = await ImagePicker.launchImageLibraryAsync(options);
+    
+      let response = await ImagePicker.launchImageLibrary(options);
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
@@ -147,7 +120,7 @@ export default class App extends Component {
           fileUri: response.uri
         });
       }
-    }
+    
 
   }
 
@@ -210,7 +183,8 @@ export default class App extends Component {
                       type='font-awesome'
                       name='camera-retro'
                       style={styles.labelIcon}
-                      color='tomato' />
+                      color='#59c393'
+ />
                     <Text style={styles.btnText}>Camera</Text>
                   </TouchableOpacity>
                 </Col>
@@ -220,7 +194,8 @@ export default class App extends Component {
                       type='font-awesome'
                       name='image'
                       style={styles.labelIcon}
-                      color='tomato' />
+                      color='#59c393'
+ />
                     <Text style={styles.btnText}>Gallery</Text>
                   </TouchableOpacity>
                 </Col>

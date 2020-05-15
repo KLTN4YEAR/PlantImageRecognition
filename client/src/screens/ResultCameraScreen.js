@@ -37,7 +37,8 @@ export default class ResultScreen extends React.Component {
                                                 name='pagelines'
                                                 style={styles.labelIcon}
                                                 size={13}
-                                                color='tomato' />
+                                                color='#59c393'
+ />
                                         </Col>
                                         <Col size={80}>
                                             <Text style={styles.labelTxt}>Phân loại</Text>
@@ -57,7 +58,8 @@ export default class ResultScreen extends React.Component {
                                                 name='map-marker'
                                                 style={styles.labelIcon}
                                                 size={13}
-                                                color='tomato' />
+                                                color='#59c393'
+ />
                                         </Col>
                                         <Col size={80}>
                                             <Text style={styles.labelTxt}>Phân bố</Text>

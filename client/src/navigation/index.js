@@ -6,7 +6,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import LoginScreen from './../screens/LoginScreen';
 import PostScreen from '../screens/PostScreen';
 import AddDetailScreen from '../screens/AddDetailScreen';
-import ImagePickerScreen from '../screens/ImagePickerScreen';
+// import ImagePickerScreen from '../screens/ImagePickerScreen';
+
+import ImagePickerScreen from '../components/TfliteView';
+
 import ResultCameraScreen from '../screens/ResultCameraScreen'
 import SearchScreen from './../screens/SearchScreen';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -14,13 +17,15 @@ import ViewInfo from '../screens/ViewInfoScreen';
 import EditInfo from '../screens/EditInfoScreen';
 import CreatePostScreen from '../screens/CreatePostScreen';
 
+
+
 const Tab = createBottomTabNavigator();
 
 function TabScreen() {
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
+      screenOptions={({route}) => ({
+        tabBarIcon: ({focused, color, size}) => {
           if (route.name === 'Home') {
             return <Icon name="home" color={color} size={25} />;
           } else if (route.name === 'User') {
@@ -33,9 +38,13 @@ function TabScreen() {
         },
       })}
       tabBarOptions={{
-        activeTintColor: 'tomato',
+        activeTintColor: '#59c393',
         inactiveTintColor: 'gray',
         showIcon: true,
+        labelStyle: {
+          fontSize: 11,
+          fontFamily: 'Helvetica',
+        },
       }}>
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="User" component={UserScreen} />
@@ -54,13 +63,19 @@ function UserScreen({ navigation }) {
         name="ViewInfo"
         options={{ headerShown: false }}
         component={ViewInfo}
+        listeners={{
+          tabPress: e => {
+            // Prevent default action
+            e.preventDefault();
+          },
+        }}
       />
       <StackUser.Screen
         name="EditInfo"
         options={{
           title: 'Chỉnh sửa thông tin cá nhân',
           headerStyle: {
-            backgroundColor: '#f4511e',
+            backgroundColor: '#59c393',
           },
           headerTintColor: '#fff',
           headerTitleStyle: {
@@ -80,16 +95,7 @@ function CameraScreen({ navigation }) {
     <StackCamera.Navigator initialRouteName="ImagePicker">
       <StackUser.Screen
         name="ImagePicker"
-        options={{
-          title: 'Chọn hình ảnh từ camera hoặc gallery',
-          headerStyle: {
-            backgroundColor: '#f4511e',
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-        }}
+        options={{ headerShown: false }}
         component={ImagePickerScreen}
       />
       <StackUser.Screen
@@ -97,7 +103,7 @@ function CameraScreen({ navigation }) {
         options={{
           title: 'Kết quả',
           headerStyle: {
-            backgroundColor: '#f4511e',
+            backgroundColor: '#59c393',
           },
           headerTintColor: '#fff',
           headerTitleStyle: {
@@ -146,7 +152,7 @@ function HomeScreen() {
         options={{
           title: 'Đóng góp thông tin',
           headerStyle: {
-            backgroundColor: '#f4511e',
+            backgroundColor: '#59c393',
           },
           headerTintColor: '#fff',
           headerTitleStyle: {
@@ -160,7 +166,7 @@ function HomeScreen() {
         options={{
           title: 'Tạo bài viết mới',
           headerStyle: {
-            backgroundColor: '#f4511e',
+            backgroundColor: '#59c393',
           },
           headerTintColor: '#fff',
           headerTitleStyle: {

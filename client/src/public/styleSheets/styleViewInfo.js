@@ -94,11 +94,25 @@ export const styles = StyleSheet.create({
     btnDone: {
         backgroundColor: 'transparent',
     },
+    editCol: {},
+    logoutCol: {
 
+    },
     touchEdit: {
-        width: '70%',
+        width: '90%',
         marginLeft: 'auto',
         marginRight: 'auto',
+        marginBottom: 20,
+        backgroundColor: 'blue',
+        height: 40,
+        backgroundColor: '#439aa6',
+        borderRadius: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    touchLogout: {
+        width: '80%',
+        marginLeft: 0,
         marginBottom: 20,
         backgroundColor: 'blue',
         height: 40,
@@ -127,6 +141,26 @@ export const styles = StyleSheet.create({
     },
 
     labelIconEdit: {
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        marginTop: 'auto',
+        marginLeft: 'auto',
+
+    },
+    colBtnLogout: {
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        marginTop: 'auto',
+        marginBottom: 'auto',
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignContent: 'center',
+    },
+
+    labelIconLogout: {
         marginLeft: 'auto',
         marginRight: 'auto',
         marginTop: 'auto',

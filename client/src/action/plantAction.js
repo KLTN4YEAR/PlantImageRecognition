@@ -1,5 +1,9 @@
 import axios from 'axios';
 import { API_URL } from '../config/helper';
+import {
+    SEARCH_PLANT,
+    ERROR_RESPONSE
+} from '../config/type';
 
 export const searchPlant = (credentials, plantName) => {
     const config = {
@@ -9,12 +13,18 @@ export const searchPlant = (credentials, plantName) => {
             'authorization': 'Bearer ' + credentials.token,
         }
     };
-    return axios.get(`${API_URL}/api/plant/searchPlant?filter=` + plantName, config)
-        .then(res => {
-            console.log(res.data)
-            return res.data;
-        })
-        .catch(err => {
-            return err;
-        });
+    return function(dispatch) {
+        axios.get(`${API_URL}/api/plant/searchPlant?filter=` + plantName, config)
+            .then((response) => {
+                dispatch({
+                    type: SEARCH_PLANT,
+                    payload: response.data.result.plants
+                });
+            })
+            .catch(err => {
+                dispatch({
+                    type: ERROR_RESPONSE
+                });
+            });
+    }
 };
