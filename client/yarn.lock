@@ -5208,6 +5208,11 @@ react-native-gesture-handler@^1.6.1:
     invariant "^2.2.4"
     prop-types "^15.7.2"
 
+react-native-image-crop-picker@^0.31.1:
+  version "0.31.1"
+  resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.31.1.tgz#b56248a9e31d62f1c6e7c2f85d296869c32af4cd"
+  integrity sha512-I5z7DcTKYYASevIalkqKdiw9Fe4CVCKPVMMkLGDVGUYgZZWlbOS9G1+oNWtWwoB5S9e931GkDrZ/HL5UhADG/Q==
+
 react-native-image-picker@^2.3.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-2.3.1.tgz#1977b65e07793d2c0b2d1976fb675c5f75ad7f11"
@@ -6196,6 +6201,11 @@ text-table@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
+
+tflite-react-native@0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/tflite-react-native/-/tflite-react-native-0.0.5.tgz#bb2a78579e84371bddc455a79bd39d28c98a218b"
+  integrity sha512-aBajq5yQQ8UiB92tIk+v9BIKZTFGwCTHegfefISgnXwqPiPAAvKhdX6Vb80kJFPTUjXB53w/NZQT9qCyVBYMyA==
 
 throat@^4.0.0, throat@^4.1.0:
   version "4.1.0"

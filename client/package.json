@@ -10,7 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@react-native-community/async-storage": "^1.10.0",
+    "@react-native-community/async-storage": "^1.10.1",
     "@react-native-community/google-signin": "^4.0.1",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/bottom-tabs": "^5.4.1",
@@ -31,6 +31,7 @@
     "react-native-reanimated": "^1.8.0",
     "react-native-safe-area-context": "^1.0.0",
     "react-native-screens": "^2.7.0",
+    "react-native-simple-dialogs": "^1.2.1",
     "react-native-simple-radio-button": "^2.7.4",
     "react-native-vector-icons": "^6.6.0",
     "react-redux": "^7.2.0",

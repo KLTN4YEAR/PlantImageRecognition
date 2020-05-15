@@ -6,9 +6,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import LoginScreen from './../screens/LoginScreen';
 import PostScreen from '../screens/PostScreen';
 import AddDetailScreen from '../screens/AddDetailScreen';
-// import ImagePickerScreen from '../screens/ImagePickerScreen';
+import ImagePickerScreen from '../screens/ImagePickerScreen';
+import PlantInfoScreen from '../screens/PlantInfoScreen';
 
-import ImagePickerScreen from '../components/TfliteView';
+// import ImagePickerScreen from '../components/TfliteView';
 
 import ResultCameraScreen from '../screens/ResultCameraScreen'
 import SearchScreen from './../screens/SearchScreen';
@@ -95,8 +96,13 @@ function CameraScreen({ navigation }) {
     <StackCamera.Navigator initialRouteName="ImagePicker">
       <StackUser.Screen
         name="ImagePicker"
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
         component={ImagePickerScreen}
+      />
+      <StackUser.Screen
+        name="PlantInfo"
+        options={{headerShown: false}}
+        component={PlantInfoScreen}
       />
       <StackUser.Screen
         name="ResultCamera"
