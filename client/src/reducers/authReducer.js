@@ -6,13 +6,13 @@ import {
     REGISTER_SUCCESS,
     REGISTER_FAIL
 } from '../config/type';
-
+import { auth } from '../config/helper';
 const initialState = {
     isAuthenticated: false,
     isAuthorized: false
 };
 
-export default function (state = initialState, action) {
+export default function(state = initialState, action) {
     switch (action.type) {
         case REGISTER_SUCCESS:
             return {
@@ -29,10 +29,7 @@ export default function (state = initialState, action) {
 
         case LOGIN_FAIL:
         case LOGOUT_SUCCESS:
-        case REGISTER_FAIL:
-            AsyncStorage.removeItem('jwt');
-            AsyncStorage.removeItem('avatar');
-            AsyncStorage.removeItem('name');
+            auth.removeStorage();
             return {
                 ...state,
                 token: null,

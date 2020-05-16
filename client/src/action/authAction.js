@@ -17,10 +17,10 @@ export const loginWithGoogle = (profile) => dispatch => {
         }
     };
     const body = profile;
-    console.log(body);
+    console.log('lggg', body);
     axios.post(`${API_URL}/api/auth/google`, body, config)
         .then((response) => {
-            //console.log(response.result);
+            console.log('gg', response.data)
             auth.authenticate(response.data.result);
             dispatch({
                 type: LOGIN_SUCCESS
@@ -47,11 +47,11 @@ export const loginWithFacebook = (profile) => dispatch => {
         }
     };
     const body = profile;
-    console.log(body);
+    console.log('fbget', body);
     axios.post(`${API_URL}/api/auth/facebook`, body, config)
         .then((response) => {
             auth.authenticate(response.data.result);
-            // console.log('res', response.data.result);
+            console.log('fb', response.data)
             dispatch({
                 type: LOGIN_SUCCESS
             });

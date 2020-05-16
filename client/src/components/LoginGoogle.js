@@ -21,16 +21,6 @@ class LoginGoogle extends React.Component {
     static propTypes = {
         isAuthenticated: PropTypes.bool,
     };
-    componentDidMount() {
-        this.checkLogin();
-    }
-    checkLogin = async () => {
-        const data = await this.props.isAuthenticated
-        if (data) {
-            console.log("Đã login!");
-            await this.props.navigation.navigate('Tab');
-        }
-    }
     signInWithGoogleAsync = async () => {
         try {
             const result = await Google.logInAsync({
@@ -41,7 +31,7 @@ class LoginGoogle extends React.Component {
             });
 
             if (result.type === 'success') {
-                this.getInfo(result);
+                this.loginGG(result);
             } else {
                 // return { cancelled: true };
                 console.log("cancel")
@@ -52,22 +42,15 @@ class LoginGoogle extends React.Component {
         }
     }
 
-    getInfo = async (result) => {
+    loginGG = async (result) => {
         const profile = this.state.profile;
         profile["fullName"] = result.user.name;
-        profile["facebookId"] = result.user.id;
+        profile["googleId"] = result.user.id;
         profile["email"] = result.user.email;
         profile["avatar"] = result.user.photoUrl;
-        await this.props.loginWithGoogle(profile);
-        await this.props.navigation.navigate('Tab');
+        this.props.loginWithGoogle(profile);
+        this.props.navigation.navigate('Tab');
     };
-    navigateToMainScreen = async (data) => {
-        try {
-            await this.props.navigation.navigate('Tab');
-        } catch (error) {
-            console.log("Something went wrong", error);
-        }
-    }
 
 
     render() {

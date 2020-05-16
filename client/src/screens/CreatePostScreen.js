@@ -41,7 +41,6 @@ class CreatePostScreen extends React.Component {
     componentDidMount() {
         this.getPermissionAsync();
         this.useLayoutEffect();
-        //this.postData = new FormData();
     }
 
     //lưu những thay đổi nơi input vào state
@@ -78,9 +77,7 @@ class CreatePostScreen extends React.Component {
 
     addPost = async (formatData) => {
         const credentials = await auth.isAuthenticated();
-        // console.log('post', credentials);
         newPost(credentials, formatData);
-        console.log(successMess);
         if (successMess == 'Created was successful') {
             this.successAlert();
             this.props.navigation.goBack();
@@ -102,7 +99,7 @@ class CreatePostScreen extends React.Component {
     useLayoutEffect = async () => {
         this.props.navigation.setOptions({
             headerRight: () => (
-                <Button buttonStyle={styles.btnDone} onPress={this.onSubmit} iconRight title="ĐĂNG" />
+                <Button buttonStyle={styles.btnDone} onPress={this.onSubmit} iconRight title="ĐĂNG"/>
                 // onPress={() => this.props.navigation.goBack()}
             ),
         });

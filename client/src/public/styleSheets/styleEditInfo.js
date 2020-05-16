@@ -169,8 +169,8 @@ export const styles = StyleSheet.create({
     },
 
     labelEdit: {
-        color: '#fff',
-        fontSize: 18,
+        color: 'black',
+        fontSize: 13,
         marginLeft: 10,
         alignContent: 'center',
         alignSelf: 'center',
@@ -182,7 +182,14 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         fontWeight: 'bold',
     },
-
+    validateMess: {
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        marginBottom: 5,
+        padding: 3,
+        color: 'red',
+        fontSize: 12,
+    },
     labelIcon: {
         marginLeft: 'auto',
         marginRight: 'auto',

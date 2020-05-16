@@ -4,18 +4,16 @@ class Post {
     this.data = data;
   }
 
-  create() {
+  async create() {
     const post = this.data;
-    return this.db.Post.create(post).then(() => {
-      return post;
-    });
+    return await this.db.Post.create(post)
   }
 
   async getInfoPost() {
     const postId = this.data.postId;
-    return await this.db.Post.findById(postId);
+    return await this.db.Post.findById(postId)
+      .populate('postedBy', '_id fullName avatar email')
   }
-
 }
 
 module.exports = {

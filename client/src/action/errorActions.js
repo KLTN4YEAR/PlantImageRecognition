@@ -1,10 +1,10 @@
 import { GET_ERRORS, CLEAR_ERRORS } from '../config/type';
 
 // RETURN ERRORS
-export const returnErrors = (msg) => {
+export const returnErrors = (err) => {
     return {
         type: GET_ERRORS,
-        payload: { msg }
+        payload: { err }
     };
 };
 
