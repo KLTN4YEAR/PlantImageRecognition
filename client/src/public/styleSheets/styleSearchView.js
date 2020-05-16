@@ -23,13 +23,14 @@ export const styles = StyleSheet.create({
     },
 
     searchBar: {
-        backgroundColor: 'tomato',
-        borderColor: 'transparent',
+        backgroundColor: '#59c393',
+
     },
 
     inputSearchBar: {
         backgroundColor: 'white',
         borderRadius: 10,
+        height: 30,
     },
 
     viewSafeArea: {

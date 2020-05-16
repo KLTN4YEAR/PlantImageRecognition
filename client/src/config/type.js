@@ -10,6 +10,8 @@ export const CLEAR_ERRORS = 'CLEAR_ERROR';
 export const GET_INFO_USER = 'GET_INFO_USER';
 export const ERROR_RESPONSE = 'ERROR_RESPONSE';
 
+export const UPDATE_USER = 'UPDATE_USER';
+
 export const GET_AVATAR = 'GET_AVATAR';
 export const CLEAN_PROFILE = 'CLEAN_PROFILE';
 

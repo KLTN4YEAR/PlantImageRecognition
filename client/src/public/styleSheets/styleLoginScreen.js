@@ -7,7 +7,14 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-
+    imgBack: {
+        width: '100%',
+        height: '100%',
+        flex: 1,
+        backgroundColor: '#ffffff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     logo: {
         fontWeight: "bold",
         fontSize: 50,
@@ -88,8 +95,8 @@ export const styles = StyleSheet.create({
     },
 
     imgLogo: {
-        width: 200,
-        height: 200,
+        width: '30%',
+        height: '30%',
         marginTop: 100,
         marginBottom: 100,
         marginLeft: 'auto',
