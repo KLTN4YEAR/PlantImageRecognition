@@ -1,4 +1,3 @@
-
 import { StyleSheet, Dimensions } from 'react-native';
 const windowWidth = Dimensions.get('window').width;
 
@@ -128,13 +127,16 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         padding: 2,
-        width: windowWidth,
+        width: '100%',
+        marginLeft: 'auto',
+        marginRight: 'auto',
     },
 
     imgDisplay: {
-        width: 100,
-        height: 80,
-        margin: 3
+        width: 160,
+        height: 160,
+        margin: 3,
+        borderRadius: 10,
     },
 
     labelTxt: {

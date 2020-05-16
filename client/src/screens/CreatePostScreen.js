@@ -22,6 +22,7 @@ class CreatePostScreen extends React.Component {
             content: '',
             plant_images: [''],
         },
+        
     }
 
     successAlert = () => {
@@ -96,35 +97,58 @@ class CreatePostScreen extends React.Component {
     };
 
     _pickImage = async () => {
-        let pickerResult = await ImagePicker.launchImageLibrary({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
-            base64: true,
-            allowsEditing: true,
-            aspect: [4, 3],
-        })
-        let imageUri = pickerResult ? `data:image/jpg;base64,${pickerResult.base64}` : null
+        const options = {
+          title: 'Select Images',
+          customButtons: [
+            {
+              name: 'fb',
+              title: 'Choose Photo',
+            },
+          ],
+          storageOptions: {
+            skipBackup: true,
+            path: 'images',
+          },
+        };
+        ImagePicker.launchImageLibrary(options, response => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        let imageUri = response? `data:image/jpg;base64,${response.base64}` : null
         imageUri && { uri: imageUri }
         this.state.multipleUrl.push(imageUri)
         this.setState({
-            LocalImage: this.state.LocalImage.concat([pickerResult.uri]),
-        })
+            LocalImage: this.state.LocalImage.concat([response.uri]),})
+        }});
     }
 
     _takePhoto = async () => {
         
-    
-        let pickerResult = await ImagePicker.launchCamera({
-                base64: true,
-                allowsEditing: true,
-                aspect: [4, 3],
-            })
-            if (!pickerResult.cancelled) {
-                let imageUri = pickerResult ? `data:image/jpg;base64,${pickerResult.base64}` : null
+    let options = {
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    ImagePicker.launchCamera(options, response => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+        alert(response.customButton);
+      } else {
+        let imageUri = response? `data:image/jpg;base64,${response.base64}` : null
                 this.state.multipleUrl.push(imageUri)
                 this.setState({
-                    LocalImage: this.state.LocalImage.concat([pickerResult.uri]),
+                    LocalImage: this.state.LocalImage.concat([response.uri]),
                 })
-            }
+        }});
         
     }
 
@@ -132,8 +156,7 @@ class CreatePostScreen extends React.Component {
         let images = []
         this.state.LocalImage.map((item, index) => {
             images.push(
-                <Image key={index} source={{ uri: item }} style={styles.imgDisplay} />
-
+            <Image key={index} source={{ uri: item }} style={styles.imgDisplay} />
             )
         })
         return images

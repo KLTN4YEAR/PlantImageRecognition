@@ -26,6 +26,12 @@ export const styles = StyleSheet.create({
         marginRight: 'auto',
 
     },
+    imgPlantCarousel: {
+        width: 250,
+        height: 200,
+        margin: 5,
+        borderRadius: 8,
+    },
     viewInfo: {
         marginLeft: 'auto',
         marginRight: 'auto',
@@ -74,6 +80,27 @@ export const styles = StyleSheet.create({
         marginLeft: 'auto',
         marginRight: 'auto',
     },
+    viewListImage: {
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        padding: 5,
+    },
+
+    //test list
+    viewImageList: {
+        flex: 1,
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    imgPlantCarousel1: {
+        width: 150,
+        height: 150,
+        margin: 5,
+        borderRadius: 8,
+    },
+
     txtDesc: {
         fontSize: 16,
         fontFamily: 'Calibri',
