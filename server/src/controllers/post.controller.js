@@ -21,18 +21,18 @@ const createPost = async (req, res) => {
 
     let typePlant = 'newPlant';
 
-    //nếu tìm thấy _id thực vật trong CSDL
+    //if name plant have in model trained
     if (req.body.mentionedPlant) {
         typePlant = 'oldPlant';
     }
 
     let listPathImage = [];
 
-    //nếu k biết tên thực vật 
+    //if dont know name plant
     let namePlant = req.body.namePlant;
     if (!namePlant) {
         typePlant = 'undefined';
-        namePlant = null
+        namePlant = null;
     }
 
     for (let i = 0; i < myFile.length; i++) {
@@ -75,7 +75,6 @@ const getInfoPost = async (req, res) => {
                 post
             }
         })
-
 }
 
 module.exports = {
