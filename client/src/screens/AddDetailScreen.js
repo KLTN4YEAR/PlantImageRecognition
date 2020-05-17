@@ -37,7 +37,7 @@ export default function AddDetailScreen({ navigation }) {
                                 type='font-awesome'
                                 name='font'
                                 style={styles.labelIcon}
-                                color='tomato' />
+                                color='#59c393' />
                             <Text style={styles.labelTxt}>Tên thực vật</Text>
                         </Col>
                         <Col size={70}>
@@ -53,7 +53,7 @@ export default function AddDetailScreen({ navigation }) {
                                 type='font-awesome'
                                 name='map-marker'
                                 style={styles.labelIcon}
-                                color='tomato' />
+                                color='#59c393' />
                             <Text style={styles.labelTxt}>Nơi phân bố</Text>
                         </Col>
                         <Col size={70}>
@@ -69,7 +69,7 @@ export default function AddDetailScreen({ navigation }) {
                                 type='font-awesome'
                                 name='leaf'
                                 style={styles.labelIcon}
-                                color='tomato' />
+                                color='#59c393' />
                             <Text style={styles.labelTxt}>Giống loài</Text>
                         </Col>
                         <Col size={70}>
@@ -85,7 +85,7 @@ export default function AddDetailScreen({ navigation }) {
                                 type='font-awesome'
                                 name='align-center'
                                 style={styles.labelIcon}
-                                color='tomato' />
+                                color='#59c393' />
                             <Text style={styles.labelTxt}>Mô tả</Text>
                         </Col>
                         <Col size={70}>

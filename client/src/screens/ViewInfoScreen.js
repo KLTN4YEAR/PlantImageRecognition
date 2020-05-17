@@ -24,6 +24,7 @@ class ViewInfo extends React.Component {
     this.loadData();
     
   };
+  
   UNSAFE_componentWillReceiveProps(nextProps) {
     //console.log(nextProps);
     if(nextProps.profile!=this.props.profile)
@@ -40,12 +41,14 @@ class ViewInfo extends React.Component {
         this.setState({ gender: 'Nữ' })
     }
   }
+
   formatDate(value){
     const date = value;
     const d = new Date(date);
     const dateFormat = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() + " ";
     return dateFormat;
   };
+
   loadData=async()=>{
     const data = await auth.isAuthenticated();
     if (data) {
@@ -53,6 +56,7 @@ class ViewInfo extends React.Component {
       await this.initValueForUser();
     }
   };
+
   onClickLogout = async()=>{
     await this.props.logout();
     const data = await auth.isAuthenticated();
@@ -142,7 +146,7 @@ class ViewInfo extends React.Component {
                   type='font-awesome'
                   name='user'
                   style={styles.labelIcon}
-                  color='tomato' />
+                  color='#59c393' />
                 <Text style={styles.labelTxt}>Tên:</Text>
               </Col>
               <Col size={70}>
@@ -156,7 +160,7 @@ class ViewInfo extends React.Component {
                   type='font-awesome'
                   name='venus-mars'
                   style={styles.labelIcon}
-                  color='tomato' />
+                  color='#59c393' />
                 <Text style={styles.labelTxt}>Giới tính:</Text>
               </Col>
               <Col size={70}>
@@ -170,7 +174,7 @@ class ViewInfo extends React.Component {
                   type='font-awesome'
                   name='envelope-square'
                   style={styles.labelIcon}
-                  color='tomato' />
+                  color='#59c393' />
 
                 <Text style={styles.labelTxt}>Email:</Text>
               </Col>
@@ -185,11 +189,11 @@ class ViewInfo extends React.Component {
                   type='font-awesome'
                   name='birthday-cake'
                   style={styles.labelIcon}
-                  color='tomato' />
+                  color='#59c393' />
                 <Text style={styles.labelTxt}>Sinh nhật:</Text>
               </Col>
               <Col size={70}>
-                <Text style={styles.contentTxt}>{birthVal}</Text>
+                <Text style={styles.contentTxt}>{this.state.birthday}</Text>
               </Col>
             </Row>
 
@@ -199,7 +203,7 @@ class ViewInfo extends React.Component {
                   type='font-awesome'
                   name='pagelines'
                   style={styles.labelIcon}
-                  color='tomato' />
+                  color='#59c393' />
                 <Text style={styles.labelTxt}>Đóng góp:</Text>
               </Col>
               <Col size={70}>
@@ -221,6 +225,5 @@ function mapStateToProp(state) {
     avatar: state.user.avatar,
   }
 }
-
 
 export default connect(mapStateToProp, { getInfo,logout })(ViewInfo);

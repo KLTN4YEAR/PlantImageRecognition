@@ -7,6 +7,8 @@ import LoginScreen from './../screens/LoginScreen';
 import PostScreen from '../screens/PostScreen';
 import AddDetailScreen from '../screens/AddDetailScreen';
 import ImagePickerScreen from '../screens/ImagePickerScreen';
+import PlantInfoScreen from '../screens/PlantInfoScreen';
+
 import ResultCameraScreen from '../screens/ResultCameraScreen'
 import SearchScreen from './../screens/SearchScreen';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -33,9 +35,13 @@ function TabScreen() {
         },
       })}
       tabBarOptions={{
-        activeTintColor: 'tomato',
+        activeTintColor: '#59c393',
         inactiveTintColor: 'gray',
         showIcon: true,
+        labelStyle: {
+          fontSize: 11,
+          fontFamily: 'Helvetica',
+        },
       }}>
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="User" component={UserScreen} />
@@ -66,7 +72,7 @@ function UserScreen({ navigation }) {
         options={{
           title: 'Chỉnh sửa thông tin cá nhân',
           headerStyle: {
-            backgroundColor: '#f4511e',
+            backgroundColor: '#59c393',
           },
           headerTintColor: '#fff',
           headerTitleStyle: {
@@ -86,24 +92,20 @@ function CameraScreen({ navigation }) {
     <StackCamera.Navigator initialRouteName="ImagePicker">
       <StackUser.Screen
         name="ImagePicker"
-        options={{
-          title: 'Chọn hình ảnh từ camera hoặc gallery',
-          headerStyle: {
-            backgroundColor: '#f4511e',
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-        }}
+        options={{ headerShown: false }}
         component={ImagePickerScreen}
+      />
+      <StackUser.Screen
+        name="PlantInfo"
+        options={{ headerShown: false }}
+        component={PlantInfoScreen}
       />
       <StackUser.Screen
         name="ResultCamera"
         options={{
           title: 'Kết quả',
           headerStyle: {
-            backgroundColor: '#f4511e',
+            backgroundColor: '#59c393',
           },
           headerTintColor: '#fff',
           headerTitleStyle: {
@@ -152,7 +154,7 @@ function HomeScreen() {
         options={{
           title: 'Đóng góp thông tin',
           headerStyle: {
-            backgroundColor: '#f4511e',
+            backgroundColor: '#59c393',
           },
           headerTintColor: '#fff',
           headerTitleStyle: {
@@ -166,7 +168,7 @@ function HomeScreen() {
         options={{
           title: 'Tạo bài viết mới',
           headerStyle: {
-            backgroundColor: '#f4511e',
+            backgroundColor: '#59c393',
           },
           headerTintColor: '#fff',
           headerTitleStyle: {

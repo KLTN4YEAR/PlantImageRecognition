@@ -22,6 +22,7 @@ class AvatarCard extends Component {
     componentDidMount = async () => {
         await this.loadData();
     };
+
     UNSAFE_componentWillReceiveProps(nextProps) {
         //console.log(nextProps);
         if(nextProps.profile!=this.props.profile)
@@ -30,6 +31,7 @@ class AvatarCard extends Component {
             this.setState({ address: nextProps.profile.address });
         }
     };
+
     loadData = async () => {
         const data = await auth.isAuthenticated();
         if (data) {
@@ -37,6 +39,7 @@ class AvatarCard extends Component {
             await this.initValueForUser();
         }
     };
+
     initValueForUser = async () => {
         if (this.props.profile.fullName == undefined || this.props.profile.fullName == null) {
             this.setState({ fullName: 'Đang cập nhật!' })
@@ -51,8 +54,8 @@ class AvatarCard extends Component {
             this.setState({ address: this.props.profile.address })
         }
     };
+
     render() {
-       
         return (
             <View style={styles.headerContainer}>
                 <ImageBackground
