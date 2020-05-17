@@ -1,11 +1,11 @@
 import axios from 'axios';
-import { API_URL, auth } from '../config/helper';
-import { returnErrors } from './errorActions';
+import { API_URL } from '../config/helper';
 import {
     GET_INFO_USER,
     UPDATE_USER,
     ERROR_RESPONSE
 } from '../config/type';
+
 export var successMess = '';
 //get info user
 export const getInfo = (credentials, uid) => {
@@ -16,10 +16,10 @@ export const getInfo = (credentials, uid) => {
             'authorization': 'Bearer ' + credentials.token,
         }
     };
+
     return function(dispatch) {
         axios.get(`${API_URL}/api/user/getInfo/${uid}`, config)
             .then((response) => {
-                //console.log('res', response.data.result.user)
                 dispatch({
                     type: GET_INFO_USER,
                     payload: response.data.result.user
@@ -32,6 +32,7 @@ export const getInfo = (credentials, uid) => {
             });
     }
 };
+
 export const UpdateUserInfo = (credentials, uid, profile) => dispatch => {
     const config = {
         headers: {

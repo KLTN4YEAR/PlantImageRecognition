@@ -6,10 +6,7 @@ import {
   Image,
   SafeAreaView,
   ScrollView,
- 
   ActivityIndicator,
-  FlatList,
-  Alert,
   RefreshControl,
 } from 'react-native';
 import { styles } from '../public/styleSheets/styleHomeCard';
@@ -28,6 +25,7 @@ class HomeScreen extends React.Component {
       dataSource: [],
     };
   }
+
   ListViewItemSeparator = () => {
     return (
       //returning the listview item saparator view
@@ -40,6 +38,7 @@ class HomeScreen extends React.Component {
       />
     );
   };
+
   onRefresh() {
     //Clear old data of the list
     this.setState({dataSource: []});
@@ -51,12 +50,14 @@ class HomeScreen extends React.Component {
   static propTypes = {
     isAuthenticated: PropTypes.bool,
   };
+
   componentDidMount() {
     this.checkLogin();
     // const jwt = auth.isAuthenticated();
     // // const userID = jwt.user._id;
     // console.log('a',jwt);
   }
+
   checkLogin = async () => {
     const data = await auth.isAuthenticated();
     if (!data) {
@@ -66,6 +67,7 @@ class HomeScreen extends React.Component {
       console.log('Đã login!');
     }
   };
+
   render() {
     if (this.state.refreshing) {
       return (
@@ -278,6 +280,7 @@ class HomeScreen extends React.Component {
     );
   }
 }
+
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
 });

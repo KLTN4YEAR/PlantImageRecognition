@@ -1,8 +1,4 @@
-//This is an example of React Native
-//FlatList Pagination to Load More Data dynamically - Infinite List
-import React, {Component} from 'react';
-//import react in our code.
-
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -30,7 +26,6 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    //fetch('http://aboutreact.com/demo/getpost.php?offset=' + this.offset)
     fetch('https://jsonplaceholder.typicode.com/comments')
       .then(response => response.json())
       .then(responseJson => {
@@ -61,7 +56,7 @@ export default class App extends Component {
 
   loadMoreData = () => {
     //On click of Load More button We will call the web API again
-    this.setState({fetching_from_server: true}, () => {
+    this.setState({ fetching_from_server: true }, () => {
       //fetch('http://aboutreact.com/demo/getpost.php?offset=' + this.offset)
       fetch('https://jsonplaceholder.typicode.com/comments')
         .then(response => response.json())
@@ -70,8 +65,6 @@ export default class App extends Component {
             this.offset * 12,
             (this.offset + 1) * 12 - 1,
           );
-          console.log('offset Load : ' + this.offset);
-          console.log(responseJson);
           //Successful response from the API Call
           this.offset = this.offset + 1;
 
@@ -100,7 +93,7 @@ export default class App extends Component {
           style={styles.loadMoreBtn}>
           <Text style={styles.btnText}>Loading</Text>
           {this.state.fetching_from_server ? (
-            <ActivityIndicator color="white" style={{marginLeft: 8}} />
+            <ActivityIndicator color="white" style={{ marginLeft: 8 }} />
           ) : null}
         </TouchableOpacity>
       </View>
@@ -113,26 +106,26 @@ export default class App extends Component {
         {this.state.loading ? (
           <ActivityIndicator size="large" />
         ) : (
-          <FlatList
-            style={{width: '100%'}}
-            keyExtractor={(item, index) => index}
-            data={this.state.serverData}
-            renderItem={({item, index}) => (
-              <View style={styles.item}>
-                <Text style={styles.text}>
-                  {item.name}
-                  {'.'}
-                  {item.email}
-                </Text>
-              </View>
-            )}
-            onEndReached={this.loadMoreData}
-            onEndReachedThreshold={0.1}
-            ItemSeparatorComponent={() => <View style={styles.separator} />}
-            ListFooterComponent={this.renderFooter.bind(this)}
+            <FlatList
+              style={{ width: '100%' }}
+              keyExtractor={(item, index) => index}
+              data={this.state.serverData}
+              renderItem={({ item, index }) => (
+                <View style={styles.item}>
+                  <Text style={styles.text}>
+                    {item.name}
+                    {'.'}
+                    {item.email}
+                  </Text>
+                </View>
+              )}
+              onEndReached={this.loadMoreData}
+              onEndReachedThreshold={0.1}
+              ItemSeparatorComponent={() => <View style={styles.separator} />}
+              ListFooterComponent={this.renderFooter.bind(this)}
             //Adding Load More button as footer component
-          />
-        )}
+            />
+          )}
       </View>
     );
   }

@@ -10,9 +10,11 @@ class LoginScreen extends React.Component {
     static propTypes = {
         isAuthenticated: PropTypes.bool,
     };
+
     componentDidMount() {
         this.checkLogin();
     }
+
     checkLogin = async () => {
         const data = await this.props.isAuthenticated
         if (data) {
@@ -20,6 +22,7 @@ class LoginScreen extends React.Component {
             await this.props.navigation.navigate('Tab');
         }
     }
+    
     render() {
         return (
           <View style={styles.container}>

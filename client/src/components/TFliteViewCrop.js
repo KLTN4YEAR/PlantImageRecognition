@@ -1,20 +1,13 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Platform,
-  StyleSheet,
   Image,
   Text,
   View,
   TouchableOpacity,
-  ScrollView,
 } from 'react-native';
-import {styles} from '../public/styleSheets/styleImagePicker';
-import {Icon} from 'react-native-elements';
-import {Col, Row, Grid} from 'react-native-easy-grid';
-
+import { styles } from '../public/styleSheets/styleImagePicker';
 import Tflite from 'tflite-react-native';
-//import ImagePicker from 'react-native-image-picker';
-
 import ImagePicker from 'react-native-image-crop-picker';
 
 let tflite = new Tflite();
@@ -38,24 +31,27 @@ export default class TfliteView extends Component {
     this.onClickGallery = this.onClickGallery.bind(this);
     this.onClickCamera = this.onClickCamera.bind(this);
   }
+
   onClickGallery() {
     if (this.state.renderCamera) {
-      this.setState({renderCamera: false});
-      this.setState({renderGallery: true});
+      this.setState({ renderCamera: false });
+      this.setState({ renderGallery: true });
     } else {
-      this.setState({renderGallery: true});
+      this.setState({ renderGallery: true });
     }
   }
+
   onClickCamera() {
     if (this.state.renderGallery) {
-      this.setState({renderGallery: false});
-      this.setState({renderCamera: true});
+      this.setState({ renderGallery: false });
+      this.setState({ renderCamera: true });
     } else {
-      this.setState({renderCamera: true});
+      this.setState({ renderCamera: true });
     }
   }
+
   onSelectModel(model) {
-    this.setState({model});
+    this.setState({ model });
     switch (model) {
       case flower:
         var modelFile = 'models/lite_flowers_model_v3.tflite';
@@ -85,47 +81,47 @@ export default class TfliteView extends Component {
       compressImageQuality: 1.0,
     };
     ImagePicker.openPicker(options).then(image => {
-       var path =
-         Platform.OS === 'ios'
-           ? image.uri
-           : 'file://' + image.path;
-       var w = image.width;
-       var h = image.height;
-       this.setState({
-         source: {uri: path},
-         imageHeight: (h * width) / w,
-         imageWidth: width,
-       });
+      var path =
+        Platform.OS === 'ios'
+          ? image.uri
+          : 'file://' + image.path;
+      var w = image.width;
+      var h = image.height;
+      this.setState({
+        source: { uri: path },
+        imageHeight: (h * width) / w,
+        imageWidth: width,
+      });
 
-       switch (this.state.model) {
-         case flower:
-           tflite.runModelOnImage(
-             {
-               path,
-               imageMean: 128.0,
-               imageStd: 128.0,
-               numResults: 3,
-               threshold: 0.05,
-             },
-             (err, res) => {
-               if (err) console.log(err);
-               else
-                 this.setState({
-                   recognitions: res,
-                 });
-             },
-           );
-       }
+      switch (this.state.model) {
+        case flower:
+          tflite.runModelOnImage(
+            {
+              path,
+              imageMean: 128.0,
+              imageStd: 128.0,
+              numResults: 3,
+              threshold: 0.05,
+            },
+            (err, res) => {
+              if (err) console.log(err);
+              else
+                this.setState({
+                  recognitions: res,
+                });
+            },
+          );
+      }
     });
   }
 
   renderResults() {
-    const {model, recognitions, imageHeight, imageWidth} = this.state;
+    const { model, recognitions, imageHeight, imageWidth } = this.state;
     switch (model) {
       case flower:
         return recognitions.map((res, id) => {
           return (
-            <Text key={id} style={{color: 'black', fontWeight: 'bold'}}>
+            <Text key={id} style={{ color: 'black', fontWeight: 'bold' }}>
               {res['label'] + '-' + (res['confidence'] * 10).toFixed(0) + '%'}
             </Text>
           );
@@ -134,7 +130,7 @@ export default class TfliteView extends Component {
   }
 
   render() {
-    const {model, source, imageHeight, imageWidth} = this.state;
+    const { model, source, imageHeight, imageWidth } = this.state;
     var renderButtonGallery = m => {
       return (
         <TouchableOpacity
@@ -167,13 +163,13 @@ export default class TfliteView extends Component {
                 resizeMode="contain"
               />
             ) : (
-              <Text style={styles.text}>Select Picture</Text>
-            )}
+                <Text style={styles.text}>Select Picture</Text>
+              )}
             <View style={styles.boxes}>{this.renderResults()}</View>
           </TouchableOpacity>
         ) : (
-          <View>{renderButtonGallery(flower)}</View>
-        )}
+            <View>{renderButtonGallery(flower)}</View>
+          )}
       </View>
     );
   }

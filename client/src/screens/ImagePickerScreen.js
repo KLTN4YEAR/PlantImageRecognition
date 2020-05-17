@@ -1,17 +1,14 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Platform,
-  StyleSheet,
   Image,
   Text,
   View,
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import {styles} from '../public/styleSheets/styleTfliteView';
-import {Icon} from 'react-native-elements';
-import {Col, Row, Grid} from 'react-native-easy-grid';
-
+import { styles } from '../public/styleSheets/styleTfliteView';
+import { Icon } from 'react-native-elements';
 import Tflite from 'tflite-react-native';
 import ImagePicker from 'react-native-image-picker';
 
@@ -36,32 +33,36 @@ export default class ImagePickerScreen extends Component {
     this.onClickGallery = this.onClickGallery.bind(this);
     this.onClickCamera = this.onClickCamera.bind(this);
   }
+
   componentDidMount() {
     this.onClickGallery(flower);
   }
+
   //Set event click to move gallery mode
   onClickGallery(m) {
     if (this.state.renderCamera) {
-      this.setState({renderCamera: false});
-      this.setState({renderGallery: true});
+      this.setState({ renderCamera: false });
+      this.setState({ renderGallery: true });
     } else {
-      this.setState({renderGallery: true});
+      this.setState({ renderGallery: true });
     }
     this.onSelectModel(m);
   }
+
   //Set event click to move camera mode
   onClickCamera(m) {
     if (this.state.renderGallery) {
-      this.setState({renderGallery: false});
-      this.setState({renderCamera: true});
+      this.setState({ renderGallery: false });
+      this.setState({ renderCamera: true });
     } else {
-      this.setState({renderCamera: true});
+      this.setState({ renderCamera: true });
     }
     this.onSelectModel(m);
   }
+
   //Set up for model train (tflite file and list result by txt file)
   onSelectModel(model) {
-    this.setState({model});
+    this.setState({ model });
     switch (model) {
       case flower:
         var modelFile = 'models/lite_flowers_model_v3.tflite';
@@ -84,7 +85,6 @@ export default class ImagePickerScreen extends Component {
   }
 
   //Mode of select Image with Gallery
-
   onSelectImage() {
     const options = {
       title: 'Select Images',
@@ -113,7 +113,7 @@ export default class ImagePickerScreen extends Component {
         var w = response.width;
         var h = response.height;
         this.setState({
-          source: {uri: path},
+          source: { uri: path },
           imageHeight: (h * width) / w,
           imageWidth: width,
         });
@@ -162,7 +162,7 @@ export default class ImagePickerScreen extends Component {
         var w = response.width;
         var h = response.height;
         this.setState({
-          source: {uri: path},
+          source: { uri: path },
           imageHeight: (h * width) / w,
           imageWidth: width,
         });
@@ -192,7 +192,7 @@ export default class ImagePickerScreen extends Component {
 
   //Return result (list 3 flower most like)
   renderResults() {
-    const {model, recognitions, imageHeight, imageWidth} = this.state;
+    const { model, recognitions, imageHeight, imageWidth } = this.state;
     switch (model) {
       case flower:
         return recognitions.map((res, id) => {
@@ -281,6 +281,7 @@ export default class ImagePickerScreen extends Component {
         </ScrollView>
       );
   }
+
   //render model from gallery or camera
   renderModel() {
     const {
@@ -306,10 +307,10 @@ export default class ImagePickerScreen extends Component {
                     resizeMode="contain"
                   />
                 ) : (
-                  <View style={styles.viewEmpty}>
-                    <Text>Chọn</Text>
-                  </View>
-                )}
+                    <View style={styles.viewEmpty}>
+                      <Text>Chọn</Text>
+                    </View>
+                  )}
               </TouchableOpacity>
               {source ? (
                 <View style={styles.boxes}>
@@ -319,14 +320,14 @@ export default class ImagePickerScreen extends Component {
                   {this.renderResults()}
                 </View>
               ) : (
-                <Text>Không có kết quả</Text>
-              )}
+                  <Text>Không có kết quả</Text>
+                )}
             </View>
           ) : (
-            <View>
-              <Text>Không có loài nào được chọn</Text>
-            </View>
-          )}
+              <View>
+                <Text>Không có loài nào được chọn</Text>
+              </View>
+            )}
         </View>
       );
     if (this.state.renderCamera)
@@ -344,10 +345,10 @@ export default class ImagePickerScreen extends Component {
                     resizeMode="contain"
                   />
                 ) : (
-                  <View style={styles.viewEmpty}>
-                    <Text>Chụp</Text>
-                  </View>
-                )}
+                    <View style={styles.viewEmpty}>
+                      <Text>Chụp</Text>
+                    </View>
+                  )}
               </TouchableOpacity>
               {source ? (
                 <View style={styles.boxes}>
@@ -357,14 +358,14 @@ export default class ImagePickerScreen extends Component {
                   {this.renderResults()}
                 </View>
               ) : (
-                <Text>Không có kết quả</Text>
-              )}
+                  <Text>Không có kết quả</Text>
+                )}
             </View>
           ) : (
-            <View>
-              <Text>Không có loài nào được chọn</Text>
-            </View>
-          )}
+              <View>
+                <Text>Không có loài nào được chọn</Text>
+              </View>
+            )}
         </View>
       );
   }

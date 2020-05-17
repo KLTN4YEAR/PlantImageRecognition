@@ -27,6 +27,7 @@ export default function App() {
     image9: require('../public/images/Picture1.png'),
     image10: require('../public/images/vu.jpg'),
   };
+
   const initialData = [
     {
       id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -85,6 +86,7 @@ export default function App() {
       </View>
     );
   }
+  
   return (
     <SafeAreaView style={styles.container}>
       <FlatList

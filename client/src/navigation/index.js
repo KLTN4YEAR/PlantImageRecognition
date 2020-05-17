@@ -9,8 +9,6 @@ import AddDetailScreen from '../screens/AddDetailScreen';
 import ImagePickerScreen from '../screens/ImagePickerScreen';
 import PlantInfoScreen from '../screens/PlantInfoScreen';
 
-// import ImagePickerScreen from '../components/TfliteView';
-
 import ResultCameraScreen from '../screens/ResultCameraScreen'
 import SearchScreen from './../screens/SearchScreen';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -18,15 +16,13 @@ import ViewInfo from '../screens/ViewInfoScreen';
 import EditInfo from '../screens/EditInfoScreen';
 import CreatePostScreen from '../screens/CreatePostScreen';
 
-
-
 const Tab = createBottomTabNavigator();
 
 function TabScreen() {
   return (
     <Tab.Navigator
-      screenOptions={({route}) => ({
-        tabBarIcon: ({focused, color, size}) => {
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
           if (route.name === 'Home') {
             return <Icon name="home" color={color} size={25} />;
           } else if (route.name === 'User') {
@@ -96,12 +92,12 @@ function CameraScreen({ navigation }) {
     <StackCamera.Navigator initialRouteName="ImagePicker">
       <StackUser.Screen
         name="ImagePicker"
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
         component={ImagePickerScreen}
       />
       <StackUser.Screen
         name="PlantInfo"
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
         component={PlantInfoScreen}
       />
       <StackUser.Screen

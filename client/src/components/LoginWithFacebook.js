@@ -1,17 +1,14 @@
 
-import React, {Component} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import React, { Component } from 'react';
+import { TouchableOpacity } from 'react-native';
 import {
   AccessToken,
-  GraphRequest,
-  GraphRequestManager,
   LoginManager,
 } from 'react-native-fbsdk';
 
 import { styles } from '../public/styleSheets/styleLoginScreen';
 import { SocialIcon } from 'react-native-elements';
 
-import { OauthKey } from '../ultils/facebookSignInID';
 import { connect } from 'react-redux';
 import { loginWithFacebook } from '../action/authAction';
 import PropTypes from 'prop-types';
@@ -29,31 +26,7 @@ class LoginFacebook extends Component {
   static propTypes = {
     isAuthenticated: PropTypes.bool,
   };
-  // logoutWithFacebook = () => {
-  //   LoginManager.logOut();
-  //   this.setState({userInfo: {}});
-  // };
 
-  // getInfoFromToken = token => {
-  //   const PROFILE_REQUEST_PARAMS = {
-  //     fields: {
-  //       string: 'id,name,first_name,last_name,email,picture.type(large)',
-  //     },
-  //   };
-  //   const profileRequest = new GraphRequest(
-  //     '/me',
-  //     {token, parameters: PROFILE_REQUEST_PARAMS},
-  //     (error, user) => {
-  //       if (error) {
-  //         console.log('login info has error: ' + error);
-  //       } else {
-  //         this.setState({userInfo: user});
-  //         console.log('result:', user);
-  //       }
-  //     },
-  //   );
-  //   new GraphRequestManager().addRequest(profileRequest).start();
-  // };
   loginFB = async (token) => {
     const response = await fetch(
       `https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,about,picture.type(large)`
@@ -69,8 +42,8 @@ class LoginFacebook extends Component {
     this.props.loginWithFacebook(profile);
     this.props.navigation.navigate('Tab');
   };
+
   loginWithFacebook = () => {
-    // Attempt a login using the Facebook login dialog asking for default permissions.
     LoginManager.logInWithPermissions(['public_profile']).then(
       login => {
         if (login.isCancelled) {
@@ -93,10 +66,11 @@ class LoginFacebook extends Component {
       <TouchableOpacity style={styles.iconSocial} onPress={this.loginWithFacebook} >
         <SocialIcon title='Sign In With Facebook' button type='facebook' />
       </TouchableOpacity>
-      
+
     );
   }
 }
+
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated
 });

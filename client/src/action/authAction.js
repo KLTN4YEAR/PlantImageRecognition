@@ -17,10 +17,8 @@ export const loginWithGoogle = (profile) => dispatch => {
         }
     };
     const body = profile;
-    console.log('lggg', body.facebookId);
     axios.post(`${API_URL}/api/auth/google`, body, config)
         .then((response) => {
-            console.log('gg', response.data)
             auth.authenticate(response.data.result);
             dispatch({
                 type: LOGIN_SUCCESS
@@ -30,7 +28,6 @@ export const loginWithGoogle = (profile) => dispatch => {
             });
         })
         .catch(err => {
-            console.log(err)
             dispatch(
                 returnErrors(err, 'GET_ERRORS')
             );
@@ -47,11 +44,9 @@ export const loginWithFacebook = (profile) => dispatch => {
         }
     };
     const body = profile;
-    console.log('fbget', body);
     axios.post(`${API_URL}/api/auth/facebook`, body, config)
         .then((response) => {
             auth.authenticate(response.data.result);
-            console.log('fb', response.data)
             dispatch({
                 type: LOGIN_SUCCESS
             });
@@ -60,7 +55,6 @@ export const loginWithFacebook = (profile) => dispatch => {
             });
         })
         .catch(err => {
-            console.log('err: ', err)
             dispatch(
                 returnErrors(err, 'GET_ERRORS')
             );

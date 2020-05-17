@@ -13,20 +13,20 @@ import { Icon } from 'react-native-elements';
 import {searchPlant} from '../action/plantAction';
 import { auth } from '../config/helper';
 import { connect } from 'react-redux';
-
 import SearchResultItem from '../components/SearchResultItem';
-
 
 class SearchScreen extends React.Component {
   state = {
     search: '',
     plants:[],
   };
+
   updateSearch = search => {
     this.setState({ search });
     this.handleSearch(search);
     
   };
+
   handleSearch = async(namePlant)=>{
     console.log('searchkey',namePlant)
     const data = await auth.isAuthenticated();
@@ -34,6 +34,7 @@ class SearchScreen extends React.Component {
       this.props.searchPlant(data, namePlant);
     }
   };
+
   renderSort() {
     console.log('a',this.props.plants)
     if (this.state.search != '')
@@ -426,10 +427,11 @@ class SearchScreen extends React.Component {
     );
   }
 }
+
 function mapStateToProp(state) {
-  console.log('v',state.plant.plants)
   return {
     plants:state.plant.plants,
   }
 }
+
 export default connect(mapStateToProp,{searchPlant})(SearchScreen);

@@ -1,15 +1,14 @@
 import * as React from 'react';
-import {Text, View, Image, TextInput, ScrollView} from 'react-native';
-import {Grid, Row, Col} from 'react-native-easy-grid';
-import {styles} from '../public/styleSheets/stylePlantInfo';
-import {Icon} from 'react-native-elements';
-import { symbol } from 'prop-types';
-import {Dialog, ConfirmDialog} from 'react-native-simple-dialogs';
+import { Text, View, Image, TextInput, ScrollView } from 'react-native';
+import { styles } from '../public/styleSheets/stylePlantInfo';
+import { Icon } from 'react-native-elements';
+import { ConfirmDialog } from 'react-native-simple-dialogs';
 
 export default class ResultScreen extends React.Component {
-  state={
-    dialogVisible:false,
+  state = {
+    dialogVisible: false,
   }
+
   render() {
     return (
       <ScrollView style={styles.scrollView}>
@@ -57,7 +56,7 @@ export default class ResultScreen extends React.Component {
         <ConfirmDialog
           title="Confirm Dialog"
           visible={this.state.dialogVisible}
-          onTouchOutside={() => this.setState({dialogVisible: false})}
+          onTouchOutside={() => this.setState({ dialogVisible: false })}
           positiveButton={{
             title: 'OK',
             onPress: () => alert('Ok touched!'),

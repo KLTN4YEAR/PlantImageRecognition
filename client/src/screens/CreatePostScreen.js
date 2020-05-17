@@ -84,12 +84,10 @@ class CreatePostScreen extends React.Component {
         }
     }
 
-
-
     useLayoutEffect = async () => {
         this.props.navigation.setOptions({
             headerRight: () => (
-                <Button buttonStyle={styles.btnDone} onPress={this.onSubmit} iconRight title="ĐĂNG"/>
+                <Button buttonStyle={styles.btnDone} onPress={this.onSubmit} iconRight title="ĐĂNG" />
                 // onPress={() => this.props.navigation.goBack()}
             ),
         });
@@ -111,21 +109,18 @@ class CreatePostScreen extends React.Component {
     }
 
     _takePhoto = async () => {
-        
-    
         let pickerResult = await ImagePicker.launchCamera({
-                base64: true,
-                allowsEditing: true,
-                aspect: [4, 3],
+            base64: true,
+            allowsEditing: true,
+            aspect: [4, 3],
+        })
+        if (!pickerResult.cancelled) {
+            let imageUri = pickerResult ? `data:image/jpg;base64,${pickerResult.base64}` : null
+            this.state.multipleUrl.push(imageUri)
+            this.setState({
+                LocalImage: this.state.LocalImage.concat([pickerResult.uri]),
             })
-            if (!pickerResult.cancelled) {
-                let imageUri = pickerResult ? `data:image/jpg;base64,${pickerResult.base64}` : null
-                this.state.multipleUrl.push(imageUri)
-                this.setState({
-                    LocalImage: this.state.LocalImage.concat([pickerResult.uri]),
-                })
-            }
-        
+        }
     }
 
     _renderImages() {
@@ -133,7 +128,6 @@ class CreatePostScreen extends React.Component {
         this.state.LocalImage.map((item, index) => {
             images.push(
                 <Image key={index} source={{ uri: item }} style={styles.imgDisplay} />
-
             )
         })
         return images
@@ -247,9 +241,9 @@ class CreatePostScreen extends React.Component {
                         </View>
                     </View>
                 </ScrollView>
-
             </SafeAreaView>
         );
     }
 }
+
 export default CreatePostScreen;

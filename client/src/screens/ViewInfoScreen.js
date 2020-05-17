@@ -24,6 +24,7 @@ class ViewInfo extends React.Component {
     this.loadData();
     
   };
+  
   UNSAFE_componentWillReceiveProps(nextProps) {
     //console.log(nextProps);
     if(nextProps.profile!=this.props.profile)
@@ -40,12 +41,14 @@ class ViewInfo extends React.Component {
         this.setState({ gender: 'Nữ' })
     }
   }
+
   formatDate(value){
     const date = value;
     const d = new Date(date);
     const dateFormat = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() + " ";
     return dateFormat;
   };
+
   loadData=async()=>{
     const data = await auth.isAuthenticated();
     if (data) {
@@ -53,6 +56,7 @@ class ViewInfo extends React.Component {
       await this.initValueForUser();
     }
   };
+
   onClickLogout = async()=>{
     await this.props.logout();
     const data = await auth.isAuthenticated();
@@ -221,6 +225,5 @@ function mapStateToProp(state) {
     avatar: state.user.avatar,
   }
 }
-
 
 export default connect(mapStateToProp, { getInfo,logout })(ViewInfo);

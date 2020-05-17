@@ -9,7 +9,6 @@ import PropTypes from 'prop-types';
 
 import {
     GoogleSignin,
-    GoogleSigninButton,
     statusCodes,
 } from '@react-native-community/google-signin';
 
@@ -26,15 +25,18 @@ class LoginGoogle extends React.Component {
   static propTypes = {
     isAuthenticated: PropTypes.bool,
   };
+  
   async componentDidMount() {
     this._configureGoogleSignIn();
   }
+
   _configureGoogleSignIn() {
     GoogleSignin.configure({
       androidClientId: OauthKey,
       offlineAccess: false,
     });
   }
+
   signInWithGoogleAsync = async () => {
     try {
       await GoogleSignin.hasPlayServices();
@@ -63,6 +65,7 @@ class LoginGoogle extends React.Component {
       }
     }
   };
+
   loginGG = async result => {
     const profile = this.state.profile;
     profile['fullName'] = result.user.name;

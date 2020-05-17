@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {
   Platform,
-  StyleSheet,
   Image,
   Text,
   View,
@@ -10,8 +9,6 @@ import {
 } from 'react-native';
 import {styles} from '../public/styleSheets/styleTfliteView';
 import {Icon} from 'react-native-elements';
-import {Col, Row, Grid} from 'react-native-easy-grid';
-
 import Tflite from 'tflite-react-native';
 import ImagePicker from 'react-native-image-picker';
 
@@ -36,9 +33,11 @@ export default class TfliteView extends Component {
     this.onClickGallery = this.onClickGallery.bind(this);
     this.onClickCamera = this.onClickCamera.bind(this);
   }
+
   componentDidMount() {
     this.onClickGallery(flower);
   }
+
   //Set event click to move gallery mode
   onClickGallery(m) {
     if (this.state.renderCamera) {
@@ -49,6 +48,7 @@ export default class TfliteView extends Component {
     }
     this.onSelectModel(m);
   }
+
   //Set event click to move camera mode
   onClickCamera(m) {
     if (this.state.renderGallery) {
@@ -59,6 +59,7 @@ export default class TfliteView extends Component {
     }
     this.onSelectModel(m);
   }
+
   //Set up for model train (tflite file and list result by txt file)
   onSelectModel(model) {
     this.setState({model});
@@ -84,7 +85,6 @@ export default class TfliteView extends Component {
   }
 
   //Mode of select Image with Gallery
-
   onSelectImage() {
     const options = {
       title: 'Select Images',
@@ -140,6 +140,7 @@ export default class TfliteView extends Component {
       }
     });
   }
+
   //Mode of get image from direct camera
   onLaunchCamera() {
     let options = {
@@ -274,6 +275,7 @@ export default class TfliteView extends Component {
         </ScrollView>
       );
   }
+  
   //render model from gallery or camera
   renderModel() {
     const {
