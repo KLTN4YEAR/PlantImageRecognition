@@ -24,6 +24,11 @@ const listImage = [
   },
 ];
 class DetailPostScreen extends React.Component {
+  componentDidMount = async () => {
+    const idPost = this.props.route.params?.post._id;
+    const data = await auth.isAuthenticated();
+    await this.props.getPostInfo(data, idPost);
+  };
   UNSAFE_componentWillMount = async () => {
     const idPost = this.props.route.params?.post._id;
     const data = await auth.isAuthenticated();
@@ -86,7 +91,6 @@ class DetailPostScreen extends React.Component {
   }
 }
 function mapStateToProp(state) {
- 
   return {
     authenticate: state.auth.isAuthenticated,
     post: state.post,
