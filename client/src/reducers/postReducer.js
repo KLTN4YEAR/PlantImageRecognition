@@ -1,16 +1,14 @@
-import { GET_COMMENT } from '../config/type';
+import { GET_INFO_POST, ERROR_RESPONSE } from '../config/type';
 
 const INITIAL_STATE = {
-    listComment: []
+    post: {},
 };
 
-export default function (state = INITIAL_STATE, action) {
+export default function(state = INITIAL_STATE, action) {
     switch (action.type) {
-        case GET_COMMENT:
-            return {
-                ...state,
-                listComment: action.payload
-            }
-        default: return state;
+        case GET_INFO_POST:
+            return {...state, post: action.payload };
+        default:
+            return state;
     }
 }

@@ -82,6 +82,8 @@ target 'client' do
 
   pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
 
+  pod 'react-native-sqlite-storage', :path => '../node_modules/react-native-sqlite-storage'
+
   target 'clientTests' do
     inherit! :complete
     # Pods for testing
