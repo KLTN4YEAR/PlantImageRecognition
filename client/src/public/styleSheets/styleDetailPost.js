@@ -6,19 +6,8 @@ export const styles = StyleSheet.create({
         width: 330,
         marginRight: 'auto',
         marginLeft: 'auto',
-
     },
 
-    rowCreate: {
-        backgroundColor: '#ffff',
-        marginTop: 10,
-        margin: 3,
-        padding: 10,
-        borderRadius: 5,
-    },
-    txtUserNameCreate: {
-        width: '100%',
-    },
     viewCard: {
         width: 'auto',
         height: 280,
@@ -38,16 +27,48 @@ export const styles = StyleSheet.create({
     },
 
     rowPostBy: {
-        alignSelf: 'center',
-        alignItems: 'center',
+        width: '100%',
     },
-
+    rowCreate: {
+        padding: 2,
+        margin: 5,
+    },
+    txtUserNameCreate: {
+        fontSize: 14,
+        color: 'black',
+        fontWeight: 'bold',
+        marginLeft: 30,
+        width: 230,
+    },
     txtUserName: {
         fontSize: 14,
         fontWeight: 'bold',
         textAlign: 'left',
         alignItems: 'flex-start',
         alignContent: 'flex-start',
+        color: 'black',
+    },
+    viewContent: {
+        padding: 5,
+        marginLeft: 10,
+        marginRight: 10,
+    },
+    viewKind: {
+        width: '100%',
+    },
+    btnPlantKind: {
+        width: 80,
+        height: 25,
+        backgroundColor: '#00afef',
+        margin: 10,
+        borderRadius: 10,
+    },
+    txtKind: {
+        color: '#ffffaa',
+        fontSize: 13,
+        fontWeight: 'bold',
+        marginLeft: 'auto',
+        marginRight: 'auto',
     },
 
     viewImg: {
@@ -150,13 +171,12 @@ export const styles = StyleSheet.create({
     txtDec: {
         width: '100%',
         color: '#1c1e21',
-        fontSize: 14,
-        maxHeight: 50,
+        fontSize: 16,
         marginBottom: 10,
-        textAlign: 'left',
-        alignContent: 'flex-start',
-        alignItems: 'flex-start',
-        marginLeft: 10,
+        textAlign: 'justify',
+        margin: 'auto',
+        letterSpacing: 0.6,
+
     },
 
     viewSafeArea: {
@@ -167,16 +187,22 @@ export const styles = StyleSheet.create({
     viewScroll: {
         backgroundColor: 'transparent',
         marginHorizontal: 5,
+        marginTop: 50,
     },
 
     viewCreatePost: {
         position: 'absolute',
         zIndex: 1,
-        bottom: 15,
-        right: 15,
-        zIndex: 1,
+        top: 0,
+        height: 50,
+        backgroundColor: 'transparent',
     },
-
+    gridCreate: {
+        position: 'absolute',
+        zIndex: 1,
+        top: 0,
+        height: 50,
+    },
     btnCreate: {
         borderRadius: 25,
         height: 50,
@@ -192,7 +218,12 @@ export const styles = StyleSheet.create({
         shadowRadius: 2,
         elevation: 1,
     },
-
+    btnCreatePost: {
+        borderRadius: 50,
+        backgroundColor: 'blue',
+        height: 40,
+        width: 40,
+    },
     labelIconCreate: {
         marginLeft: 'auto',
         marginRight: 'auto',
@@ -206,4 +237,24 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         fontWeight: 'bold',
     },
+    imgPlantCarousel: {
+        width: '100%',
+        height: 300,
+    },
+    viewContribute: {
+        width: 250,
+        backgroundColor: '#00afef',
+        borderRadius: 10,
+        margin: 20,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        alignContent: 'center',
+        padding: 10,
+    },
+    txtContribute: {
+        fontSize: 14,
+        letterSpacing: 1,
+        color: '#ffffee',
+    },
+
 });

@@ -65,8 +65,6 @@ const getList = async (req, res) => {
         lastId: req.params.lastId
     }
 
-    console.log('formatData: ', formatData.lastId)
-
     const postService = new PostService(db, formatData);
 
     let listPost = await postService.getList();
