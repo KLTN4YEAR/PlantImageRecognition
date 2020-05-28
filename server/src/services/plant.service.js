@@ -9,6 +9,11 @@ class Plant {
         .limit(5)
         return result;
     }
+
+    async addPlant() {
+        const plant = this.data;
+        return await this.db.Plant.create(plant)
+    }
 }
 
 module.exports = {
