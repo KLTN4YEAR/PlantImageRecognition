@@ -66,7 +66,6 @@ class ExampleApp extends Component {
       });
   }
   toggleTorch() {
-    console.log('he')
     let tstate = this.state.torchon;
     if (tstate == RNCamera.Constants.FlashMode.off) {
       tstate = RNCamera.Constants.FlashMode.torch;
@@ -113,12 +112,7 @@ class ExampleApp extends Component {
                 size={30}
               />
             ) : (
-              <Icon
-                name="flash-on"
-                type="material"
-                color="#59c393"
-                size={30}
-              />
+              <Icon name="flash-on" type="material" color="#59c393" size={30} />
             )}
           </TouchableOpacity>
           <TouchableOpacity
@@ -135,12 +129,7 @@ class ExampleApp extends Component {
           <TouchableOpacity
             style={styles.btnGallery}
             onPress={this.onSelectImage.bind(this)}>
-            <Icon
-              name="image"
-              type="font-awesome"
-              color="#59c393"
-              size={30}
-            />
+            <Icon name="image" type="font-awesome" color="#59c393" size={30} />
           </TouchableOpacity>
         </View>
       </View>

@@ -2,8 +2,6 @@ import * as React from 'react';
 import {Text, View, TextInput, Image} from 'react-native';
 import {styles} from '../public/styleSheets/styleDetailPost';
 import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
-import {auth} from '../config/helper';
 import {getPostInfo} from '../action/postAction';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {Col, Row, Grid} from 'react-native-easy-grid';
@@ -25,7 +23,7 @@ class DetailPostScreen extends React.Component {
   //   }
   // }
   render() {
-    const {post,route} = this.props;
+    const {post, route} = this.props;
 
     return (
       <ScrollView style={styles.scrollView}>
@@ -83,9 +81,7 @@ class DetailPostScreen extends React.Component {
               />
             </View>
             <View style={styles.viewContribute}>
-              <Text style={styles.txtContribute}>
-                Đóng góp ở đây nè !!!!
-              </Text>
+              <Text style={styles.txtContribute}>Đóng góp ở đây nè !!!!</Text>
             </View>
           </View>
         ) : (

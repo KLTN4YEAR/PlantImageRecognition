@@ -3,7 +3,7 @@ import * as React from 'react';
 import {Text, View, ScrollView, ImageBackground} from 'react-native';
 
 import {Picker} from '@react-native-community/picker';
-import {Input,Image} from 'react-native-elements';
+import {Input, Image} from 'react-native-elements';
 import {styles} from '../public/styleSheets/styleEditInfo';
 import {Icon} from 'react-native-elements';
 import {connect} from 'react-redux';
@@ -130,7 +130,6 @@ class EditInfo extends ValidationComponent {
 
     return (
       <View style={styles.container}>
-        
         <ScrollView style={styles.viewScroll}>
           {profile ? (
             <>
@@ -143,11 +142,9 @@ class EditInfo extends ValidationComponent {
                   multiline={true}
                   onChangeText={name => this.setState({fullName: name})}
                   onChange={this.onChange}
-                 
                 />
                 <Text style={styles.validateMess}>
-                  {this.isFieldInError('name') &&
-                  this.getErrorsInField('name')
+                  {this.isFieldInError('name') && this.getErrorsInField('name')
                     ? this.getErrorsInField('name')
                     : ''}
                 </Text>
@@ -160,7 +157,6 @@ class EditInfo extends ValidationComponent {
                   multiline={true}
                   onChangeText={email => this.setState({email: email})}
                   onChange={this.onChange}
-                
                 />
                 <Input
                   ref="gender"
@@ -170,7 +166,6 @@ class EditInfo extends ValidationComponent {
                   multiline={true}
                   onChangeText={gender => this.setState({gender: gender})}
                   onChange={this.onChange}
-                 
                 />
                 <Text style={styles.validateMess}>
                   {this.isFieldInError('email') &&
@@ -185,7 +180,6 @@ class EditInfo extends ValidationComponent {
                   onChangeText={text => this.setState({address: text})}
                   onChange={this.onChange}
                   label="Địa chỉ"
-                 
                 />
                 <Text style={styles.validateMess}>
                   {this.isFieldInError('address') &&
@@ -204,7 +198,6 @@ class EditInfo extends ValidationComponent {
                       <Icon name="event" size={24} color="#59c393" />
                     </TouchableOpacity>
                   }
-                 
                 />
               </View>
             </>

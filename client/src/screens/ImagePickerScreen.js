@@ -94,7 +94,7 @@ export default class ImagePickerScreen extends Component {
       showCropGuidelines: true,
       cropperToolbarTitle: 'Cắt ảnh',
       cropperToolbarColor: 'white',
-      mediaType:'photo',
+      mediaType: 'photo',
     };
     ImagePicker.openPicker(options)
       .then(image => {
@@ -144,8 +144,7 @@ export default class ImagePickerScreen extends Component {
     };
     ImagePicker.openCamera(options)
       .then(image => {
-        var path =
-          Platform.OS === 'ios' ? image.uri : 'file://' + image.path;
+        var path = Platform.OS === 'ios' ? image.uri : 'file://' + image.path;
         var w = image.width;
         var h = image.height;
         this.setState({
@@ -231,12 +230,7 @@ export default class ImagePickerScreen extends Component {
             <TouchableOpacity
               onPress={this.onClickCamera.bind(this, m)}
               style={styles.btnChoose}>
-              <Icon
-                raised
-                name="camera"
-                type="font-awesome"
-                color="#59c393"
-              />
+              <Icon raised name="camera" type="font-awesome" color="#59c393" />
               <Text style={{color: 'white'}}>Camera</Text>
             </TouchableOpacity>
           </View>

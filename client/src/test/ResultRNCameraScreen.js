@@ -114,7 +114,6 @@ class ResultCamera extends Component {
   render() {
     const {route} = this.props;
     const {source} = this.state;
-    console.log('r', route);
     return (
       <ScrollView style={styles.viewContainer}>
         <Image

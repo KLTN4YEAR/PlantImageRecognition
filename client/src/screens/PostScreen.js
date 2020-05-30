@@ -18,7 +18,7 @@ import {Icon} from 'react-native-elements';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {auth} from '../config/helper';
-
+import Toast from 'react-native-simple-toast';
 import {getListPost} from '../action/postAction';
 // Gọi các sqlite function
 import {viewAllFlower} from '../sqlite/dbFlowerOffline';
@@ -57,14 +57,9 @@ class PostScreen extends React.Component {
   async componentDidMount() {
     await this.checkLogin();
     await this.loadMoreData();
-    
+
     //xu ly bat dong bo sqlite
     await viewAllFlower(this.getResultFromVA);
-  }
-
-  //getresult from viewall
-  getResultFromVA(data) {
-    //console.log('data',data);
   }
 
   onRefresh() {
@@ -81,9 +76,9 @@ class PostScreen extends React.Component {
   checkLogin = async () => {
     const data = await auth.isAuthenticated();
     if (!data) {
-      console.log('Chưa login!');
+      Toast.show('Chưa login!');
     } else {
-      console.log('Đã login!');
+      Toast.show('Đã login!');
     }
   };
 
@@ -104,7 +99,7 @@ class PostScreen extends React.Component {
             this.setState({
               serverData: [...serverData, ...lstPost],
               fetching_from_server: false,
-            });        
+            });
           } else {
             this.setState({
               fetching_from_server: false,
@@ -243,9 +238,7 @@ class PostScreen extends React.Component {
                                 iconStyle={styles.labelIconAdd}
                                 color="rgb(242,235,223)"
                               />
-                              <Text style={styles.labelAdd}>
-                                Xem chi tiết
-                              </Text>
+                              <Text style={styles.labelAdd}>Xem chi tiết</Text>
                             </Col>
                           </TouchableOpacity>
                         </Col>

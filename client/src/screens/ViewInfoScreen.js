@@ -23,8 +23,6 @@ class ViewInfo extends React.Component {
     await this.loadData();
   }
 
- 
-
   loadData = async () => {
     const data = await auth.isAuthenticated();
     if (data) {
@@ -64,9 +62,7 @@ class ViewInfo extends React.Component {
                       iconStyle={styles.labelIconEdit}
                       color="white"
                     />
-                    <Text style={styles.labelEdit}>
-                      Chỉnh sửa thông tin
-                    </Text>
+                    <Text style={styles.labelEdit}>Chỉnh sửa thông tin</Text>
                   </Col>
                 </TouchableOpacity>
               </Col>

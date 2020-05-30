@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, Alert } from 'react-native';
+import {TouchableOpacity, Alert} from 'react-native';
 import {styles} from '../public/styleSheets/styleLoginScreen';
 import {SocialIcon} from 'react-native-elements';
 import {OauthKey} from '../ultils/googleSignInID';
@@ -7,10 +7,7 @@ import {connect} from 'react-redux';
 import {loginWithGoogle} from '../action/authAction';
 import PropTypes from 'prop-types';
 
-import {
-    GoogleSignin,
-    statusCodes,
-} from '@react-native-community/google-signin';
+import {GoogleSignin, statusCodes} from '@react-native-community/google-signin';
 
 class LoginGoogle extends React.Component {
   state = {
@@ -25,7 +22,7 @@ class LoginGoogle extends React.Component {
   static propTypes = {
     isAuthenticated: PropTypes.bool,
   };
-  
+
   async componentDidMount() {
     this._configureGoogleSignIn();
   }
@@ -88,8 +85,11 @@ class LoginGoogle extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
-    error: state.error
+  isAuthenticated: state.auth.isAuthenticated,
+  error: state.error,
 });
 
-export default connect(mapStateToProps, { loginWithGoogle })(LoginGoogle);
+export default connect(
+  mapStateToProps,
+  {loginWithGoogle},
+)(LoginGoogle);
