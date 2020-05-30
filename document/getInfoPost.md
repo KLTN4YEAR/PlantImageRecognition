@@ -15,18 +15,18 @@
 
 ```js
 {
-        post: {
-            images: [], // list path image
-            _id,        // id post
-            content
-            postedBy: {
-                _id     //id user
-                fullName
-                avatar
-                email
-            },
-            created     //created date
-            mentionedPlant
-        }
+    post: {
+        images: [], // list path image
+        _id,        // id post
+        content
+        postedBy: {
+            _id     //id user
+            fullName
+            avatar
+            email
+        },
+        created     //created date
+        mentionedPlant
+    }
 }
 ```

@@ -21,28 +21,28 @@ class SearchScreen extends React.Component {
     plants:[],
   };
 
-  updateSearch = search => {
-    this.setState({ search });
-    this.handleSearch(search);
+  updateSearch = async (search) => {
+    await this.setState({ search });
+    await this.handleSearch(search);
     
   };
 
   handleSearch = async(namePlant)=>{
-    console.log('searchkey',namePlant)
+  const {searchPlant} = this.props;
     const data = await auth.isAuthenticated();
     if (data) {
-      this.props.searchPlant(data, namePlant);
+      searchPlant(data, namePlant);
     }
   };
 
   renderSort() {
-    console.log('a',this.props.plants)
+    const{plants}=this.props;
     if (this.state.search != '')
       return (
         <View style={styles.viewSearch}>
           <Text style={styles.labelResult}>Kết quả cho {this.state.search}</Text>
           {
-            this.props.plants.length > 0 ? this.props.plants.map((item, i) => {
+           plants.length > 0 ? plants.map((item, i) => {
               return (<SearchResultItem i={i} key={item._id} plant={item} />);
             }) : <Text>Không có kết quả</Text>
           }
@@ -419,7 +419,6 @@ class SearchScreen extends React.Component {
           showLoading
           containerStyle={styles.searchBar}
           cancelIcon
-          lightTheme
           round
         />
         {this.renderSort()}

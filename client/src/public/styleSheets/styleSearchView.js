@@ -23,8 +23,8 @@ export const styles = StyleSheet.create({
     },
 
     searchBar: {
-        backgroundColor: '#59c393',
-
+        backgroundColor: '#303030',
+        borderEndWidth: 0,
     },
 
     inputSearchBar: {
@@ -36,12 +36,14 @@ export const styles = StyleSheet.create({
     viewSafeArea: {
         flex: 1,
         marginTop: 0,
-        borderColor: 'transparent'
+        borderColor: 'transparent',
+        backgroundColor: '#303030',
     },
 
     viewScroll: {
         backgroundColor: 'transparent',
         marginHorizontal: 5,
+        backgroundColor: '#303030',
     },
 
     viewCard: {

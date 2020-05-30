@@ -1,273 +1,241 @@
-
 'use strict';
 import * as React from 'react';
-import { Text, View, ScrollView, Alert } from 'react-native';
-import { Button, Input } from 'react-native-elements';
-import { Col, Row, Grid } from 'react-native-easy-grid';
-import { styles } from '../public/styleSheets/styleEditInfo';
-import { Icon } from 'react-native-elements';
-import RadioForm from 'react-native-simple-radio-button';
-import { connect } from 'react-redux';
-import { auth } from '../config/helper';
-import { UpdateUserInfo, successMess } from '../action/userAction';
-import ValidationComponent from 'react-native-form-validator';
+import {Text, View, ScrollView, ImageBackground} from 'react-native';
 
+import {Picker} from '@react-native-community/picker';
+import {Input,Image} from 'react-native-elements';
+import {styles} from '../public/styleSheets/styleEditInfo';
+import {Icon} from 'react-native-elements';
+import {connect} from 'react-redux';
+import {auth} from '../config/helper';
+import {UpdateUserInfo, successMess} from '../action/userAction';
+import ValidationComponent from 'react-native-form-validator';
+import Toast from 'react-native-simple-toast';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import DateTimePicker from '@react-native-community/datetimepicker';
+
+var moment = require('moment');
 class EditInfo extends ValidationComponent {
-  state = {
-    email: '',
-    fullName: '',
-    birthday: '',
-    gender: 0,
-    address: '',
-    profile: {
+  constructor(props) {
+    super(props);
+    this.state = {
       email: '',
       fullName: '',
       birthday: '',
       gender: '',
       address: '',
-    },
-  };
+      profile: {
+        email: '',
+        fullName: '',
+        birthday: '',
+        gender: '',
+        address: '',
+      },
+      showDatePicker: false,
+      selectedItems: [],
+    };
+  }
 
-  componentDidMount = async () => {
-    await this.useLayoutEffect();
+  async componentDidMount() {
     await this.initValueForUser();
-  };
-
-  successAlert = () => {
-    Alert.alert(
-      'Chúc mừng bạn đã cập nhật thành công!'
-    )
   }
 
-  failAlert = () => {
-    Alert.alert(
-      'Lỗi trong quá trình xử lý!'
-    )
+  async componentDidUpdate(prevProps) {
+    const {profile} = this.props;
+    if (profile !== prevProps.profile) {
+      await this.initValueForUser();
+    }
   }
 
-  initValueForUser = async () => {
-    if (this.props.profile.email == undefined || this.props.profile.email == null) {
-      this.setState({ email: 'Đang cập nhật!' })
-    }
-    else {
-      this.setState({ email: this.props.profile.email })
-    }
-    if (this.props.profile.fullName == undefined || this.props.profile.fullName == null) {
-      this.setState({ fullName: 'Đang cập nhật!' })
-    }
-    else {
-      this.setState({ fullName: this.props.profile.fullName })
-    }
-    if (this.props.profile.birthday == undefined || this.props.profile.birthday == null) {
-      this.setState({ birthday: '1999-1-1' })
-    }
-    else {
-      this.setState({ birthday: this.formatDate(this.props.profile.birthday) })
-    }
-
-    if (this.props.profile.address == undefined || this.props.profile.address == null) {
-      this.setState({ address: 'Đang cập nhật!' })
-    }
-    else {
-      this.setState({ address: this.props.profile.address })
-    }
-  };
-
-  useLayoutEffect = async () => {
-    this.props.navigation.setOptions({
-      headerRight: () => (
-        <Button buttonStyle={styles.btnDone} onPress={this.onSubmit} icon={
-          <Icon
-            name="check"
-            size={24}
-            color="white"
-          />
-        } iconRight />
-        // onPress={() => this.props.navigation.goBack()}
-      ),
+  initValueForUser() {
+    const {profile} = this.props;
+    this.setState({
+      email: profile.email,
+      fullName: profile.fullName,
+      birthday: profile.birthday,
+      gender: profile.gender,
+      address: profile.address,
     });
-  };
+  }
 
   //lưu những thay đổi nơi input vào state
   onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
-
+    this.setState({[e.target.name]: e.target.value});
   };
 
   formatDate(value) {
     const date = value;
     const d = new Date(date);
-    const dateFormat = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " ";
+    const dateFormat =
+      d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ';
     return dateFormat;
-  };
+  }
 
   onValidate() {
     return this.validate({
-      name: { minlength: 4, maxlength: 25, required: true },
-      email: { email: true },
-      number: { numbers: true },
-      birthday: { date: 'YYYY-MM-DD' }
+      name: {minlength: 4, maxlength: 25, required: true, spacing: true},
+      email: {email: true, required: true, spacing: true},
+      number: {numbers: true, required: true, spacing: true},
     });
   }
 
-  onSubmit = e => {
-    e.preventDefault();//chấp nó bấm submit liên tục nè
+  async onSubmit() {
     if (this.onValidate()) {
       const profile = this.state.profile;
-      profile["email"] = this.state.email;
-      profile["fullName"] = this.state.fullName;
-      profile["birthday"] = Date.parse(this.state.birthday.toString());
-      profile["gender"] = this.state.gender;
-      profile["address"] = this.state.address;
-      this.updateUser(profile);
-
+      profile['email'] = this.state.email;
+      profile['fullName'] = this.state.fullName;
+      profile['birthday'] = this.state.birthday;
+      profile['gender'] = this.state.gender;
+      profile['address'] = this.state.address;
+      await this.updateUser(profile);
     }
   }
 
-  updateUser = async (profile) => {
+  updateUser = async profile => {
+    const {navigation, UpdateUserInfo} = this.props;
     const credentials = await auth.isAuthenticated();
-    await this.props.UpdateUserInfo(credentials, credentials.user._id, profile);
+    await UpdateUserInfo(credentials, credentials.user._id, profile);
     if (successMess == 'update success') {
-      this.successAlert();
-      this.props.navigation.goBack();
+      Toast.show('Cập nhật thành công!');
+      navigation.goBack();
     } else {
-      this.failAlert();
-      this.props.navigation.goBack();
+      Toast.show('Lỗi trong quá trình xử lý!');
+      navigation.goBack();
     }
-  }
+  };
+
+  showDatePicker = () => {
+    this.setState({showDatePicker: true});
+  };
+
+  hideDatePicker = () => {
+    this.setState({showDatePicker: false});
+  };
+
+  onChangeDate = (event, selectedDate) => {
+    if (selectedDate || date) {
+      const currentDate = selectedDate || date;
+
+      this.setState({birthday: currentDate, showDatePicker: false});
+    }
+  };
+
+  onSelectedItemsChange = selectedItems => {
+    this.setState({selectedItems});
+  };
 
   render() {
-    const genderValue = [{ label: 'Nam', value: 0 }, { label: 'Nữ', value: 1 }];
-    var initGender;
-    if (this.props.profile.gender == 1) {
-      initGender = 1;
-    }
-    else {
-      initGender = 0;
-    }
-    return (
-      <ScrollView style={styles.container}>
-        <Row size={60} style={styles.viewInfo}>
+    const {profile} = this.props;
+    const {showDatePicker} = this.state;
 
-          <Grid>
-            <Row>
-              <Text style={styles.validateMess}>
-                {this.getErrorMessages()}
-              </Text>
-            </Row>
-            <Row style={styles.rowInfo}>
-              <Col size={30} style={styles.colInfo}>
-                <Icon
-                  type='font-awesome'
-                  name='user'
-                  style={styles.labelIcon}
-                  color='#59c393' />
-                <Text style={styles.labelTxt}>Tên</Text>
-              </Col>
-              <Col size={70}>
+    return (
+      <View style={styles.container}>
+        
+        <ScrollView style={styles.viewScroll}>
+          {profile ? (
+            <>
+              <View style={styles.viewInfo}>
                 <Input
+                  label="Tên"
                   ref="name"
-                  value={this.state.fullName}
+                  defaultValue={this.state.fullName}
                   inputStyle={styles.labelEdit}
-                  underlineColorAndroid="transparent"
                   multiline={true}
-                  onChangeText={name => this.setState({ fullName: name })}
+                  onChangeText={name => this.setState({fullName: name})}
+                  onChange={this.onChange}
+                 
                 />
-              </Col>
-            </Row>
-            <Row style={styles.rowInfo}>
-              <Col size={30} style={styles.colInfo}>
-                <Icon
-                  type='font-awesome'
-                  name='venus-mars'
-                  style={styles.labelIcon}
-                  color='#59c393' />
-                <Text style={styles.labelTxt}>Giới tính</Text>
-              </Col>
-              <Col size={70}>
-                <View style={styles.viewGender}>
-                  <RadioForm
-                    radio_props={genderValue}
-                    initial={initGender} // you can set as per requirement, initial i set here 0 for male
-                    // initial={-1} // you can set as per requirement, initial i set here 0 for male
-                    onPress={(number) => { this.setState({ gender: number }) }}
-                    buttonSize={12} // size of radiobutton
-                    buttonOuterSize={18}
-                    selectedButtonColor={'#59c393'}
-                    selectedLabelColor={'#59c393'}
-                    labelStyle={styles.radioGender}
-                    formHorizontal={true}
-                    ref="number"
-                  />
-                </View>
-              </Col>
-            </Row>
-            <Row style={styles.rowInfo}>
-              <Col size={30} style={styles.colInfo}>
-                <Icon
-                  type='font-awesome'
-                  name='envelope-square'
-                  style={styles.labelIcon}
-                  color='#59c393' />
-                <Text style={styles.labelTxt}>Email</Text>
-              </Col>
-              <Col size={70}>
+                <Text style={styles.validateMess}>
+                  {this.isFieldInError('name') &&
+                  this.getErrorsInField('name')
+                    ? this.getErrorsInField('name')
+                    : ''}
+                </Text>
+
                 <Input
                   ref="email"
-                  value={this.state.email}
+                  label="Email"
+                  defaultValue={this.state.email}
                   inputStyle={styles.labelEdit}
-                  underlineColorAndroid="transparent"
                   multiline={true}
-                  onChangeText={email => this.setState({ email: email })}
+                  onChangeText={email => this.setState({email: email})}
+                  onChange={this.onChange}
+                
                 />
-              </Col>
-            </Row>
-            <Row style={styles.rowInfo}>
-              <Col size={30} style={styles.colInfo}>
-                <Icon
-                  name='place'
-                  style={styles.labelIcon}
-                  color='#59c393' />
-                <Text style={styles.labelTxt}>Địa chỉ</Text>
-              </Col>
-              <Col size={70}>
                 <Input
-                  value={this.state.address}
-                  underlineColorAndroid="transparent"
-                  multiline={true}
+                  ref="gender"
+                  label="Giới tính"
+                  defaultValue={this.state.gender}
                   inputStyle={styles.labelEdit}
-                  onChangeText={text => this.setState({ address: text })}
+                  multiline={true}
+                  onChangeText={gender => this.setState({gender: gender})}
+                  onChange={this.onChange}
+                 
                 />
-              </Col>
-            </Row>
-
-            <Row style={styles.rowInfo}>
-              <Col size={30} style={styles.colInfo}>
-                <Icon
-                  type='font-awesome'
-                  name='birthday-cake'
-                  style={styles.labelIcon}
-                  color='#59c393' />
-                <Text style={styles.labelTxt}>Sinh nhật</Text>
-              </Col>
-              <Col size={70}>
+                <Text style={styles.validateMess}>
+                  {this.isFieldInError('email') &&
+                  this.getErrorsInField('email')
+                    ? this.getErrorsInField('email')
+                    : ''}
+                </Text>
                 <Input
-                  value={this.state.birthday}
-                  ref="birthday"
-                  underlineColorAndroid="transparent"
+                  defaultValue={this.state.address}
                   multiline={true}
                   inputStyle={styles.labelEdit}
-                  onChangeText={birthday => this.setState({ birthday: birthday })}
+                  onChangeText={text => this.setState({address: text})}
+                  onChange={this.onChange}
+                  label="Địa chỉ"
+                 
                 />
-                {this.isFieldInError('date') && this.getErrorsInField('date').map(errorMessage => <Text>{errorMessage}</Text>)}
-              </Col>
-            </Row>
-
-
-          </Grid>
-
-        </Row>
-      </ScrollView>
+                <Text style={styles.validateMess}>
+                  {this.isFieldInError('address') &&
+                  this.getErrorsInField('address')
+                    ? this.getErrorsInField('address')
+                    : ''}
+                </Text>
+                <Input
+                  label="Sinh nhật"
+                  value={moment(this.state.birthday).format('DD/MM/YYYY')}
+                  multiline={true}
+                  inputStyle={styles.labelEdit}
+                  disabled
+                  rightIcon={
+                    <TouchableOpacity onPress={this.showDatePicker}>
+                      <Icon name="event" size={24} color="#59c393" />
+                    </TouchableOpacity>
+                  }
+                 
+                />
+              </View>
+            </>
+          ) : (
+            <Text>Có lỗi xảy ra!</Text>
+          )}
+          {showDatePicker && (
+            <DateTimePicker
+              isVisible={this.state.showDatePicker}
+              testID="dateTimePicker"
+              value={Date.parse(this.state.birthday)}
+              mode="date"
+              display="default"
+              onChange={this.onChangeDate}
+              onCancel={this.hideDatePicker}
+            />
+          )}
+        </ScrollView>
+        <View style={styles.viewButton}>
+          {/* <TouchableOpacity
+            style={styles.btnCancel}
+            onPress={this.onSubmit.bind(this)}>
+            <Text style={styles.lblButton}>Huỷ</Text>
+          </TouchableOpacity> */}
+          <TouchableOpacity
+            style={styles.btnSave}
+            onPress={this.onSubmit.bind(this)}>
+            <Text style={styles.lblButton}>Lưu</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     );
   }
 }
@@ -276,7 +244,10 @@ function mapStateToProp(state) {
   return {
     authenticate: state.auth.isAuthenticated,
     profile: state.user.profile,
-  }
+  };
 }
 
-export default connect(mapStateToProp, { UpdateUserInfo })(EditInfo);
+export default connect(
+  mapStateToProp,
+  {UpdateUserInfo},
+)(EditInfo);

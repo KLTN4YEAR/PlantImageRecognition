@@ -2,7 +2,8 @@ import axios from 'axios';
 import { API_URL } from '../config/helper';
 import {
     GET_INFO_POST,
-    ERROR_RESPONSE
+    ERROR_RESPONSE,
+    GET_LIST_POST,
 } from '../config/type';
 export var successMess = '';
 
@@ -32,11 +33,9 @@ export const getPostInfo = (credentials, pid) => {
             'authorization': 'Bearer ' + credentials.token,
         }
     };
-    console.log('cre', credentials.token)
     return function(dispatch) {
         axios.get(`${API_URL}/api/post/getInfoPost/${pid}`, config)
             .then((response) => {
-                console.log('res', response.data.result.post);
                 dispatch({
                     type: GET_INFO_POST,
                     payload: response.data.result.post
@@ -49,4 +48,30 @@ export const getPostInfo = (credentials, pid) => {
                 });
             });
     }
+};
+
+
+//Get post by scroll down to load
+
+export const getListPost = (credentials, offset) => async() => {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'authorization': 'Bearer ' + credentials.token,
+        }
+    };
+
+    return axios.get(`${API_URL}/api/post/getList/${offset}`, config)
+        .then((response) => {
+            if (response.data.result.length > 0) {
+                return response.data.result.listPost
+
+            }
+            return response.data.result.listPost
+        })
+        .catch(err => {
+            console.log('err', err);
+            return err
+        });
 };

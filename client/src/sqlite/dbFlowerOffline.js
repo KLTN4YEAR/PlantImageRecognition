@@ -142,7 +142,7 @@ export const viewImagesByName = (name) => {
     });
 };
 //Lấy tất cả ảnh!
-export const viewAllFlower = () => {
+export const viewAllFlower = (getResult) => {
     console.log('vi')
     var temp = [];
     db.transaction(tx => {
@@ -151,7 +151,7 @@ export const viewAllFlower = () => {
                 temp.push(results.rows.item(i));
             }
             // console.log('te', temp);
-            return temp;
+            getResult(temp);
         }, (err) => {
             console.log('transaction error: ', err.message);
         }, );

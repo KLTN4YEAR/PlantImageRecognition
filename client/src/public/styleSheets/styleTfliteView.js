@@ -1,8 +1,9 @@
 import { StyleSheet, Dimensions } from 'react-native';
+const windowWidth = Dimensions.get('window').width;
 export const styles = StyleSheet.create({
     viewContainer: {
         width: '100%',
-        backgroundColor: '#59c393',
+        backgroundColor: '#303030',
     },
     viewBtnChoose: {
         top: 0,
@@ -37,10 +38,11 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
     },
     boxes: {
-        backgroundColor: '#F8F8FF',
+        backgroundColor: 'rgba(64,64,64, 0.8)',
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
         marginTop: -20,
+        padding: 15,
     },
     lblSearchResult: {
         padding: 10,
@@ -51,11 +53,13 @@ export const styles = StyleSheet.create({
         padding: 5,
         fontSize: 16,
         fontWeight: 'bold',
+        color: "#F2EBDF",
     },
     viewResult: {
         backgroundColor: '#fff',
-        padding: 5,
+        padding: 8,
         margin: 5,
+        borderRadius: 5,
         flexDirection: 'row',
         flexWrap: 'wrap',
     },
@@ -97,5 +101,17 @@ export const styles = StyleSheet.create({
         width: '100%',
         height: 350,
         alignItems: 'center',
+    },
+    imgCard: {
+        height: windowWidth,
+        width: windowWidth,
+    },
+    viewHeader: {
+        position: 'absolute',
+        top: 0,
+        width: '100%',
+        backgroundColor: 'rgba(100,100,100,0.2)',
+        height: 30,
+        zIndex: 2
     },
 });

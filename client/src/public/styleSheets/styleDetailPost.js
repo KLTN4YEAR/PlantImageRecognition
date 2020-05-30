@@ -7,7 +7,9 @@ export const styles = StyleSheet.create({
         marginRight: 'auto',
         marginLeft: 'auto',
     },
-
+    scrollView: {
+        backgroundColor: '#303030'
+    },
     viewCard: {
         width: 'auto',
         height: 280,
@@ -28,6 +30,9 @@ export const styles = StyleSheet.create({
 
     rowPostBy: {
         width: '100%',
+        alignItems: 'center',
+        padding: 5,
+        backgroundColor: "rgba(191, 186, 176, 0.1)",
     },
     rowCreate: {
         padding: 2,
@@ -41,27 +46,39 @@ export const styles = StyleSheet.create({
         width: 230,
     },
     txtUserName: {
-        fontSize: 14,
+        fontSize: 18,
         fontWeight: 'bold',
         textAlign: 'left',
         alignItems: 'flex-start',
         alignContent: 'flex-start',
-        color: 'black',
+        color: '#EBF2EB',
+    },
+    colPostBy: {
+        marginLeft: 20,
+    },
+    txtCreated: {
+        fontSize: 12,
+        marginTop: 5,
+        color: '#d4d5d6',
     },
     viewContent: {
-        padding: 5,
+        padding: 10,
         marginLeft: 10,
-        marginRight: 10,
+        flex: 1,
+        flexDirection: 'column'
+
     },
     viewKind: {
         width: '100%',
     },
     btnPlantKind: {
-        width: 80,
+        width: 50,
         height: 25,
         backgroundColor: '#00afef',
         margin: 10,
         borderRadius: 10,
+        alignItems: 'center',
+        alignContent: 'center',
     },
     txtKind: {
         color: '#ffffaa',
@@ -170,13 +187,13 @@ export const styles = StyleSheet.create({
 
     txtDec: {
         width: '100%',
-        color: '#1c1e21',
-        fontSize: 16,
+        color: '#F2EBDF',
         marginBottom: 10,
         textAlign: 'justify',
+        letterSpacing: 0.2,
+        lineHeight: 20,
         margin: 'auto',
-        letterSpacing: 0.6,
-
+        padding: 5,
     },
 
     viewSafeArea: {

@@ -135,113 +135,134 @@ class CreatePostScreen extends React.Component {
 
     render() {
         return (
-            <SafeAreaView style={styles.container}>
-                <View style={styles.viewImage}>
-                    <TouchableOpacity onPress={this._pickImage} style={styles.btnGallery}>
-                        <Grid>
-                            <Row>
-                                <Col size={20}>
-                                    <Icon
-                                        type='material'
-                                        name='photo-library'
-                                        style={styles.labelIcon}
-                                        color='#59c393' />
-                                </Col>
-                                <Col size={80}>
-                                    <Text style={styles.labelTxt}>Ảnh từ thư viện</Text>
-                                </Col>
-                            </Row>
-                        </Grid>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={this._takePhoto} style={styles.btnCamera}>
-                        <Grid>
-                            <Row>
-                                <Col size={20}>
-                                    <Icon
-                                        type='material'
-                                        name='photo-camera'
-                                        style={styles.labelIcon}
-                                        color='#59c393' />
-                                </Col>
-                                <Col size={80}>
-                                    <Text style={styles.labelTxt}>Camera</Text>
-                                </Col>
-                            </Row>
-                        </Grid>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.btnCancel} onPress={() => this.props.navigation.goBack()}>
-                        <Grid>
-                            <Row>
-                                <Col size={20}>
-                                    <Icon
-                                        type='material'
-                                        name='cancel'
-                                        style={styles.labelIcon}
-                                        color='#59c393' />
-                                </Col>
-                                <Col size={80}>
-                                    <Text style={styles.labelTxt}>Huỷ</Text>
-                                </Col>
-                            </Row>
-                        </Grid>
-                    </TouchableOpacity>
+          <SafeAreaView style={styles.container}>
+            <View style={styles.viewImage}>
+              <TouchableOpacity
+                onPress={this._pickImage}
+                style={styles.btnGallery}>
+                <Grid>
+                  <Row>
+                    <Col size={20}>
+                      <Icon
+                        type="material"
+                        name="photo-library"
+                        style={styles.labelIcon}
+                        color="#59c393"
+                      />
+                    </Col>
+                    <Col size={80}>
+                      <Text style={styles.labelTxt}>
+                        Ảnh từ thư viện
+                      </Text>
+                    </Col>
+                  </Row>
+                </Grid>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={this._takePhoto}
+                style={styles.btnCamera}>
+                <Grid>
+                  <Row>
+                    <Col size={20}>
+                      <Icon
+                        type="material"
+                        name="photo-camera"
+                        style={styles.labelIcon}
+                        color="#59c393"
+                      />
+                    </Col>
+                    <Col size={80}>
+                      <Text style={styles.labelTxt}>Camera</Text>
+                    </Col>
+                  </Row>
+                </Grid>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.btnCancel}
+                onPress={() => this.props.navigation.goBack()}>
+                <Grid>
+                  <Row>
+                    <Col size={20}>
+                      <Icon
+                        type="material"
+                        name="cancel"
+                        style={styles.labelIcon}
+                        color="#59c393"
+                      />
+                    </Col>
+                    <Col size={80}>
+                      <Text style={styles.labelTxt}>Huỷ</Text>
+                    </Col>
+                  </Row>
+                </Grid>
+              </TouchableOpacity>
+            </View>
+            <ScrollView style={styles.scrollView}>
+              <View style={styles.viewUser}>
+                <Grid>
+                  <Row style={styles.rowPostBy}>
+                    <Col size={15}>
+                      <Avatar
+                        rounded
+                        size={40}
+                        source={{
+                          uri:
+                            'https://scontent.fsgn5-7.fna.fbcdn.net/v/t1.0-9/p960x960/50688968_787150878305428_8692489284222976000_o.jpg?_nc_cat=103&_nc_sid=85a577&_nc_ohc=47b_1pEflRMAX-noq9N&_nc_ht=scontent.fsgn5-7.fna&_nc_tp=6&oh=65351c2246646f2adbaf49549f9746e8&oe=5ECE32B1',
+                        }}
+                      />
+                    </Col>
+                    <Col size={85}>
+                      <Text style={styles.txtUserName}>
+                        Nguyễn Tuấn Vũ
+                      </Text>
+                    </Col>
+                  </Row>
+                </Grid>
+              </View>
+              <View style={styles.viewDataInput}>
+                <View style={styles.viewInputContent}>
+                  <View style={styles.viewMentioned}>
+                    <TextInput
+                      placeholder="Id của thực vật (trên 12 ký tự số)?"
+                      style={styles.inputMention}
+                      underlineColorAndroid="transparent"
+                      multiline={true}
+                      onChangeText={text =>
+                        this.setState({mentionedPlant: text})
+                      }
+                    />
+                  </View>
+                  <View style={styles.viewPlantName}>
+                    <TextInput
+                      placeholder="Bạn có biết thực vật này tên gì không?"
+                      style={styles.inputMention}
+                      underlineColorAndroid="transparent"
+                      multiline={true}
+                      onChangeText={text =>
+                        this.setState({namePlant: text})
+                      }
+                    />
+                  </View>
+                  <View style={styles.viewContent}>
+                    <TextInput
+                      placeholder="Bạn muốn viết gì?"
+                      style={styles.inputContent}
+                      underlineColorAndroid="transparent"
+                      multiline={true}
+                      onChangeText={text =>
+                        this.setState({content: text})
+                      }
+                    />
+                  </View>
                 </View>
-                <ScrollView style={styles.scrollView}>
-                    <View style={styles.viewUser}>
-                        <Grid>
-                            <Row style={styles.rowPostBy}>
-                                <Col size={15}>
-                                    <Avatar
-                                        rounded
-                                        size={40}
-                                        source={{
-                                            uri:
-                                                'https://scontent.fsgn5-7.fna.fbcdn.net/v/t1.0-9/p960x960/50688968_787150878305428_8692489284222976000_o.jpg?_nc_cat=103&_nc_sid=85a577&_nc_ohc=47b_1pEflRMAX-noq9N&_nc_ht=scontent.fsgn5-7.fna&_nc_tp=6&oh=65351c2246646f2adbaf49549f9746e8&oe=5ECE32B1',
-                                        }}
-                                    />
-                                </Col>
-                                <Col size={85}>
-                                    <Text style={styles.txtUserName}>Nguyễn Tuấn Vũ</Text>
-                                </Col>
-                            </Row>
-                        </Grid>
-                    </View>
-                    <View style={styles.viewDataInput}>
-                        <View style={styles.viewInputContent}>
-                            <View style={styles.viewMentioned}>
-                                <TextInput
-                                    placeholder="Id của thực vật (trên 12 ký tự số)?"
-                                    style={styles.inputMention}
-                                    underlineColorAndroid="transparent"
-                                    multiline={true}
-                                    onChangeText={text => this.setState({ mentionedPlant: text })}
-                                />
-                            </View>
-                            <View style={styles.viewPlantName}>
-                                <TextInput
-                                    placeholder="Bạn có biết thực vật này tên gì không?"
-                                    style={styles.inputMention}
-                                    underlineColorAndroid="transparent"
-                                    multiline={true}
-                                    onChangeText={text => this.setState({ namePlant: text })}
-                                />
-                            </View>
-                            <View style={styles.viewContent}>
-                                <TextInput
-                                    placeholder="Bạn muốn viết gì?"
-                                    style={styles.inputContent}
-                                    underlineColorAndroid="transparent"
-                                    multiline={true}
-                                    onChangeText={text => this.setState({ content: text })}
-                                />
-                            </View>
-                        </View>
-                        <View style={styles.viewDisplayImage}>
-                            <View style={styles.viewImgDisplay}>{this._renderImages()}</View>
-                        </View>
-                    </View>
-                </ScrollView>
-            </SafeAreaView>
+                <View style={styles.viewDisplayImage}>
+                  <View style={styles.viewImgDisplay}>
+                    {this._renderImages()}
+                  </View>
+                </View>
+              </View>
+            </ScrollView>
+          </SafeAreaView>
         );
     }
 }

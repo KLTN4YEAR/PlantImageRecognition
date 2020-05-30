@@ -60,6 +60,23 @@ const createPost = async (req, res) => {
         })
 }
 
+const getList = async (req, res) => {
+    const formatData = {
+        lastId: req.params.lastId
+    }
+
+    const postService = new PostService(db, formatData);
+
+    let listPost = await postService.getList();
+    return res.status(200)
+        .json({
+            message: "Get list post was successful",
+            result: {
+                listPost
+            }
+        })
+}
+
 const getInfoPost = async (req, res) => {
     const formatData = {
         postId: req.params._id
@@ -80,5 +97,6 @@ const getInfoPost = async (req, res) => {
 module.exports = {
     createPost,
     multerMid,
-    getInfoPost
+    getInfoPost,
+    getList
 };

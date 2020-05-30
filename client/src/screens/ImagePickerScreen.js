@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   Platform,
   Image,
@@ -7,10 +7,11 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import { styles } from '../public/styleSheets/styleTfliteView';
-import { Icon } from 'react-native-elements';
+import {styles} from '../public/styleSheets/styleTfliteView';
+import {Icon} from 'react-native-elements';
 import Tflite from 'tflite-react-native';
-import ImagePicker from 'react-native-image-picker';
+import ImagePicker from 'react-native-image-crop-picker';
+import Toast from 'react-native-simple-toast';
 
 let tflite = new Tflite();
 const height = 350;
@@ -41,10 +42,10 @@ export default class ImagePickerScreen extends Component {
   //Set event click to move gallery mode
   onClickGallery(m) {
     if (this.state.renderCamera) {
-      this.setState({ renderCamera: false });
-      this.setState({ renderGallery: true });
+      this.setState({renderCamera: false});
+      this.setState({renderGallery: true});
     } else {
-      this.setState({ renderGallery: true });
+      this.setState({renderGallery: true});
     }
     this.onSelectModel(m);
   }
@@ -52,17 +53,17 @@ export default class ImagePickerScreen extends Component {
   //Set event click to move camera mode
   onClickCamera(m) {
     if (this.state.renderGallery) {
-      this.setState({ renderGallery: false });
-      this.setState({ renderCamera: true });
+      this.setState({renderGallery: false});
+      this.setState({renderCamera: true});
     } else {
-      this.setState({ renderCamera: true });
+      this.setState({renderCamera: true});
     }
     this.onSelectModel(m);
   }
 
   //Set up for model train (tflite file and list result by txt file)
   onSelectModel(model) {
-    this.setState({ model });
+    this.setState({model});
     switch (model) {
       case flower:
         var modelFile = 'models/lite_flowers_model_v3.tflite';
@@ -87,33 +88,21 @@ export default class ImagePickerScreen extends Component {
   //Mode of select Image with Gallery
   onSelectImage() {
     const options = {
-      title: 'Select Images',
-      customButtons: [
-        {
-          name: 'fb',
-          title: 'Choose Photo',
-        },
-      ],
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
+      cropping: true,
+      compressImageQuality: 1.0,
+      showCropFrame: true,
+      showCropGuidelines: true,
+      cropperToolbarTitle: 'Cắt ảnh',
+      cropperToolbarColor: 'white',
+      mediaType:'photo',
     };
-
-    ImagePicker.launchImageLibrary(options, response => {
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      } else {
-        var path =
-          Platform.OS === 'ios' ? response.uri : 'file://' + response.path;
-        var w = response.width;
-        var h = response.height;
+    ImagePicker.openPicker(options)
+      .then(image => {
+        var path = Platform.OS === 'ios' ? image.uri : 'file://' + image.path;
+        var w = image.width;
+        var h = image.height;
         this.setState({
-          source: { uri: path },
+          source: {uri: path},
           imageHeight: (h * width) / w,
           imageWidth: width,
         });
@@ -137,32 +126,30 @@ export default class ImagePickerScreen extends Component {
               },
             );
         }
-      }
-    });
+      })
+      .catch(err => {
+        Toast.show('Có lỗi xảy ra!');
+      });
   }
   //Mode of get image from direct camera
   onLaunchCamera() {
-    let options = {
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
+    const options = {
+      cropping: true,
+      compressImageQuality: 1.0,
+      showCropFrame: true,
+      showCropGuidelines: true,
+      cropperToolbarTitle: 'Cắt ảnh',
+      cropperToolbarColor: 'white',
+      mediaType: 'photo',
     };
-    ImagePicker.launchCamera(options, response => {
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-        alert(response.customButton);
-      } else {
+    ImagePicker.openCamera(options)
+      .then(image => {
         var path =
-          Platform.OS === 'ios' ? response.uri : 'file://' + response.path;
-        var w = response.width;
-        var h = response.height;
+          Platform.OS === 'ios' ? image.uri : 'file://' + image.path;
+        var w = image.width;
+        var h = image.height;
         this.setState({
-          source: { uri: path },
+          source: {uri: path},
           imageHeight: (h * width) / w,
           imageWidth: width,
         });
@@ -186,25 +173,24 @@ export default class ImagePickerScreen extends Component {
               },
             );
         }
-      }
-    });
+      })
+      .catch(err => {
+        Toast.show('Có lỗi xảy ra!');
+      });
   }
 
   //Return result (list 3 flower most like)
   renderResults() {
-    const { model, recognitions, imageHeight, imageWidth } = this.state;
+    const {model, recognitions, imageHeight, imageWidth} = this.state;
     switch (model) {
       case flower:
         return recognitions.map((res, id) => {
-          console.log('ten hoa', res['label']);
           //Se lay res label de search theo ten hoa o day de ra ket qua chi tiet
           return (
             <TouchableOpacity
               key={id}
               style={styles.viewResult}
-              onPress={() =>
-                this.props.navigation.navigate('PlantInfo')
-              }>
+              onPress={() => this.props.navigation.navigate('PlantInfo')}>
               <Image
                 source={{
                   uri:
@@ -215,9 +201,7 @@ export default class ImagePickerScreen extends Component {
               <View style={styles.viewTrend}>
                 <Text style={styles.lblNameFlow}>{res['label']}</Text>
                 <Text style={styles.lblPercent}>
-                  {'Similarity: ' +
-                    (res['confidence'] * 10).toFixed(0) +
-                    '%'}
+                  {'Similarity: ' + (res['confidence'] * 10).toFixed(0) + '%'}
                 </Text>
               </View>
             </TouchableOpacity>
@@ -242,13 +226,18 @@ export default class ImagePickerScreen extends Component {
                 type="font-awesome"
                 color="#59c393"
               />
-              <Text>Gallery</Text>
+              <Text style={{color: 'white'}}>Gallery</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={this.onClickCamera.bind(this, m)}
               style={styles.btnChoose}>
-              <Icon raised name="camera" type="font-awesome" color="#59c393" />
-              <Text>Camera</Text>
+              <Icon
+                raised
+                name="camera"
+                type="font-awesome"
+                color="#59c393"
+              />
+              <Text style={{color: 'white'}}>Camera</Text>
             </TouchableOpacity>
           </View>
           {this.renderModel()}
@@ -307,10 +296,10 @@ export default class ImagePickerScreen extends Component {
                     resizeMode="contain"
                   />
                 ) : (
-                    <View style={styles.viewEmpty}>
-                      <Text>Chọn</Text>
-                    </View>
-                  )}
+                  <View style={styles.viewEmpty}>
+                    <Text>Chọn</Text>
+                  </View>
+                )}
               </TouchableOpacity>
               {source ? (
                 <View style={styles.boxes}>
@@ -320,14 +309,14 @@ export default class ImagePickerScreen extends Component {
                   {this.renderResults()}
                 </View>
               ) : (
-                  <Text>Không có kết quả</Text>
-                )}
+                <Text>Không có kết quả</Text>
+              )}
             </View>
           ) : (
-              <View>
-                <Text>Không có loài nào được chọn</Text>
-              </View>
-            )}
+            <View>
+              <Text>Không có loài nào được chọn</Text>
+            </View>
+          )}
         </View>
       );
     if (this.state.renderCamera)
@@ -345,10 +334,10 @@ export default class ImagePickerScreen extends Component {
                     resizeMode="contain"
                   />
                 ) : (
-                    <View style={styles.viewEmpty}>
-                      <Text>Chụp</Text>
-                    </View>
-                  )}
+                  <View style={styles.viewEmpty}>
+                    <Text>Chụp</Text>
+                  </View>
+                )}
               </TouchableOpacity>
               {source ? (
                 <View style={styles.boxes}>
@@ -358,14 +347,14 @@ export default class ImagePickerScreen extends Component {
                   {this.renderResults()}
                 </View>
               ) : (
-                  <Text>Không có kết quả</Text>
-                )}
+                <Text>Không có kết quả</Text>
+              )}
             </View>
           ) : (
-              <View>
-                <Text>Không có loài nào được chọn</Text>
-              </View>
-            )}
+            <View>
+              <Text>Không có loài nào được chọn</Text>
+            </View>
+          )}
         </View>
       );
   }
