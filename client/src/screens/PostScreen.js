@@ -20,6 +20,7 @@ import PropTypes from 'prop-types';
 import {auth} from '../config/helper';
 import Toast from 'react-native-simple-toast';
 import {getListPost} from '../action/postAction';
+import {getInfo} from '../action/userAction';
 // Gọi các sqlite function
 import {viewAllFlower} from '../sqlite/dbFlowerOffline';
 
@@ -57,11 +58,18 @@ class PostScreen extends React.Component {
   async componentDidMount() {
     await this.checkLogin();
     await this.loadMoreData();
-
+    await this.loadData();
     //xu ly bat dong bo sqlite
     await viewAllFlower(this.getResultFromVA);
   }
 
+  loadData = async () => {
+    const {getInfo} = this.props;
+    const data = await auth.isAuthenticated();
+    if (data) {
+      await getInfo(data, data.user._id);
+    }
+  };
   onRefresh() {
     this.setState({
       loading: false,
@@ -122,6 +130,7 @@ class PostScreen extends React.Component {
   }
 
   render() {
+    const {profile} = this.props;
     return (
       <SafeAreaView style={styles.viewSafeArea}>
         <View style={styles.stylesHead}>
@@ -134,8 +143,7 @@ class PostScreen extends React.Component {
             <Avatar
               rounded
               source={{
-                uri:
-                  'https://scontent.fsgn2-2.fna.fbcdn.net/v/t1.0-9/p960x960/50688968_787150878305428_8692489284222976000_o.jpg?_nc_cat=103&_nc_sid=85a577&_nc_ohc=LK8bZiMgFFMAX-3yBGF&_nc_ht=scontent.fsgn2-2.fna&_nc_tp=6&oh=a3275ccf63dc6ef6182f419baa18d20b&oe=5EEDD6B1',
+                uri: profile.avatar,
               }}
             />
           </TouchableOpacity>
@@ -262,10 +270,11 @@ function mapStateToProp(state) {
     loaded: state.post.loaded,
     isAuthenticate: state.auth.isAuthenticated,
     listPost: state.post.listPost,
+    profile: state.user.profile,
   };
 }
 
 export default connect(
   mapStateToProp,
-  {getListPost},
+  {getListPost, getInfo},
 )(PostScreen);

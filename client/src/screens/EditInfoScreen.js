@@ -115,7 +115,6 @@ class EditInfo extends ValidationComponent {
   onChangeDate = (event, selectedDate) => {
     if (selectedDate || date) {
       const currentDate = selectedDate || date;
-
       this.setState({birthday: currentDate, showDatePicker: false});
     }
   };

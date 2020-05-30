@@ -8,115 +8,125 @@ import {
   Alert,
   SafeAreaView,
 } from 'react-native';
-import ImagePicker from 'react-native-image-picker';
+import ImagePicker from 'react-native-image-crop-picker';
 import {styles} from '../public/styleSheets/styleCreatePost';
 import {Text, Button, Avatar} from 'react-native-elements';
 import {Col, Row, Grid} from 'react-native-easy-grid';
 import {Icon} from 'react-native-elements';
 import {newPost, successMess} from '../action/postAction';
 import {auth} from '../config/helper';
+import {connect} from 'react-redux';
+import Toast from 'react-native-simple-toast';
+import ValidationComponent from 'react-native-form-validator';
 
-class CreatePostScreen extends React.Component {
-  state = {
-    postedBy: '',
-    LocalImage: [],
-    multipleUrl: [],
-    content: '',
-    mentionedPlant: '',
-    namePlant: '',
-    post: {
+class CreatePostScreen extends ValidationComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      postedBy: '',
+      LocalImage: [],
+      content: '',
       mentionedPlant: '',
       namePlant: '',
-      content: '',
-      plant_images: [''],
-    },
-  };
+      post: {
+        mentionedPlant: '',
+        namePlant: '',
+        content: '',
+        plant_images: [''],
+      },
+    };
+  }
 
   successAlert = () => {
-    Alert.alert('Chúc mừng bạn đã đăng thành công!');
+    Toast.show('Chúc mừng bạn đã đăng thành công!');
   };
 
   failAlert = () => {
-    Alert.alert('Bài viết không hợp lệ, vui lòng thử lại!');
+    Toast.show('Bài viết không hợp lệ, vui lòng thử lại!');
   };
 
-  componentDidMount() {
-    this.useLayoutEffect();
+  onValidate() {
+    return this.validate({
+      name: {minlength: 4, maxlength: 25, required: true, spacing: true},
+      email: {email: true, required: true, spacing: true},
+      number: {numbers: true, required: true, spacing: true},
+    });
   }
+
+  // async componentDidMount() {
+  //   await this.loadData();
+  // }
 
   //lưu những thay đổi nơi input vào state
   onChange = e => {
     this.setState({[e.target.name]: e.target.value});
   };
 
-  onSubmit = e => {
-    e.preventDefault(); //chấp nó bấm submit liên tục nè
-    const post = this.state.post;
-    post['mentionedPlant'] = this.state.mentionedPlant;
-    post['namePlant'] = this.state.namePlant;
-    post['content'] = this.state.content;
-    post['plant_images'] = this.state.LocalImage;
-    // create fromData to create post
-    let formData = new FormData();
-    formData.append('mentionedPlant', post.mentionedPlant);
-    formData.append('namePlant', post.namePlant);
-    formData.append('content', post.content);
-    this.state.LocalImage.map((item, index) => {
-      let fileType = item.substring(item.lastIndexOf('.') + 1);
-      let fileName = item.substring(item.lastIndexOf('/') + 1);
-      return formData.append('plant_images', {
-        uri: item,
-        name: fileName,
-        type: `image/${fileType}`,
+  async onSubmit() {
+    if (this.onValidate()) {
+      const {post} = this.state;
+      post['mentionedPlant'] = this.state.mentionedPlant;
+      post['namePlant'] = this.state.namePlant;
+      post['content'] = this.state.content;
+      post['plant_images'] = this.state.LocalImage;
+      console.log('post', post);
+      // create fromData to create post
+      let formData = new FormData();
+      formData.append('mentionedPlant', post.mentionedPlant);
+      formData.append('namePlant', post.namePlant);
+      formData.append('content', post.content);
+      this.state.LocalImage.map((item, index) => {
+        let fileType = item.substring(item.lastIndexOf('.') + 1);
+        let fileName = item.substring(item.lastIndexOf('/') + 1);
+        return formData.append('plant_images', {
+          uri: item,
+          name: fileName,
+          type: `image/${fileType}`,
+        });
       });
-    });
-
-    this.addPost(formData);
-  };
+      console.log('fm',formData)
+      await this.addPost(formData);
+    }
+    
+  }
 
   addPost = async formatData => {
+    const {newPost, navigation} = this.props;
     const credentials = await auth.isAuthenticated();
     newPost(credentials, formatData);
     if (successMess == 'Created was successful') {
       this.successAlert();
-      this.props.navigation.goBack();
+      navigation.goBack();
     } else {
       this.failAlert();
-      this.props.navigation.goBack();
+      navigation.goBack();
     }
   };
 
-  useLayoutEffect = async () => {
-    this.props.navigation.setOptions({
-      headerRight: () => (
-        <Button
-          buttonStyle={styles.btnDone}
-          onPress={this.onSubmit}
-          iconRight
-          title="ĐĂNG"
-        />
-        // onPress={() => this.props.navigation.goBack()}
-      ),
-    });
-  };
-
   _pickImage = async () => {
-    let pickerResult = await ImagePicker.launchImageLibrary({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      base64: true,
-      allowsEditing: true,
-      aspect: [4, 3],
-    });
-    let imageUri = pickerResult
-      ? `data:image/jpg;base64,${pickerResult.base64}`
-      : null;
-    imageUri && {uri: imageUri};
-    this.state.multipleUrl.push(imageUri);
-    this.setState({
-      LocalImage: this.state.LocalImage.concat([pickerResult.uri]),
-    });
-  };
+    const options = {
+      cropping: true,
+      compressImageQuality: 1.0,
+      showCropFrame: true,
+      showCropGuidelines: true,
+      cropperToolbarTitle: 'Cắt ảnh',
+      cropperToolbarColor: 'white',
+      mediaType: 'photo',
+    };
+    ImagePicker.openPicker(options)
+      .then(image => {
+        const imageUri = image ? `data:image/jpg;base64,${image.base64}` : null;
 
+        this.setState({
+          LocalImage: this.state.LocalImage.concat([image.path]),
+        });
+        console.log('v1', image.path);
+        console.log('v', this.state.LocalImage);
+      })
+      .catch(err => {
+        Toast.show('Có lỗi xảy ra!');
+      });
+  };
   _takePhoto = async () => {
     let pickerResult = await ImagePicker.launchCamera({
       base64: true,
@@ -145,10 +155,13 @@ class CreatePostScreen extends React.Component {
   }
 
   render() {
+    const {profile, navigation} = this.props;
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.viewImage}>
-          <TouchableOpacity onPress={this._pickImage} style={styles.btnGallery}>
+          <TouchableOpacity
+            onPress={this._pickImage}
+            style={styles.btnGallery}>
             <Grid>
               <Row>
                 <Col size={20}>
@@ -165,7 +178,9 @@ class CreatePostScreen extends React.Component {
               </Row>
             </Grid>
           </TouchableOpacity>
-          <TouchableOpacity onPress={this._takePhoto} style={styles.btnCamera}>
+          <TouchableOpacity
+            onPress={this._takePhoto}
+            style={styles.btnCamera}>
             <Grid>
               <Row>
                 <Col size={20}>
@@ -184,7 +199,7 @@ class CreatePostScreen extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.btnCancel}
-            onPress={() => this.props.navigation.goBack()}>
+            onPress={() => navigation.goBack()}>
             <Grid>
               <Row>
                 <Col size={20}>
@@ -211,13 +226,12 @@ class CreatePostScreen extends React.Component {
                     rounded
                     size={40}
                     source={{
-                      uri:
-                        'https://scontent.fsgn5-7.fna.fbcdn.net/v/t1.0-9/p960x960/50688968_787150878305428_8692489284222976000_o.jpg?_nc_cat=103&_nc_sid=85a577&_nc_ohc=47b_1pEflRMAX-noq9N&_nc_ht=scontent.fsgn5-7.fna&_nc_tp=6&oh=65351c2246646f2adbaf49549f9746e8&oe=5ECE32B1',
+                      uri: profile.avatar,
                     }}
                   />
                 </Col>
                 <Col size={85}>
-                  <Text style={styles.txtUserName}>Nguyễn Tuấn Vũ</Text>
+                  <Text style={styles.txtUserName}>{profile.fullName}</Text>
                 </Col>
               </Row>
             </Grid>
@@ -230,7 +244,9 @@ class CreatePostScreen extends React.Component {
                   style={styles.inputMention}
                   underlineColorAndroid="transparent"
                   multiline={true}
-                  onChangeText={text => this.setState({mentionedPlant: text})}
+                  onChangeText={text =>
+                    this.setState({mentionedPlant: text})
+                  }
                 />
               </View>
               <View style={styles.viewPlantName}>
@@ -253,13 +269,28 @@ class CreatePostScreen extends React.Component {
               </View>
             </View>
             <View style={styles.viewDisplayImage}>
-              <View style={styles.viewImgDisplay}>{this._renderImages()}</View>
+              <View style={styles.viewImgDisplay}>
+                {this._renderImages()}
+              </View>
             </View>
           </View>
+          <TouchableOpacity
+            style={styles.btnSave}
+            onPress={this.onSubmit.bind(this)}
+            ><Text style={styles.lblButton}>Lưu</Text>
+          </TouchableOpacity>
         </ScrollView>
       </SafeAreaView>
     );
   }
 }
-
-export default CreatePostScreen;
+function mapStateToProp(state) {
+  return {
+    authenticate: state.auth.isAuthenticated,
+    profile: state.user.profile,
+  };
+}
+export default connect(
+  mapStateToProp,
+  {newPost},
+)(CreatePostScreen);

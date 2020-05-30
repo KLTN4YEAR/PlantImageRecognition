@@ -1,5 +1,12 @@
 import * as React from 'react';
-import {Text, View, Image, TextInput, ScrollView} from 'react-native';
+import {
+  Text,
+  View,
+  Image,
+  TextInput,
+  ScrollView,
+  ImageBackground,
+} from 'react-native';
 import {styles} from '../public/styleSheets/stylePlantInfo';
 import {Icon} from 'react-native-elements';
 import {ConfirmDialog} from 'react-native-simple-dialogs';
@@ -13,45 +20,55 @@ export default class ResultScreen extends React.Component {
     return (
       <ScrollView style={styles.scrollView}>
         <View style={styles.viewImage}>
-          <Image
+          <ImageBackground
             source={{
               uri:
                 'https://mrhoa.com/wp-content/uploads/2019/01/hoa-hong-phan-dep.jpg',
             }}
-            style={styles.imgPlant}
-          />
+            style={styles.imgPlant}>
+            <View style={styles.viewInfoHead}>
+              <Text style={styles.txtName}>Hoa Hồng</Text>
+              <View style={styles.viewKind}>
+                <Icon
+                  type="font-awesome"
+                  name="pagelines"
+                  style={styles.icKind}
+                  size={20}
+                  color="#59c393"
+                />
+                <Text style={styles.txtKind}>Hồng</Text>
+                <Text style={styles.txtLoc}>| VietNam</Text>
+              </View>
+            </View>
+          </ImageBackground>
         </View>
-        <View style={styles.viewInfo}>
-          <Text style={styles.txtName}>Hoa Hồng</Text>
-          <View style={styles.viewKind}>
-            <Icon
-              type="font-awesome"
-              name="pagelines"
-              style={styles.icKind}
-              size={13}
-              color="#59c393"
-            />
-            <Text style={styles.txtKind}>Hồng</Text>
+        <ScrollView style={styles.viewDesc}>
+          <View style={styles.viewBasic}>
+            <Text style={styles.txtNamevi}>Hoa hồng</Text>
+            <Text style={styles.txtNameen}>| Rose</Text>
           </View>
-          <View style={styles.viewLoc}>
-            <Icon
-              type="font-awesome"
-              name="map-marker"
-              style={styles.labelIcon}
-              size={13}
-              color="#59c393"
+          {/* <View>
+            <Text style={styles.txtNamesce}>Tên khoa học: Rose</Text>
+          </View> */}
+          <View style={styles.viewCharacter}>
+            <Text style={styles.lblName}>Đặc điểm</Text>
+            <TextInput
+              multiline={true}
+              style={styles.txtDesc}
+              editable={false}
+              defaultValue="Hồng hay hường là tên gọi chung cho các loài thực vật có hoa dạng cây bụi hoặc cây leo lâu năm thuộc chi Rosa, họ Rosaceae, với hơn 100 loài với màu hoa đa dạng, phân bố từ miền ôn đới đến nhiệt đới. Các loài này nổi tiếng vì hoa đẹp nên thường gọi là hoa hồng"
             />
-            <Text style={styles.txtLoc}>VietNam</Text>
           </View>
-        </View>
-        <View style={styles.viewDesc}>
-          <TextInput
-            multiline={true}
-            style={styles.txtDesc}
-            editable={false}
-            placeholder="Hồng hay hường là tên gọi chung cho các loài thực vật có hoa dạng cây bụi hoặc cây leo lâu năm thuộc chi Rosa, họ Rosaceae, với hơn 100 loài với màu hoa đa dạng, phân bố từ miền ôn đới đến nhiệt đới. Các loài này nổi tiếng vì hoa đẹp nên thường gọi là hoa hồng"
-          />
-        </View>
+          <View style={styles.viewCharacter}>
+            <Text style={styles.lblName}>Ý nghĩa | tượng trưng</Text>
+            <TextInput
+              multiline={true}
+              style={styles.txtDesc}
+              editable={false}
+              defaultValue="Hồng hay hường là tên gọi chung cho các loài thực vật có hoa dạng cây bụi hoặc cây leo lâu năm thuộc chi Rosa, họ Rosaceae, với hơn 100 loài với màu hoa đa dạng, phân bố từ miền ôn đới đến nhiệt đới. Các loài này nổi tiếng vì hoa đẹp nên thường gọi là hoa hồng"
+            />
+          </View>
+        </ScrollView>
 
         <ConfirmDialog
           title="Confirm Dialog"

@@ -227,14 +227,14 @@ export const styles = StyleSheet.create({
     },
 
     btnSave: {
-        backgroundColor: 'transparent',
+        backgroundColor: '#59c393',
         borderRadius: 15,
         borderWidth: 1,
         justifyContent: 'center',
         alignContent: 'center',
         alignItems: 'center',
-        width: 90,
-        height: 30,
+        width: 180,
+        height: 35,
         borderColor: '#59c393',
         zIndex: 2,
     },
