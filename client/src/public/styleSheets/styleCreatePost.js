@@ -1,10 +1,9 @@
-
 import { StyleSheet, Dimensions } from 'react-native';
 const windowWidth = Dimensions.get('window').width;
 
 export const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#fff',
+        backgroundColor: '#303030',
         flex: 1,
     },
 
@@ -74,6 +73,7 @@ export const styles = StyleSheet.create({
 
     inputMention: {
         padding: 10,
+        color: '#DCF2DE',
     },
 
     viewContent: {
@@ -92,7 +92,7 @@ export const styles = StyleSheet.create({
         bottom: 0,
         left: 0,
         right: 0,
-        backgroundColor: '#fff'
+        backgroundColor: 'rgba(64,64,64, 0.8)',
     },
 
     btnGallery: {
@@ -140,6 +140,7 @@ export const styles = StyleSheet.create({
     labelTxt: {
         fontSize: 14,
         fontWeight: '600',
+        color: '#DCF2DE',
     },
 
     btnDone: {

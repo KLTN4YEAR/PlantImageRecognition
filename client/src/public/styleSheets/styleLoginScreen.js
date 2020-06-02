@@ -3,11 +3,18 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#303030',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    imgBack: {
+        width: '100%',
+        height: '100%',
+        flex: 1,
         backgroundColor: '#ffffff',
         alignItems: 'center',
         justifyContent: 'center',
     },
-
     logo: {
         fontWeight: "bold",
         fontSize: 50,
@@ -88,14 +95,13 @@ export const styles = StyleSheet.create({
     },
 
     imgLogo: {
-        width: 200,
-        height: 200,
+        width: 300,
+        height: 300,
         marginTop: 100,
         marginBottom: 100,
         marginLeft: 'auto',
         marginRight: 'auto',
     },
-
     viewBtn: {
         marginTop: 36,
         marginLeft: 'auto',

@@ -1,9 +1,9 @@
-import { StyleSheet } from 'react-native';
-
+import { StyleSheet, Dimensions } from 'react-native';
+const windowWidth = Dimensions.get('window').width;
 export const styles = StyleSheet.create({
     imgCard: {
-        width: 150,
-        height: 150,
+        width: windowWidth,
+        height: windowWidth,
         marginLeft: 'auto',
         marginRight: 'auto',
     },

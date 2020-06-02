@@ -1,6 +1,6 @@
 const gc = require('../config/google-cloud')
-const bucket = gc.bucket('recognition-plant') // should be your bucket name
-
+const bucket = gc.bucket(`recognitionimageplant.appspot.com`)
+const UUID = require("uuid-v4");
 /**
  *
  * @param { File } object file object that will be uploaded
@@ -13,19 +13,31 @@ const bucket = gc.bucket('recognition-plant') // should be your bucket name
 const uploadImage = (file, typePlant, plant) => new Promise((resolve, reject) => {
   const { originalname, buffer } = file
   let blob;
+  
   if (!plant) {
     blob = bucket.file(`imagePost/${typePlant}/` + originalname.replace(/ /g, "_"))
   }
-  else
+  else {
     blob = bucket.file(`imagePost/${typePlant}/${plant}/` + originalname.replace(/ /g, "_"))
+  }
 
+  let uuid = UUID();
+
+  const metadata = {
+    contentType: file.mimetype,
+    metadata: {
+      firebaseStorageDownloadTokens: uuid
+    }
+  };
 
   const blobStream = blob.createWriteStream({
-    contentType: file.mimetype,
+    metadata: metadata,
     resumable: false
-  })
+  });
+
   blobStream.on('finish', () => {
-    const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`
+    const publicUrl = "https://firebasestorage.googleapis.com/v0/b/" +
+      bucket.name + "/o/" + encodeURIComponent(blob.name) + "?alt=media&token=" + uuid
     resolve(publicUrl)
   })
     .on('error', (err) => {

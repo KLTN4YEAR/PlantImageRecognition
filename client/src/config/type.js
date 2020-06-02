@@ -16,3 +16,7 @@ export const GET_AVATAR = 'GET_AVATAR';
 export const CLEAN_PROFILE = 'CLEAN_PROFILE';
 
 export const SEARCH_PLANT = 'SEARCH_PLANT';
+
+export const GET_INFO_POST = 'GET_INFO_POST';
+
+export const GET_LIST_POST = 'GET_LIST_POST';
