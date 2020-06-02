@@ -23,14 +23,19 @@ export const styles = StyleSheet.create({
     },
 
     searchBar: {
-        backgroundColor: '#303030',
-        borderEndWidth: 0,
+        padding: 10,
+        height: 60,
+        backgroundColor: 'transparent',
+        borderWidth: 0, //no effect
+        shadowColor: 'white', //no effect
+        borderBottomColor: 'transparent',
+        borderTopColor: 'transparent'
     },
 
     inputSearchBar: {
-        backgroundColor: 'white',
-        borderRadius: 10,
-        height: 30,
+        backgroundColor: 'rgba(82,82,82,0.3)',
+        borderRadius: 30,
+        height: 40,
     },
 
     viewSafeArea: {
@@ -44,6 +49,7 @@ export const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         marginHorizontal: 5,
         backgroundColor: '#303030',
+
     },
 
     viewCard: {
@@ -79,9 +85,13 @@ export const styles = StyleSheet.create({
 
     viewImg: {
         width: 'auto',
-        marginLeft: 'auto',
-        marginRight: 'auto',
         marginBottom: 10,
+        flex: 1,
+        flexDirection: 'row',
+        padding: 10,
+        backgroundColor: 'rgba(82,82,82,0.7)',
+        margin: 5,
+        borderRadius: 20
     },
 
     viewDetail: {
@@ -103,32 +113,33 @@ export const styles = StyleSheet.create({
         margin: 25,
         backgroundColor: '#d4d5d6',
     },
-
+    viewInfo: {
+        flex: 1,
+    },
     txtName: {
         width: '100%',
         fontWeight: 'bold',
         fontSize: 16,
-        marginLeft: 'auto',
+        marginLeft: 20,
         padding: 5,
-        borderBottomWidth: 1,
-        borderBottomColor: '#d1d1d1',
-        marginRight: 'auto',
-        color: '#385898',
+        color: '#fff',
     },
 
     txtDec: {
-        width: '100%',
-        color: '#1c1e21',
+        marginLeft: 20,
+        color: '#ffff',
         fontFamily: 'Helvetica',
-        fontSize: 14,
+        fontSize: 12,
         maxHeight: 50,
+        padding: 5,
+        letterSpacing: 0.8,
     },
 
     imgCard: {
-        height: 120,
-        width: 155,
-        marginLeft: 'auto',
-        marginRight: 'auto',
+        height: 90,
+        width: 90,
+        borderRadius: 50,
+        borderColor: '#fff',
     },
 
     viewPlant: {
@@ -179,12 +190,20 @@ export const styles = StyleSheet.create({
     },
 
     labelResult: {
+        marginLeft: 20,
+        padding: 5,
+        fontWeight: 'bold',
+        color: '#ffff',
+        width: '100%',
+        fontSize: 18
+    },
+    txtNotify: {
+        padding: 10,
+        fontSize: 16,
         marginLeft: 'auto',
         marginRight: 'auto',
-        padding: 10,
-        borderBottomColor: '#d1d1d1',
-        borderBottomWidth: 2,
-        width: '100%',
-        marginTop: 0,
+        marginTop: 10,
+        marginBottom: 10,
+        color: '#ffff',
     },
 });

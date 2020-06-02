@@ -53,7 +53,6 @@ class ExampleApp extends Component {
       cropperToolbarTitle: 'Cắt ảnh',
       cropperToolbarColor: 'white',
       mediaType: 'photo',
-      aspect: [1, 1],
     };
     ImagePicker.openPicker(options)
       .then(image => {

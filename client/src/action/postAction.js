@@ -7,22 +7,23 @@ import {
 } from '../config/type';
 export var successMess = '';
 
-export const newPost = (credentials, post) => {
+export const newPost = (credentials, post) => () => {
     const config = {
         headers: {
             'Accept': 'application/json',
-            'Authorization': 'Bearer ' + credentials.token
+            'Content-Type': 'multipart/form-data',
+            'Authorization': 'Bearer ' + credentials.token,
+            
         }
     }
     const body = post;
-    return axios.post(`${API_URL}/api/post/create`, body, config)
+    axios.post(`${API_URL}/api/post/create`, body, config)
         .then(res => {
-            successMess = res.data.message;
-            return true;
+            console.log('res', res.data)
         })
         .catch(error => {
-            console.log('error: ', error)
-            return error;
+            console.log('error', error)
+                // return error;
         });
 };
 export const getPostInfo = (credentials, pid) => {

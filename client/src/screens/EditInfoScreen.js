@@ -126,7 +126,6 @@ class EditInfo extends ValidationComponent {
   render() {
     const {profile} = this.props;
     const {showDatePicker} = this.state;
-
     return (
       <View style={styles.container}>
         <ScrollView style={styles.viewScroll}>
@@ -143,7 +142,8 @@ class EditInfo extends ValidationComponent {
                   onChange={this.onChange}
                 />
                 <Text style={styles.validateMess}>
-                  {this.isFieldInError('name') && this.getErrorsInField('name')
+                  {this.isFieldInError('name') &&
+                  this.getErrorsInField('name')
                     ? this.getErrorsInField('name')
                     : ''}
                 </Text>
@@ -207,7 +207,11 @@ class EditInfo extends ValidationComponent {
             <DateTimePicker
               isVisible={this.state.showDatePicker}
               testID="dateTimePicker"
-              value={Date.parse(this.state.birthday)}
+              value={
+                this.state.birthday
+                  ? Date.parse(this.state.birthday)
+                  : new Date(1598051730000)
+              }
               mode="date"
               display="default"
               onChange={this.onChangeDate}

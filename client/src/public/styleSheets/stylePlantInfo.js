@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         marginLeft: 'auto',
         marginRight: 'auto',
-
+        backgroundColor: '#303030',
 
     },
     imgPlant: {
@@ -31,8 +31,9 @@ export const styles = StyleSheet.create({
     },
     viewInfoHead: {
         position: 'absolute',
-        bottom: 30,
+        bottom: 40,
         flex: 1,
+        left: 5
     },
     txtName: {
         fontSize: 24,
@@ -81,7 +82,7 @@ export const styles = StyleSheet.create({
     viewDesc: {
         marginLeft: 'auto',
         marginRight: 'auto',
-        backgroundColor: '#303030',
+        backgroundColor: 'transparent',
         marginTop: -20,
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
@@ -90,12 +91,12 @@ export const styles = StyleSheet.create({
     },
 
     txtDesc: {
-        fontSize: 15,
+        fontSize: 14,
         fontFamily: 'Calibri',
         fontWeight: 'normal',
         padding: 5,
         letterSpacing: 0.8,
-        textAlign: 'justify',
+        textAlign: 'left',
         color: '#ffff',
     },
     viewBasic: {
@@ -105,15 +106,16 @@ export const styles = StyleSheet.create({
         padding: 5,
         marginTop: 10,
         marginLeft: 20,
-        marginBottom: 20,
+
     },
     viewScience: {
         width: windowWidth,
         flexDirection: 'row',
         flex: 1,
-        padding: 5,
         marginTop: 0,
         marginLeft: 20,
+        marginBottom: 20,
+        padding: 5,
     },
     txtNamevi: {
         color: '#fff',
@@ -132,24 +134,42 @@ export const styles = StyleSheet.create({
     txtNamesce: {
         color: 'black',
         fontSize: 14,
-        textTransform: 'uppercase',
         fontWeight: '900',
         color: '#59c393',
-        padding: 5,
+
     },
     viewCharacter: {
         width: '92%',
-        borderWidth: 1,
         padding: 5,
-        borderColor: '#d1d1d1',
+        borderTopWidth: 1,
+        borderTopColor: 'rgba(1,135,134,0.7)',
         marginBottom: 20,
+        backgroundColor: 'transparent'
+    },
+    linearGradient: {
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        marginTop: -20,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        height: '100%',
+        padding: 5,
+
     },
     lblName: {
         marginTop: -17,
-        backgroundColor: '#303030',
+        backgroundColor: 'rgba(1,135,134,1)',
         flex: 1,
         alignSelf: 'flex-start',
-        fontSize: 18,
-        color: '#d1d1d1',
+        fontSize: 16,
+        color: '#fffeee',
+        borderRadius: 15,
+        padding: 3,
+
+    },
+    viewListImage: {
+        width: '100%',
+        backgroundColor: 'transparent',
+        zIndex: 3
     },
 });

@@ -15,6 +15,7 @@ import {Col, Row, Grid} from 'react-native-easy-grid';
 import {Icon} from 'react-native-elements';
 import {newPost, successMess} from '../action/postAction';
 import {auth} from '../config/helper';
+
 import {connect} from 'react-redux';
 import Toast from 'react-native-simple-toast';
 import ValidationComponent from 'react-native-form-validator';
@@ -62,10 +63,11 @@ class CreatePostScreen extends ValidationComponent {
     this.setState({[e.target.name]: e.target.value});
   };
 
-  async onSubmit() {
+  onSubmit = e => {
+    e.preventDefault(); //chấp nó bấm submit liên tục nè
     if (this.onValidate()) {
       const {post} = this.state;
-      post['mentionedPlant'] = this.state.mentionedPlant;
+      post['mentionedPlant'] = '123456789000';
       post['namePlant'] = this.state.namePlant;
       post['content'] = this.state.content;
       post['plant_images'] = this.state.LocalImage;
@@ -75,20 +77,20 @@ class CreatePostScreen extends ValidationComponent {
       formData.append('mentionedPlant', post.mentionedPlant);
       formData.append('namePlant', post.namePlant);
       formData.append('content', post.content);
-      this.state.LocalImage.map((item, index) => {
-        let fileType = item.substring(item.lastIndexOf('.') + 1);
-        let fileName = item.substring(item.lastIndexOf('/') + 1);
+      post.plant_images.map((item, index) => {
+        // let fileType = item.substring(item.lastIndexOf('.') + 1);
+        let fileName = item.path.substring(item.path.lastIndexOf('/') + 1);
+        console.log('s', item);
         return formData.append('plant_images', {
-          uri: item,
+          uri:  Platform.OS === 'ios' ? item.uri : 'file://' + item.path,
           name: fileName,
-          type: `image/${fileType}`,
+          type: item.mime,
         });
       });
-      console.log('fm',formData)
-      await this.addPost(formData);
+      // console.log('fm', formData);
+      this.addPost(formData);
     }
-    
-  }
+  };
 
   addPost = async formatData => {
     const {newPost, navigation} = this.props;
@@ -105,7 +107,7 @@ class CreatePostScreen extends ValidationComponent {
 
   _pickImage = async () => {
     const options = {
-      cropping: true,
+      //cropping: true,
       compressImageQuality: 1.0,
       showCropFrame: true,
       showCropGuidelines: true,
@@ -115,40 +117,43 @@ class CreatePostScreen extends ValidationComponent {
     };
     ImagePicker.openPicker(options)
       .then(image => {
-        const imageUri = image ? `data:image/jpg;base64,${image.base64}` : null;
-
+        console.log('aaaaa',image)
+        var path = Platform.OS === 'ios' ? image.uri : 'file://' + image.path;
         this.setState({
-          LocalImage: this.state.LocalImage.concat([image.path]),
+          LocalImage: this.state.LocalImage.concat([image]),
         });
-        console.log('v1', image.path);
-        console.log('v', this.state.LocalImage);
       })
       .catch(err => {
         Toast.show('Có lỗi xảy ra!');
       });
   };
+  //Mode of get image from direct camera
   _takePhoto = async () => {
-    let pickerResult = await ImagePicker.launchCamera({
-      base64: true,
-      allowsEditing: true,
-      aspect: [4, 3],
-    });
-    if (!pickerResult.cancelled) {
-      let imageUri = pickerResult
-        ? `data:image/jpg;base64,${pickerResult.base64}`
-        : null;
-      this.state.multipleUrl.push(imageUri);
-      this.setState({
-        LocalImage: this.state.LocalImage.concat([pickerResult.uri]),
+    const options = {
+      cropping: true,
+      compressImageQuality: 1.0,
+      showCropFrame: true,
+      showCropGuidelines: true,
+      cropperToolbarTitle: 'Cắt ảnh',
+      cropperToolbarColor: 'white',
+      mediaType: 'photo',
+    };
+    ImagePicker.openCamera(options)
+      .then(image => {
+        var path = Platform.OS === 'ios' ? image.uri : 'file://' + image.path;
+        this.setState({
+          LocalImage: this.state.LocalImage.concat([image]),
+        });
+      })
+      .catch(err => {
+        Toast.show('Có lỗi xảy ra!');
       });
-    }
   };
-
   _renderImages() {
     let images = [];
     this.state.LocalImage.map((item, index) => {
       images.push(
-        <Image key={index} source={{uri: item}} style={styles.imgDisplay} />,
+        <Image key={index} source={{uri: item.path}} style={styles.imgDisplay} />,
       );
     });
     return images;
@@ -159,9 +164,7 @@ class CreatePostScreen extends ValidationComponent {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.viewImage}>
-          <TouchableOpacity
-            onPress={this._pickImage}
-            style={styles.btnGallery}>
+          <TouchableOpacity onPress={this._pickImage} style={styles.btnGallery}>
             <Grid>
               <Row>
                 <Col size={20}>
@@ -178,9 +181,7 @@ class CreatePostScreen extends ValidationComponent {
               </Row>
             </Grid>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={this._takePhoto}
-            style={styles.btnCamera}>
+          <TouchableOpacity onPress={this._takePhoto} style={styles.btnCamera}>
             <Grid>
               <Row>
                 <Col size={20}>
@@ -244,9 +245,7 @@ class CreatePostScreen extends ValidationComponent {
                   style={styles.inputMention}
                   underlineColorAndroid="transparent"
                   multiline={true}
-                  onChangeText={text =>
-                    this.setState({mentionedPlant: text})
-                  }
+                  onChangeText={text => this.setState({mentionedPlant: text})}
                 />
               </View>
               <View style={styles.viewPlantName}>
@@ -269,15 +268,13 @@ class CreatePostScreen extends ValidationComponent {
               </View>
             </View>
             <View style={styles.viewDisplayImage}>
-              <View style={styles.viewImgDisplay}>
-                {this._renderImages()}
-              </View>
+              <View style={styles.viewImgDisplay}>{this._renderImages()}</View>
             </View>
           </View>
           <TouchableOpacity
             style={styles.btnSave}
-            onPress={this.onSubmit.bind(this)}
-            ><Text style={styles.lblButton}>Lưu</Text>
+            onPress={this.onSubmit.bind(this)}>
+            <Text style={styles.lblButton}>Lưu</Text>
           </TouchableOpacity>
         </ScrollView>
       </SafeAreaView>
