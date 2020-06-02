@@ -74,6 +74,17 @@ export const styles = StyleSheet.create({
         flexDirection: 'column',
         flexWrap: 'wrap',
     },
+    viewSimilar: {
+        height: 50,
+        width: 50,
+        position: 'absolute',
+        right: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 'auto',
+        marginBottom: 'auto',
+        top: 15,
+    },
     lblNameFlow: {
         margin: 5,
         padding: 5,

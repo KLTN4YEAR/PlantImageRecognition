@@ -11,6 +11,7 @@ import {
 import {styles} from '../public/styleSheets/styleTfliteView';
 import Tflite from 'tflite-react-native';
 import Toast from 'react-native-simple-toast';
+import ProgressCircle from 'react-native-progress-circle';
 
 let tflite = new Tflite();
 const height = 350;
@@ -91,8 +92,12 @@ class ResultCamera extends Component {
         return recognitions.map((res, id) => {
           //Se lay res label de search theo ten hoa o day de ra ket qua chi tiet
           return (
-            <TouchableOpacity key={id}  style={styles.viewResult} onPress={() => this.props.navigation.navigate('PlantInfo')}>
-              
+            <TouchableOpacity
+              key={id}
+              style={styles.viewResult}
+              onPress={() =>
+                this.props.navigation.navigate('PlantInfo')
+              }>
               <Image
                 source={{
                   uri:
@@ -102,9 +107,34 @@ class ResultCamera extends Component {
               />
               <View style={styles.viewTrend}>
                 <Text style={styles.lblNameFlow}>{res['label']}</Text>
-                <Text style={styles.lblPercent}>
-                  {'Similarity: ' + (res['confidence'] * 10).toFixed(0) + '%'}
-                </Text>
+              </View>
+              <View style={styles.viewSimilar}>
+                <ProgressCircle
+                  percent={res['confidence'] * 10}
+                  radius={30}
+                  borderWidth={8}
+                  color="#3399FF"
+                  shadowColor="#999"
+                  bgColor="#fff">
+                  <Text style={{fontSize: 12}}>
+                    {(res['confidence'] * 10).toFixed(0) + '%'}
+                  </Text>
+                </ProgressCircle>
+                {/* <PercentageCircle
+                  radius={35}
+                  percent={50}
+                  color={'#3498db'}
+                /> */}
+                {/* <PercentageCircle
+                  radius={35}
+                  percent={50}
+                  >
+                  <Text style={styles.lblPercent}>
+                    {'Similarity: ' +
+                      (res['confidence'] * 10).toFixed(0) +
+                      '%'}
+                  </Text>
+                </PercentageCircle> */}
               </View>
             </TouchableOpacity>
           );
