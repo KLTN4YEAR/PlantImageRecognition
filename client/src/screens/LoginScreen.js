@@ -1,10 +1,11 @@
 import React from 'react';
-import {Image, View, Text, ImageBackground} from 'react-native';
+import {Image, View, Text, ImageBackground, ToastAndroid} from 'react-native';
 import {styles} from '../public/styleSheets/styleLoginScreen';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import Facebook from '../components/LoginWithFacebook';
 import Google from '../components/LoginWithGoogle';
+import Toast from 'react-native-simple-toast';
 
 class LoginScreen extends React.Component {
   static propTypes = {
@@ -18,7 +19,7 @@ class LoginScreen extends React.Component {
   checkLogin = async () => {
     const data = await this.props.isAuthenticated;
     if (data) {
-      console.log('Đã login!');
+      Toast.show('Đã login!');
       await this.props.navigation.navigate('Tab');
     }
   };

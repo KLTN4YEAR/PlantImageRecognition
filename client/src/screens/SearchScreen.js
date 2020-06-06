@@ -1,414 +1,63 @@
 import * as React from 'react';
-import { SearchBar } from 'react-native-elements';
-import {
-  Text,
-  View,
-  Image,
-  SafeAreaView,
-  ScrollView,
-} from 'react-native';
-import { styles } from '../public/styleSheets/styleSearchView';
-import { Col, Row, Grid } from 'react-native-easy-grid';
-import { Icon } from 'react-native-elements';
+import {SearchBar} from 'react-native-elements';
+import {Text, View, Image, SafeAreaView, ScrollView} from 'react-native';
+import {styles} from '../public/styleSheets/styleSearchView';
+import {Col, Row, Grid} from 'react-native-easy-grid';
+import {Icon} from 'react-native-elements';
 import {searchPlant} from '../action/plantAction';
-import { auth } from '../config/helper';
-import { connect } from 'react-redux';
+import {auth} from '../config/helper';
+import {connect} from 'react-redux';
 import SearchResultItem from '../components/SearchResultItem';
 
 class SearchScreen extends React.Component {
   state = {
     search: '',
-    plants:[],
+    plants: [],
   };
 
-  updateSearch = search => {
-    this.setState({ search });
-    this.handleSearch(search);
-    
+  updateSearch = async search => {
+    await this.setState({search});
+    await this.handleSearch(search);
   };
 
-  handleSearch = async(namePlant)=>{
-    console.log('searchkey',namePlant)
+  handleSearch = async namePlant => {
+    const {searchPlant} = this.props;
     const data = await auth.isAuthenticated();
     if (data) {
-      this.props.searchPlant(data, namePlant);
+      searchPlant(data, namePlant);
     }
   };
 
   renderSort() {
-    console.log('a',this.props.plants)
-    if (this.state.search != '')
-      return (
-        <View style={styles.viewSearch}>
-          <Text style={styles.labelResult}>Kết quả cho {this.state.search}</Text>
-          {
-            this.props.plants.length > 0 ? this.props.plants.map((item, i) => {
-              return (<SearchResultItem i={i} key={item._id} plant={item} />);
-            }) : <Text>Không có kết quả</Text>
-          }
-        </View>
-      );
-    else
-      return (
-        <ScrollView style={styles.viewScroll}>
-          <Grid>
-            <Row>
-              <Col size={1}>
-                <View style={styles.viewCard}>
-                  <View style={styles.viewImg}>
-                    <Image
-                      source={{ uri: 'https://mrhoa.com/wp-content/uploads/2019/01/hoa-hong-phan-dep.jpg' }}
-                      style={styles.imgCard}
-                    />
-                  </View>
-                  <View style={styles.viewDetail}>
-                    <Text style={styles.txtName}>Hoa hống</Text>
-                    <View style={styles.viewPlant}>
-                      <Row style={styles.rowDetail}>
-                        <Col size={50} style={styles.colDetail}>
-                          <Row style={styles.rowLabel}>
-                            <Col size={20} >
-                              <Icon
-                                type='font-awesome'
-                                name='pagelines'
-                                style={styles.labelIcon}
-                                size={13}
-                                color='#59c393' />
-                            </Col>
-                            <Col size={80}>
-                              <Text style={styles.labelTxt}>Phân loại</Text>
-                            </Col>
-                          </Row>
-                        </Col>
-                        <Col size={50} style={styles.colDetail}>
-                          <Text style={styles.labelTxtContent}>Hoa Hồng</Text>
-                        </Col>
+    const {plants} = this.props;
 
-                      </Row>
-                      <Row style={styles.rowDetail}>
-                        <Col size={50} style={styles.colDetail}>
-                          <Row style={styles.rowLabel}>
-                            <Col size={20} >
-                              <Icon
-                                type='font-awesome'
-                                name='map-marker'
-                                style={styles.labelIcon}
-                                size={13}
-                                color='#59c393' />
-                            </Col>
-                            <Col size={80}>
-                              <Text style={styles.labelTxt}>Phân bố</Text>
-                            </Col>
-                          </Row>
-                        </Col>
-                        <Col size={50} style={styles.colDetail}>
-                          <Text style={styles.labelTxtContent}>VietNam</Text>
-                        </Col>
-
-                      </Row>
-
-                    </View>
-                  </View>
-                </View>
-              </Col>
-
-              <Col size={1}>
-                <View style={styles.viewCard}>
-                  <View style={styles.viewImg}>
-                    <Image
-                      source={{ uri: 'https://mrhoa.com/wp-content/uploads/2019/01/hoa-hong-phan-dep.jpg' }}
-                      style={styles.imgCard}
-                    />
-                  </View>
-                  <View style={styles.viewDetail}>
-                    <Text style={styles.txtName}>Hoa hống</Text>
-                    <View style={styles.viewPlant}>
-                      <Row style={styles.rowDetail}>
-                        <Col size={50} style={styles.colDetail}>
-                          <Row style={styles.rowLabel}>
-                            <Col size={20} >
-                              <Icon
-                                type='font-awesome'
-                                name='pagelines'
-                                style={styles.labelIcon}
-                                size={13}
-                                color='#59c393' />
-                            </Col>
-                            <Col size={80}>
-                              <Text style={styles.labelTxt}>Phân loại</Text>
-                            </Col>
-                          </Row>
-                        </Col>
-                        <Col size={50} style={styles.colDetail}>
-                          <Text style={styles.labelTxtContent}>Hoa Hồng</Text>
-                        </Col>
-
-                      </Row>
-                      <Row style={styles.rowDetail}>
-                        <Col size={50} style={styles.colDetail}>
-                          <Row style={styles.rowLabel}>
-                            <Col size={20} >
-                              <Icon
-                                type='font-awesome'
-                                name='map-marker'
-                                style={styles.labelIcon}
-                                size={13}
-                                color='#59c393' />
-                            </Col>
-                            <Col size={80}>
-                              <Text style={styles.labelTxt}>Phân bố</Text>
-                            </Col>
-                          </Row>
-                        </Col>
-                        <Col size={50} style={styles.colDetail}>
-                          <Text style={styles.labelTxtContent}>VietNam</Text>
-                        </Col>
-                      </Row>
-                    </View>
-                  </View>
-                </View>
-              </Col>
-            </Row>
-            <Row>
-              <Col size={1}>
-                <View style={styles.viewCard}>
-                  <View style={styles.viewImg}>
-                    <Image
-                      source={{ uri: 'https://mrhoa.com/wp-content/uploads/2019/01/hoa-hong-phan-dep.jpg' }}
-                      style={styles.imgCard}
-                    />
-                  </View>
-                  <View style={styles.viewDetail}>
-                    <Text style={styles.txtName}>Hoa hống</Text>
-                    <View style={styles.viewPlant}>
-                      <Row style={styles.rowDetail}>
-                        <Col size={50} style={styles.colDetail}>
-                          <Row style={styles.rowLabel}>
-                            <Col size={20} >
-                              <Icon
-                                type='font-awesome'
-                                name='pagelines'
-                                style={styles.labelIcon}
-                                size={13}
-                                color='#59c393' />
-                            </Col>
-                            <Col size={80}>
-                              <Text style={styles.labelTxt}>Phân loại</Text>
-                            </Col>
-                          </Row>
-                        </Col>
-                        <Col size={50} style={styles.colDetail}>
-                          <Text style={styles.labelTxtContent}>Hoa Hồng</Text>
-                        </Col>
-
-                      </Row>
-                      <Row style={styles.rowDetail}>
-                        <Col size={50} style={styles.colDetail}>
-                          <Row style={styles.rowLabel}>
-                            <Col size={20} >
-                              <Icon
-                                type='font-awesome'
-                                name='map-marker'
-                                style={styles.labelIcon}
-                                size={13}
-                                color='#59c393' />
-                            </Col>
-                            <Col size={80}>
-                              <Text style={styles.labelTxt}>Phân bố</Text>
-                            </Col>
-                          </Row>
-                        </Col>
-                        <Col size={50} style={styles.colDetail}>
-                          <Text style={styles.labelTxtContent}>VietNam</Text>
-                        </Col>
-
-                      </Row>
-
-                    </View>
-                  </View>
-                </View>
-              </Col>
-
-              <Col size={1}>
-                <View style={styles.viewCard}>
-                  <View style={styles.viewImg}>
-                    <Image
-                      source={{ uri: 'https://mrhoa.com/wp-content/uploads/2019/01/hoa-hong-phan-dep.jpg' }}
-                      style={styles.imgCard}
-                    />
-                  </View>
-                  <View style={styles.viewDetail}>
-                    <Text style={styles.txtName}>Hoa hống</Text>
-                    <View style={styles.viewPlant}>
-                      <Row style={styles.rowDetail}>
-                        <Col size={50} style={styles.colDetail}>
-                          <Row style={styles.rowLabel}>
-                            <Col size={20} >
-                              <Icon
-                                type='font-awesome'
-                                name='pagelines'
-                                style={styles.labelIcon}
-                                size={13}
-                                color='#59c393' />
-                            </Col>
-                            <Col size={80}>
-                              <Text style={styles.labelTxt}>Phân loại</Text>
-                            </Col>
-                          </Row>
-                        </Col>
-                        <Col size={50} style={styles.colDetail}>
-                          <Text style={styles.labelTxtContent}>Hoa Hồng</Text>
-                        </Col>
-
-                      </Row>
-                      <Row style={styles.rowDetail}>
-                        <Col size={50} style={styles.colDetail}>
-                          <Row style={styles.rowLabel}>
-                            <Col size={20} >
-                              <Icon
-                                type='font-awesome'
-                                name='map-marker'
-                                style={styles.labelIcon}
-                                size={13}
-                                color='#59c393' />
-                            </Col>
-                            <Col size={80}>
-                              <Text style={styles.labelTxt}>Phân bố</Text>
-                            </Col>
-                          </Row>
-                        </Col>
-                        <Col size={50} style={styles.colDetail}>
-                          <Text style={styles.labelTxtContent}>VietNam</Text>
-                        </Col>
-                      </Row>
-                    </View>
-                  </View>
-                </View>
-              </Col>
-            </Row>
-            <Row>
-              <Col size={1}>
-                <View style={styles.viewCard}>
-                  <View style={styles.viewImg}>
-                    <Image
-                      source={{ uri: 'https://mrhoa.com/wp-content/uploads/2019/01/hoa-hong-phan-dep.jpg' }}
-                      style={styles.imgCard}
-                    />
-                  </View>
-                  <View style={styles.viewDetail}>
-                    <Text style={styles.txtName}>Hoa hống</Text>
-                    <View style={styles.viewPlant}>
-                      <Row style={styles.rowDetail}>
-                        <Col size={50} style={styles.colDetail}>
-                          <Row style={styles.rowLabel}>
-                            <Col size={20} >
-                              <Icon
-                                type='font-awesome'
-                                name='pagelines'
-                                style={styles.labelIcon}
-                                size={13}
-                                color='#59c393' />
-                            </Col>
-                            <Col size={80}>
-                              <Text style={styles.labelTxt}>Phân loại</Text>
-                            </Col>
-                          </Row>
-                        </Col>
-                        <Col size={50} style={styles.colDetail}>
-                          <Text style={styles.labelTxtContent}>Hoa Hồng</Text>
-                        </Col>
-
-                      </Row>
-                      <Row style={styles.rowDetail}>
-                        <Col size={50} style={styles.colDetail}>
-                          <Row style={styles.rowLabel}>
-                            <Col size={20} >
-                              <Icon
-                                type='font-awesome'
-                                name='map-marker'
-                                style={styles.labelIcon}
-                                size={13}
-                                color='#59c393' />
-                            </Col>
-                            <Col size={80}>
-                              <Text style={styles.labelTxt}>Phân bố</Text>
-                            </Col>
-                          </Row>
-                        </Col>
-                        <Col size={50} style={styles.colDetail}>
-                          <Text style={styles.labelTxtContent}>VietNam</Text>
-                        </Col>
-
-                      </Row>
-
-                    </View>
-                  </View>
-                </View>
-              </Col>
-              <Col size={1}>
-                <View style={styles.viewCard}>
-                  <View style={styles.viewImg}>
-                    <Image
-                      source={{ uri: 'https://mrhoa.com/wp-content/uploads/2019/01/hoa-hong-phan-dep.jpg' }}
-                      style={styles.imgCard}
-                    />
-                  </View>
-                  <View style={styles.viewDetail}>
-                    <Text style={styles.txtName}>Hoa hống</Text>
-                    <View style={styles.viewPlant}>
-                      <Row style={styles.rowDetail}>
-                        <Col size={50} style={styles.colDetail}>
-                          <Row style={styles.rowLabel}>
-                            <Col size={20} >
-                              <Icon
-                                type='font-awesome'
-                                name='pagelines'
-                                style={styles.labelIcon}
-                                size={13}
-                                color='#59c393' />
-                            </Col>
-                            <Col size={80}>
-                              <Text style={styles.labelTxt}>Phân loại</Text>
-                            </Col>
-                          </Row>
-                        </Col>
-                        <Col size={50} style={styles.colDetail}>
-                          <Text style={styles.labelTxtContent}>Hoa Hồng</Text>
-                        </Col>
-
-                      </Row>
-                      <Row style={styles.rowDetail}>
-                        <Col size={50} style={styles.colDetail}>
-                          <Row style={styles.rowLabel}>
-                            <Col size={20} >
-                              <Icon
-                                type='font-awesome'
-                                name='map-marker'
-                                style={styles.labelIcon}
-                                size={13}
-                                color='#59c393' />
-                            </Col>
-                            <Col size={80}>
-                              <Text style={styles.labelTxt}>Phân bố</Text>
-                            </Col>
-                          </Row>
-                        </Col>
-                        <Col size={50} style={styles.colDetail}>
-                          <Text style={styles.labelTxtContent}>VietNam</Text>
-                        </Col>
-                      </Row>
-                    </View>
-                  </View>
-                </View>
-              </Col>
-            </Row>
-          </Grid>
-        </ScrollView>
-      );
+    return (
+    
+      <View style={styles.viewSearch}>
+        {this.state.search ? (
+          <>
+            <Text style={styles.labelResult}>
+              Kết quả cho: {this.state.search}
+            </Text>
+            {plants.length > 0 ? (
+              plants.map((item, i) => {
+                return (
+                  <SearchResultItem i={i} key={item._id} plant={item} />
+                );
+              })
+            ) : (
+              <Text style={styles.txtNotify}>Không có kết quả</Text>
+            )}
+          </>
+        ) : (
+          <Text style={styles.txtNotify}>Nhập từ khoá để tìm kiếm!</Text>
+        )}
+      </View>
+    );
   }
 
   render() {
-    const { search } = this.state;
+    const {search} = this.state;
     return (
       <SafeAreaView style={styles.viewSafeArea}>
         <SearchBar
@@ -418,8 +67,8 @@ class SearchScreen extends React.Component {
           inputContainerStyle={styles.inputSearchBar}
           showLoading
           containerStyle={styles.searchBar}
+          placeholderTextColor="#fff"
           cancelIcon
-          lightTheme
           round
         />
         {this.renderSort()}
@@ -430,8 +79,11 @@ class SearchScreen extends React.Component {
 
 function mapStateToProp(state) {
   return {
-    plants:state.plant.plants,
-  }
+    plants: state.plant.plants,
+  };
 }
 
-export default connect(mapStateToProp,{searchPlant})(SearchScreen);
+export default connect(
+  mapStateToProp,
+  {searchPlant},
+)(SearchScreen);

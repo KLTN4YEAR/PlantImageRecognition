@@ -11,7 +11,7 @@ const multerMid = multer({
     },
 }).array("plant_images", 5);
 
-const createPost = async (req, res) => {
+const createPost = async(req, res) => {
     const myFile = req.files;
     if (!myFile) {
         return res.status(400).json({
@@ -77,7 +77,7 @@ const getList = async (req, res) => {
         })
 }
 
-const getInfoPost = async (req, res) => {
+const getInfoPost = async(req, res) => {
     const formatData = {
         postId: req.params._id
     }
@@ -100,3 +100,4 @@ module.exports = {
     getInfoPost,
     getList
 };
+

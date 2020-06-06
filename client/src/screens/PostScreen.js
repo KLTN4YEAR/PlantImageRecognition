@@ -11,73 +11,18 @@ import {
   Alert,
   RefreshControl,
 } from 'react-native';
-import { styles } from '../public/styleSheets/styleHomeCard';
-import { Col, Row, Grid } from 'react-native-easy-grid';
-import { Avatar } from 'react-native-elements';
-import { Icon } from 'react-native-elements';
-import { connect } from 'react-redux';
+import {styles} from '../public/styleSheets/styleHomeCard';
+import {Col, Row, Grid} from 'react-native-easy-grid';
+import {Avatar} from 'react-native-elements';
+import {Icon} from 'react-native-elements';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import { auth } from '../config/helper';
+import {auth} from '../config/helper';
+import Toast from 'react-native-simple-toast';
+import {getListPost} from '../action/postAction';
+import {getInfo} from '../action/userAction';
 // Gọi các sqlite function
-import {
-  addDataToDb,
-  insertFlower,
-  viewAllFlower,
-  getIDByName,
-  insertImages,
-  removeData,
-  
-} from '../sqlite/dbFlowerOffline';
-
-import { openDatabase } from 'react-native-sqlite-storage';
-var db = openDatabase({ name: 'FlowerDatabase.db' });
-const listPost = [
-  {
-    _id: '5eb1875a89302e0908142f10',
-    images:
-      'https://storage.googleapis.com/recognition-plant/imagePost/oldPlant/daisy/fcd767c9-5dd9-4688-8a07-e4625ca0111e.jpg',
-
-    hiden: false,
-    content: 'Cúc nè',
-    postedBy: '5eb17e2ec8c4ce2fb45d9c7a',
-    nameUser: 'Nguyễn Tuấn Vũ',
-    avatarUrl:
-      'https://scontent.fsgn2-2.fna.fbcdn.net/v/t1.0-9/p960x960/50688968_787150878305428_8692489284222976000_o.jpg?_nc_cat=103&_nc_sid=85a577&_nc_ohc=zcJBX5vIb8wAX90Dc2L&_nc_ht=scontent.fsgn2-2.fna&_nc_tp=6&oh=f014004fd64fff9d405ece955bde47b7&oe=5EE5EDB1',
-  },
-  {
-    _id: '5eb1876d89302e0908142f11',
-    images:
-      'https://storage.googleapis.com/recognition-plant/imagePost/oldPlant/daisy/1890ac32-e365-438d-bca3-203f1cd39339.jpg',
-    nameUser: 'Nguyễn Tuấn Vũ',
-    avatarUrl:
-      'https://scontent.fsgn2-2.fna.fbcdn.net/v/t1.0-9/p960x960/50688968_787150878305428_8692489284222976000_o.jpg?_nc_cat=103&_nc_sid=85a577&_nc_ohc=zcJBX5vIb8wAX90Dc2L&_nc_ht=scontent.fsgn2-2.fna&_nc_tp=6&oh=f014004fd64fff9d405ece955bde47b7&oe=5EE5EDB1',
-    hiden: false,
-    content: 'Hoa Cúc xinh đẹp',
-    postedBy: '5eb17e2ec8c4ce2fb45d9c7a',
-  },
-  {
-    _id: '5eb1876d89302e0908142f11',
-    images:
-      'https://storage.googleapis.com/recognition-plant/imagePost/oldPlant/daisy/1890ac32-e365-438d-bca3-203f1cd39339.jpg',
-    nameUser: 'Nguyễn Tuấn Vũ',
-    avatarUrl:
-      'https://scontent.fsgn2-2.fna.fbcdn.net/v/t1.0-9/p960x960/50688968_787150878305428_8692489284222976000_o.jpg?_nc_cat=103&_nc_sid=85a577&_nc_ohc=zcJBX5vIb8wAX90Dc2L&_nc_ht=scontent.fsgn2-2.fna&_nc_tp=6&oh=f014004fd64fff9d405ece955bde47b7&oe=5EE5EDB1',
-    hiden: false,
-    content: 'Hoa Cúc xinh đẹp',
-    postedBy: '5eb17e2ec8c4ce2fb45d9c7a',
-  },
-  {
-    _id: '5eb1876d89302e0908142f11',
-    images:
-      'https://storage.googleapis.com/recognition-plant/imagePost/oldPlant/daisy/1890ac32-e365-438d-bca3-203f1cd39339.jpg',
-    nameUser: 'Nguyễn Tuấn Vũ',
-    avatarUrl:
-      'https://scontent.fsgn2-2.fna.fbcdn.net/v/t1.0-9/p960x960/50688968_787150878305428_8692489284222976000_o.jpg?_nc_cat=103&_nc_sid=85a577&_nc_ohc=zcJBX5vIb8wAX90Dc2L&_nc_ht=scontent.fsgn2-2.fna&_nc_tp=6&oh=f014004fd64fff9d405ece955bde47b7&oe=5EE5EDB1',
-    hiden: false,
-    content: 'Hoa Cúc xinh đẹp',
-    postedBy: '5eb17e2ec8c4ce2fb45d9c7a',
-  },
-];
+import {viewAllFlower} from '../sqlite/dbFlowerOffline';
 
 class PostScreen extends React.Component {
   constructor(props) {
@@ -85,13 +30,21 @@ class PostScreen extends React.Component {
     this.state = {
       refreshing: false,
       dataSource: [],
-
       dataSQLite: [],
+      loading: false,
+      isListEnd: false,
+      serverData: [],
+      fetching_from_server: false,
     };
+    this.offset = '111111111111';
   }
+  //định nghĩa các prop
+  static propTypes = {
+    isAuthenticated: PropTypes.bool,
+  };
+
   ListViewItemSeparator = () => {
     return (
-      //returning the listview item saparator view
       <View
         style={{
           height: 0.2,
@@ -101,176 +54,227 @@ class PostScreen extends React.Component {
       />
     );
   };
-  onRefresh() {
-    //Clear old data of the list
-    this.setState({ dataSource: [] });
-    //Call the Service to get the latest data
-    //this.GetData();
+
+  async componentDidMount() {
+    await this.checkLogin();
+    await this.loadMoreData();
+    await this.loadData();
+    //xu ly bat dong bo sqlite
+    await viewAllFlower(this.getResultFromVA);
   }
 
-  //định nghĩa các prop
-  static propTypes = {
-    isAuthenticated: PropTypes.bool,
+  loadData = async () => {
+    const {getInfo} = this.props;
+    const data = await auth.isAuthenticated();
+    if (data) {
+      await getInfo(data, data.user._id);
+    }
   };
-  componentDidMount = async () => {
-    this.checkLogin();
-    // await addDataToDb();
-    // const flower={
-    //   name:'cuc',
-    //   location:'tay ninh',
-    //   characteristics:'',
-    //   fAvatar:'',
-    //   created:''
-    // }
-    // await insertFlower(flower);
-    await viewAllFlower(this.getResult)
+  onRefresh() {
+    this.setState({
+      loading: false,
+      isListEnd: false,
+      serverData: [],
+      fetching_from_server: false,
+    });
+    this.offset = '111111111111';
+    this.loadMoreData();
   }
 
-  getResult=(result)=>{
-    console.log('result: ',result)
-  }
   checkLogin = async () => {
     const data = await auth.isAuthenticated();
     if (!data) {
-      console.log('Chưa login!');
-      //await this.props.navigation.navigate('Login');
+      Toast.show('Chưa login!');
     } else {
-      console.log('Đã login!');
+      Toast.show('Đã login!');
     }
   };
-  render() {
-    if (this.state.refreshing) {
-      return (
-        //loading view while data is loading
-        <View style={{ flex: 1, paddingTop: 20 }}>
-          <ActivityIndicator />
-        </View>
+
+  loadMoreData = async () => {
+    const {getListPost} = this.props;
+    const {fetching_from_server, isListEnd, serverData} = this.state;
+
+    if (!fetching_from_server && !isListEnd) {
+      this.setState(
+        {
+          fetching_from_server: true,
+        },
+        async () => {
+          const credentials = await auth.isAuthenticated();
+          let lstPost = await getListPost(credentials, this.offset);
+          if (lstPost.length > 0) {
+            this.offset = lstPost[lstPost.length - 1]._id;
+            this.setState({
+              serverData: [...serverData, ...lstPost],
+              fetching_from_server: false,
+            });
+          } else {
+            this.setState({
+              fetching_from_server: false,
+              isListEnd: true,
+            });
+          }
+        },
       );
     }
+  };
+
+  renderFooter() {
+    return (
+      <View style={styles.footer}>
+        {this.state.fetching_from_server ? (
+          <ActivityIndicator color="black" style={{margin: 15}} />
+        ) : null}
+      </View>
+    );
+  }
+
+  render() {
+    const {profile} = this.props;
     return (
       <SafeAreaView style={styles.viewSafeArea}>
-        <ScrollView
-          style={styles.viewScroll}
-          refreshControl={
-            <RefreshControl
-              //refresh control used for the Pull to Refresh
-              refreshing={this.state.refreshing}
-              onRefresh={this.onRefresh.bind(this)}
+        <View style={styles.stylesHead}>
+          <Image
+            source={require('../public/images/logohead.png')}
+            style={styles.imgLogoHead}
+          />
+          <Text style={styles.txtLogoHead}>RECOGNITION PLANT</Text>
+          <TouchableOpacity>
+            <Avatar
+              rounded
+              source={{
+                uri: profile.avatar,
+              }}
             />
-          }>
-          <Grid>
-            <Row style={styles.rowCreate}>
-              <Col size={20}>
-                <Avatar
-                  rounded
-                  source={{
-                    uri:
-                      'https://scontent.fsgn2-2.fna.fbcdn.net/v/t1.0-9/p960x960/50688968_787150878305428_8692489284222976000_o.jpg?_nc_cat=103&_nc_sid=85a577&_nc_ohc=zcJBX5vIb8wAX_TOhha&_nc_ht=scontent.fsgn2-2.fna&_nc_tp=6&oh=fb5db39206db9f0b26ad10b268a91f5b&oe=5EE5EDB1',
-                  }}
-                />
-              </Col>
-              <Col size={90}>
-                <Text style={styles.txtUserNameCreate}>Nguyễn Tuấn Vũ</Text>
-              </Col>
-              <Col size={10}>
-                <TouchableOpacity
-                  style={styles.btnCreatePost}
-                  onPress={() => this.props.navigation.navigate('CreatePost')}>
-                  <Text style={styles.txtUserNameCreate}>+</Text>
-                </TouchableOpacity>
-              </Col>
-            </Row>
-            {listPost.length > 0 ? (
-              listPost.map((item, i) => {
-                return (
-                  <Row key={i}>
-                    <View style={styles.viewCard}>
-                      <View style={styles.viewPostBy}>
-                        <Row style={styles.rowPostBy}>
-                          <Col size={15}>
-                            <Avatar
-                              rounded
-                              source={{
-                                uri: item.avatarUrl,
-                              }}
-                            />
-                          </Col>
-                          <Col size={85}>
-                            <Text style={styles.txtUserName}>
-                              {item.nameUser}
-                            </Text>
-                          </Col>
-                        </Row>
-                      </View>
-
-                      <View style={styles.viewDetail}>
-                        <Text style={styles.txtDec}>{item.content}</Text>
-                      </View>
-                      <View style={styles.viewImg}>
-                        <Image
-                          source={{
-                            uri: item.images,
-                          }}
-                          style={styles.imgCard}
-                        />
-                      </View>
-                      <View style={styles.viewBtn}>
-                        {/* <TouchableOpacity
-                          style={styles.touchAdd}
-                          onPress={() =>
-                            this.props.navigation.navigate(
-                              'AddDetail',
-                            )
-                          }>
-                          <Col
-                            size={15}
-                            style={styles.colBtnAdd}>
-                            <Icon
-                              size={20}
-                              type="font-awesome"
-                              name="edit"
-                              iconStyle={styles.labelIconAdd}
-                              color="#606770"
-                            />
-                            <Text style={styles.labelAdd}>
-                              Thêm thông tin
-                            </Text>
-                          </Col>
-                        </TouchableOpacity> */}
-                        <TouchableOpacity
-                          style={styles.touchAdd}
-                          onPress={() =>
-                            this.props.navigation.navigate('DetailPost', {
-                              post: item,
-                            })
-                          }>
-                          <Col size={15} style={styles.colBtnAdd}>
-                            <Icon
-                              size={20}
-                              type="font-awesome"
-                              name="edit"
-                              iconStyle={styles.labelIconAdd}
-                              color="#606770"
-                            />
-                            <Text style={styles.labelAdd}>Xem chi tiết</Text>
-                          </Col>
-                        </TouchableOpacity>
-                      </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.btnAdd}
+            onPress={() => this.props.navigation.navigate('CreatePost')}>
+            <Icon
+              size={35}
+              type="font-awesome"
+              name="plus"
+              iconStyle={styles.labelIconAdd}
+              color="#DCF2DE"
+            />
+          </TouchableOpacity>
+        </View>
+        {this.state.loading ? (
+          <ActivityIndicator size="large" />
+        ) : (
+          <FlatList
+            style={styles.viewFlatList}
+            keyExtractor={(item, index) => index.toString()}
+            data={this.state.serverData}
+            onEndReached={() => this.loadMoreData()}
+            onEndReachedThreshold={0.5}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this.onRefresh.bind(this)}
+              />
+            }
+            renderItem={({item, index}) => (
+              <Grid>
+                <Row key={index}>
+                  <View style={styles.viewCard}>
+                    <View style={styles.viewPostBy}>
+                      <Row style={styles.rowPostBy}>
+                        <Col size={15}>
+                          <Avatar
+                            rounded
+                            source={{
+                              uri: item.postedBy.avatar,
+                            }}
+                          />
+                        </Col>
+                        <Col size={85}>
+                          <Text style={styles.txtUserName}>
+                            {item.postedBy.fullName}
+                          </Text>
+                        </Col>
+                      </Row>
                     </View>
-                  </Row>
-                );
-              })
-            ) : (
-                <Text>Không có kết quả</Text>
-              )}
-          </Grid>
-        </ScrollView>
+                    <View style={styles.viewDetail}>
+                      <Text style={styles.txtDec} numberOfLines={4}>
+                        {item.content}
+                      </Text>
+                    </View>
+                    <View style={styles.viewImg}>
+                      <Image
+                        source={{
+                          uri: item.images[0],
+                        }}
+                        style={styles.imgCard}
+                      />
+                    </View>
+                    <View style={styles.viewBtn}>
+                      <Row>
+                        <Col size={1}>
+                          <TouchableOpacity
+                            style={styles.touchAdd}
+                            onPress={() =>
+                              this.props.navigation.navigate('AddDetail')
+                            }>
+                            <Col size={15} style={styles.colBtnAdd}>
+                              <Icon
+                                size={20}
+                                type="font-awesome"
+                                name="edit"
+                                iconStyle={styles.labelIconAdd}
+                                color="rgb(242,235,223)"
+                              />
+                              <Text style={styles.labelAdd}>
+                                Thêm thông tin
+                              </Text>
+                            </Col>
+                          </TouchableOpacity>
+                        </Col>
+                        <Col size={1}>
+                          <TouchableOpacity
+                            style={styles.touchAdd}
+                            onPress={() =>
+                              this.props.navigation.navigate('DetailPost', {
+                                post: item,
+                              })
+                            }>
+                            <Col size={15} style={styles.colBtnAdd}>
+                              <Icon
+                                size={20}
+                                type="font-awesome"
+                                name="info-circle"
+                                iconStyle={styles.labelIconAdd}
+                                color="rgb(242,235,223)"
+                              />
+                              <Text style={styles.labelAdd}>Xem chi tiết</Text>
+                            </Col>
+                          </TouchableOpacity>
+                        </Col>
+                      </Row>
+                    </View>
+                  </View>
+                </Row>
+              </Grid>
+            )}
+            ItemSeparatorComponent={() => <View style={styles.separator} />}
+            ListFooterComponent={this.renderFooter.bind(this)}
+          />
+        )}
       </SafeAreaView>
     );
   }
 }
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated,
-});
 
-export default connect(mapStateToProps)(PostScreen);
+function mapStateToProp(state) {
+  return {
+    loaded: state.post.loaded,
+    isAuthenticate: state.auth.isAuthenticated,
+    listPost: state.post.listPost,
+    profile: state.user.profile,
+  };
+}
+
+export default connect(
+  mapStateToProp,
+  {getListPost, getInfo},
+)(PostScreen);

@@ -28,12 +28,9 @@ const searchPlant = async (req, res) => {
 }
 
 const addPlant = async (req, res) => {
-
-    console.log('alo')
     const myFile = req.files;
     let listPathImage = [];
 
-    console.log('req.body.name: ',req.body.name)
     for (let i = 0; i < myFile.length; i++) {
         let imageUrl = '';
         imageUrl = await uploadImage.uploadImagePlant(myFile[i], req.body.name);
@@ -51,8 +48,6 @@ const addPlant = async (req, res) => {
         images: listPathImage
     }
 
-    console.log(formatData)
-
     let plantService = new PlantService(db, formatData);
     let plants = await plantService.addPlant();
 
@@ -64,8 +59,26 @@ const addPlant = async (req, res) => {
 
 }
 
+const getInfo = async (req, res) => {
+    let formatData = {
+        id: req.params.id
+    }
+
+    let plantService = new PlantService(db, formatData);
+    let plants = await plantService.getInfo();
+
+    return res.status(200).json({
+        result: {
+            plants
+        }
+    })
+
+}
+
+
 module.exports = {
     searchPlant,
     addPlant,
-    multerMid
+    multerMid,
+    getInfo
 };

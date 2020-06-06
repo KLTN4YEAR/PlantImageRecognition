@@ -2,13 +2,36 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
     imgCard: {
-        height: 150,
-        width: 330,
+        height: 200,
+        width: 300,
         marginRight: 'auto',
         marginLeft: 'auto',
-
+        borderRadius: 10,
     },
-
+    viewFlatList: {
+        width: '100%',
+        padding: 10,
+    },
+    stylesHead: {
+        flexDirection: 'row',
+        height: 60,
+        width: '100%',
+        backgroundColor: '#59c393',
+        alignItems: 'center',
+    },
+    imgLogoHead: {
+        height: 40,
+        width: 40,
+        alignItems: 'center',
+        padding: 10,
+    },
+    txtLogoHead: {
+        width: '60%',
+        marginLeft: 10,
+        fontWeight: 'bold',
+        fontSize: 20,
+        color: '#DCF2DE',
+    },
     rowCreate: {
         backgroundColor: '#ffff',
         marginTop: 10,
@@ -20,14 +43,13 @@ export const styles = StyleSheet.create({
         width: '100%',
     },
     viewCard: {
-        width: 'auto',
-        height: 280,
         marginTop: 10,
-        borderWidth: 1,
         padding: 10,
         borderRadius: 3,
-        borderColor: '#d1d1d1',
-        backgroundColor: 'white',
+        backgroundColor: '#424242',
+        flex: 1,
+        flexDirection: 'column',
+
     },
 
     viewPostBy: {
@@ -35,11 +57,17 @@ export const styles = StyleSheet.create({
         marginLeft: 'auto',
         marginRight: 'auto',
         padding: 10,
+        backgroundColor: 'rgba(64,64,64, 0.8)',
+        borderRadius: 10,
+        flex: 1,
+        flexDirection: 'column',
+
     },
 
     rowPostBy: {
         alignSelf: 'center',
         alignItems: 'center',
+
     },
 
     txtUserName: {
@@ -48,16 +76,23 @@ export const styles = StyleSheet.create({
         textAlign: 'left',
         alignItems: 'flex-start',
         alignContent: 'flex-start',
+        color: "#DCF2DE",
     },
 
     viewImg: {
         marginLeft: 'auto',
         marginRight: 'auto',
         marginBottom: 10,
+        height: 'auto',
     },
 
     btnAdd: {
-        backgroundColor: 'tomato',
+        backgroundColor: 'transparent',
+        // borderRadius: 50,
+        borderRadius: 5,
+        width: 35,
+        height: 35,
+        marginLeft: 15,
     },
 
     rowAdd: {
@@ -73,16 +108,16 @@ export const styles = StyleSheet.create({
     },
 
     touchAdd: {
-        width: '100%',
+        height: 30,
+        width: 120,
         marginLeft: 'auto',
         marginRight: 'auto',
-        marginBottom: 20,
-        backgroundColor: 'blue',
-        height: 40,
-        backgroundColor: 'transparent',
+        marginTop: 10,
+        backgroundColor: "rgba(191, 186, 176, 0.6)",
         borderRadius: 5,
         justifyContent: 'center',
         alignItems: 'center',
+        borderRadius: 10,
     },
 
     colBtnAdd: {
@@ -107,7 +142,7 @@ export const styles = StyleSheet.create({
     },
 
     labelAdd: {
-        color: '#606770',
+        color: '#F2EBDF',
         fontSize: 12,
         marginLeft: 10,
         alignContent: 'center',
@@ -126,6 +161,10 @@ export const styles = StyleSheet.create({
         display: 'flex',
         marginTop: 10,
         padding: 5,
+        flex: 1,
+        flexDirection: 'column',
+
+
 
     },
 
@@ -134,12 +173,15 @@ export const styles = StyleSheet.create({
         borderTopColor: '#d1d1d1',
         position: 'relative',
         display: 'flex',
+        flex: 1,
+        flexDirection: 'column',
     },
 
     btnEvent: {
         width: 'auto',
         height: 'auto',
         margin: 25,
+        height: '15%',
         backgroundColor: '#d4d5d6',
     },
 
@@ -148,19 +190,20 @@ export const styles = StyleSheet.create({
     },
 
     txtDec: {
-        width: '100%',
-        color: '#1c1e21',
+        flex: 1,
+        flexDirection: 'column',
+        color: '#EBF2EB',
         fontSize: 14,
-        maxHeight: 50,
         marginBottom: 10,
         textAlign: 'left',
         alignContent: 'flex-start',
         alignItems: 'flex-start',
-        marginLeft: 10,
+        marginLeft: 3,
+        letterSpacing: 0.5,
     },
 
     viewSafeArea: {
-        backgroundColor: '#d1d1d1',
+        backgroundColor: '#303030',
         flex: 1,
     },
 

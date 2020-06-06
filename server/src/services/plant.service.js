@@ -10,6 +10,11 @@ class Plant {
         return result;
     }
 
+    async getInfo() {
+        let result=await this.db.Plant.findById(this.data.id)
+        return result;
+    }
+    
     async addPlant() {
         const plant = this.data;
         return await this.db.Plant.create(plant)

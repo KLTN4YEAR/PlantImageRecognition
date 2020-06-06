@@ -6,16 +6,18 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import LoginScreen from './../screens/LoginScreen';
 import PostScreen from '../screens/PostScreen';
 import AddDetailScreen from '../screens/AddDetailScreen';
-import ImagePickerScreen from '../screens/ImagePickerScreen';
+// import ImagePickerScreen from '../screens/ImagePickerScreen';
 import PlantInfoScreen from '../screens/PlantInfoScreen';
 
-// import ImagePickerScreen from '../components/TfliteView';
+import ImagePickerScreen from '../test/RNCameraScreen';
+import ResultRNCameraScreen from '../test/ResultRNCameraScreen';
 
 import ResultCameraScreen from '../screens/ResultCameraScreen';
 import SearchScreen from './../screens/SearchScreen';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ViewInfo from '../screens/ViewInfoScreen';
 import EditInfo from '../screens/EditInfoScreen';
+
 import CreatePostScreen from '../screens/CreatePostScreen';
 
 import DetailPostScreen from '../screens/PostDetailScreen';
@@ -40,14 +42,17 @@ function TabScreen() {
       })}
       tabBarOptions={{
         activeTintColor: '#59c393',
-        inactiveTintColor: '#AFFABA',
+        inactiveTintColor: 'rgba(209,242,194,0.4)',
         showIcon: true,
-        style: {borderRadius: 20},
-        tabStyle: {borderRadius: 20},
+        tabStyle: {borderRadius: 10},
         labelStyle: {
           fontSize: 12,
           fontFamily: 'Calibri',
           letterSpacing: 1,
+        },
+        style: {
+          backgroundColor: 'rgb(38,38,38)',
+          borderRadius: 0,
         },
       }}>
       <Tab.Screen name="Home" component={HomeScreen} />
@@ -106,6 +111,11 @@ function CameraScreen({navigation}) {
         name="PlantInfo"
         options={{headerShown: false}}
         component={PlantInfoScreen}
+      />
+      <StackUser.Screen
+        name="ResultRNCamera"
+        options={{headerShown: false}}
+        component={ResultRNCameraScreen}
       />
       <StackUser.Screen
         name="ResultCamera"
