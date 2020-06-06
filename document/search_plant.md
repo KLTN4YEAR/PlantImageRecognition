@@ -6,7 +6,7 @@
 ***Method: get***
 
 ***Input*** :
-filter on url
+name_plant filter on url (name_plant vietnamese)
 
 ***Ouput*** : limit 5 element
 
