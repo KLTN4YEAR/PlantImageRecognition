@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {RNCamera} from 'react-native-camera';
+import {RNCamera} from 'react-native-camera-tflite';
 import {styles} from '../public/styleSheets/styleRNCamera';
 import {Icon} from 'react-native-elements';
 import ImagePicker from 'react-native-image-crop-picker';

@@ -22,7 +22,7 @@ import Toast from 'react-native-simple-toast';
 import {getListPost} from '../action/postAction';
 import {getInfo} from '../action/userAction';
 // Gọi các sqlite function
-import {viewAllFlower} from '../sqlite/dbFlowerOffline';
+import {viewAllFlower,addDataToDb} from '../sqlite/dbFlowerOffline';
 
 class PostScreen extends React.Component {
   constructor(props) {
@@ -61,6 +61,10 @@ class PostScreen extends React.Component {
     await this.loadData();
     //xu ly bat dong bo sqlite
     await viewAllFlower(this.getResultFromVA);
+  }
+
+  getResultFromVA(result){
+    // console.log('re',result);
   }
 
   loadData = async () => {

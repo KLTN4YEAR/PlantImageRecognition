@@ -13,6 +13,7 @@ import Tflite from 'tflite-react-native';
 import Toast from 'react-native-simple-toast';
 import ProgressCircle from 'react-native-progress-circle';
 
+
 let tflite = new Tflite();
 const height = 350;
 const width = 350;
@@ -32,6 +33,8 @@ class ResultCamera extends Component {
   async componentDidMount() {
     await this.onSelectModel(flower);
     await this.onRunModel();
+
+
   }
   //Set up for model train (tflite file and list result by txt file)
   onSelectModel(model) {
@@ -96,7 +99,7 @@ class ResultCamera extends Component {
               key={id}
               style={styles.viewResult}
               onPress={() =>
-                this.props.navigation.navigate('PlantInfo')
+                this.props.navigation.navigate('PlantInfo',{f_name:res['label']})
               }>
               <Image
                 source={{
@@ -120,21 +123,6 @@ class ResultCamera extends Component {
                     {(res['confidence'] * 10).toFixed(0) + '%'}
                   </Text>
                 </ProgressCircle>
-                {/* <PercentageCircle
-                  radius={35}
-                  percent={50}
-                  color={'#3498db'}
-                /> */}
-                {/* <PercentageCircle
-                  radius={35}
-                  percent={50}
-                  >
-                  <Text style={styles.lblPercent}>
-                    {'Similarity: ' +
-                      (res['confidence'] * 10).toFixed(0) +
-                      '%'}
-                  </Text>
-                </PercentageCircle> */}
               </View>
             </TouchableOpacity>
           );

@@ -9,6 +9,7 @@ import AddDetailScreen from '../screens/AddDetailScreen';
 // import ImagePickerScreen from '../screens/ImagePickerScreen';
 import PlantInfoScreen from '../screens/PlantInfoScreen';
 
+// import ImagePickerScreen from '../test/RNCameraRealtimeScreen';
 import ImagePickerScreen from '../test/RNCameraScreen';
 import ResultRNCameraScreen from '../test/ResultRNCameraScreen';
 

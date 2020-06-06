@@ -14,10 +14,14 @@ import LinearGradient from 'react-native-linear-gradient';
 import {ConfirmDialog} from 'react-native-simple-dialogs';
 import Carousel from 'react-native-snap-carousel';
 
+// Gọi các sqlite function
+import {viewFlowerByName} from '../sqlite/dbFlowerOffline';
 const windowWidth = Dimensions.get('window').width;
 export default class ResultScreen extends React.Component {
   state = {
     dialogVisible: false,
+
+    resultPlant: [],
 
     images: [
       {
@@ -34,6 +38,30 @@ export default class ResultScreen extends React.Component {
       },
     ],
   };
+
+  async componentDidMount() {
+    await this.getFlowerByName();
+  }
+
+  async getFlowerByName(){
+    const {route} = this.props;
+    const f_name = route.params?.f_name;
+    // Xư lý bất đồng bộ sqlite
+    await viewFlowerByName(f_name, this.getResult);
+  }
+
+  getResult(result) {
+    console.log('r', result[0]);
+    if (result) {
+      this.setState({resultPlant:result})
+    }
+  };
+
+
+  setResult(result){
+    this.setState({resultPlant: result[0]});
+  }
+
   _renderItem = ({item, index}) => {
     return (
       <ImageBackground
@@ -45,6 +73,8 @@ export default class ResultScreen extends React.Component {
     );
   };
   render() {
+    const{resultPlant}=this.state;
+    console.log('rrrr',resultPlant)
     return (
       <ScrollView style={styles.scrollView}>
         <View style={styles.viewImage}>

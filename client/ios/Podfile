@@ -84,6 +84,8 @@ target 'client' do
 
   pod 'react-native-sqlite-storage', :path => '../node_modules/react-native-sqlite-storage'
 
+  pod 'react-native-camera', :path => '../node_modules/react-native-camera-tflite'
+
   target 'clientTests' do
     inherit! :complete
     # Pods for testing
