@@ -45,6 +45,6 @@ Strelitzia
 Tropaeolum majus
 Viola tricolor
 dandelion
-roses
+rose
 sunflowers
 tulips
