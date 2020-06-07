@@ -7,7 +7,28 @@ export const styles = StyleSheet.create({
         height: '100%',
     },
 
+    viewHeader: {
+        position: 'absolute',
+        backgroundColor: 'rgba(242,242,242,0.4)',
+        flex: 1,
+        zIndex: 3,
+        flexDirection: 'row',
+        width: '100%',
+        padding: 10,
 
+    },
+    btnBack: {
+        position: 'relative',
+        alignItems: 'flex-start',
+        width: "50%",
+        padding: 5,
+    },
+    btnCancel: {
+        position: 'relative',
+        alignItems: 'flex-end',
+        width: "50%",
+        padding: 5,
+    },
     //Plant update style
     viewImage: {
         width: windowWidth,
@@ -102,20 +123,24 @@ export const styles = StyleSheet.create({
     viewBasic: {
         width: windowWidth,
         flexDirection: 'row',
-        flex: 1,
+        flex: 0,
         padding: 5,
-        marginTop: 10,
+        marginTop: 15,
         marginLeft: 20,
-
     },
     viewScience: {
         width: windowWidth,
-        flexDirection: 'row',
-        flex: 1,
         marginTop: 0,
-        marginLeft: 20,
-        marginBottom: 20,
+        marginLeft: 10,
+        marginBottom: 10,
         padding: 5,
+    },
+    viewLocation: {
+        width: windowWidth,
+        marginTop: 0,
+        marginLeft: 10,
+        padding: 5,
+        marginBottom: 20,
     },
     txtNamevi: {
         color: '#fff',
@@ -132,11 +157,15 @@ export const styles = StyleSheet.create({
         marginRight: 5,
     },
     txtNamesce: {
-        color: 'black',
         fontSize: 14,
         fontWeight: '900',
         color: '#59c393',
 
+    },
+    txtLocation: {
+        fontSize: 14,
+        fontWeight: '900',
+        color: '#59c393',
     },
     viewCharacter: {
         width: '92%',
@@ -171,5 +200,11 @@ export const styles = StyleSheet.create({
         width: '100%',
         backgroundColor: 'transparent',
         zIndex: 3
+    },
+    pagination: {
+        backgroundColor: 'transparent',
+        position: 'absolute',
+        bottom: 0,
+        flex: 1,
     },
 });

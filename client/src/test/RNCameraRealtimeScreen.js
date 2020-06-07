@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {RNCamera} from 'react-native-camera-tflite';
-import outputs from '../output/output-test.json';
+import outputs from '../output/output-flower.json';
 import _ from 'lodash';
 
 let _currentInstant = 0;
@@ -17,6 +17,7 @@ export default class App extends Component {
 
   processOutput({data}) {
     const probs = _.map(data, item => _.round(item / 255.0, 0.02));
+    console.log('probs', data);
     const orderedData = _.chain(data)
       .zip(outputs)
       .orderBy(0, 'desc')
@@ -27,6 +28,7 @@ export default class App extends Component {
       .map(item => `${item[1]}: ${item[0]}`)
       .join('\n')
       .value();
+    console.log('out',outputData)
     const time = Date.now() - (_currentInstant || Date.now());
     const output = `Guesses:\n${outputData}\nTime:${time} ms`;
     this.setState(state => ({
@@ -37,10 +39,10 @@ export default class App extends Component {
 
   render() {
     const modelParams = {
-      file: 'mobilenet_v1_1.0_224_quant.tflite',
+      file: 'models/flowers_quant.tflite',
       inputDimX: 224,
       inputDimY: 224,
-      outputDim: 1001,
+      outputDim: 50,
       isQuantized: true,
       freqms: 0,
     };
