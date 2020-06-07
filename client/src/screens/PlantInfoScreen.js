@@ -15,28 +15,16 @@ import {ConfirmDialog} from 'react-native-simple-dialogs';
 import Carousel from 'react-native-snap-carousel';
 
 // Gọi các sqlite function
-import {viewFlowerByName} from '../sqlite/dbFlowerOffline';
+import {viewFlowerByName, viewImagesById} from '../sqlite/dbFlowerOffline';
 const windowWidth = Dimensions.get('window').width;
 export default class ResultScreen extends React.Component {
   state = {
     dialogVisible: false,
 
-    resultPlant: [],
+    resultPlant: {},
+    resultImg:{},
 
-    images: [
-      {
-        url:
-          'https://hoahongthanglong.com/wp-content/uploads/2019/04/hoa-hong-corail-gelee-rose-8.jpg',
-      },
-      {
-        url:
-          'https://hoahongthanglong.com/wp-content/uploads/2019/04/hoa-hong-corail-gelee-rose-6.jpg',
-      },
-      {
-        url:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTfpxmp2pN4Qz400vJ2FRDg9xE5Uf_kGxDpjjkwxlAXIy1oRJyr&usqp=CAU',
-      },
-    ],
+    images: [],
   };
 
   async componentDidMount() {
@@ -60,21 +48,37 @@ export default class ResultScreen extends React.Component {
   getResult = result => {
     if (result) {
       this.setState({resultPlant: result[0]});
+      this.setState({images: [result[0].img1,result[0].img2,result[0].img3,result[0].img4,result[0].img5,result[0].img6]});
     }
   };
+
+  // async getImagesById(){
+  //   const {resultPlant}=this.state;
+
+  //   //Xử lý lấy image
+  //   await this.getImagesById(resultPlant._id,this.getResultImg)
+  // }
+
+  // getResultImg=result=>{
+  //   if(result){
+  //     this.setState({resultImg:result[0]});
+  //     console.log("img",this.state.resultImg)
+  //   }
+  // }
 
   _renderItem = ({item, index}) => {
     return (
       <ImageBackground
         source={{
-          uri: item.url,
+          uri: item,
         }}
         style={styles.imgPlant}
       />
     );
   };
   render() {
-    const {resultPlant} = this.state;
+    const {resultPlant,images} = this.state;
+    console.log('img',images)
     return (
       <ScrollView style={styles.scrollView}>
         <View style={styles.viewImage}>
@@ -82,7 +86,7 @@ export default class ResultScreen extends React.Component {
             layout={'tinder'}
             layoutCardOffset={9}
             ref={ref => (this.carousel = ref)}
-            data={this.state.images}
+            data={images}
             sliderWidth={windowWidth}
             itemWidth={windowWidth}
             renderItem={this._renderItem}

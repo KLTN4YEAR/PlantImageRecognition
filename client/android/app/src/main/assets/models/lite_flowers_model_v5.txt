@@ -47,4 +47,4 @@ Viola tricolor
 dandelion
 rose
 sunflowers
-tulips
+Tulip
