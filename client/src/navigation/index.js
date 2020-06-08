@@ -23,6 +23,10 @@ import CreatePostScreen from '../screens/CreatePostScreen';
 
 import DetailPostScreen from '../screens/PostDetailScreen';
 
+//idenity before create post
+import ImageBeforePostScreen from '../test/ImageBeforePostScreen';
+import ResultBeforePostScreen from '../test/ResultBeforePostScreen';
+
 const Tab = createBottomTabNavigator();
 
 function TabScreen() {
@@ -187,17 +191,18 @@ function HomeScreen() {
         component={AddDetailScreen}
       />
       <Stack.Screen
+        name="ImageBefore"
+        options={{headerShown: false}}
+        component={ImageBeforePostScreen}
+      />
+      <Stack.Screen
+        name="ResultBefore"
+        options={{headerShown: false}}
+        component={ResultBeforePostScreen}
+      />
+      <Stack.Screen
         name="CreatePost"
-        options={{
-          title: 'Tạo bài viết mới',
-          headerStyle: {
-            backgroundColor: '#59c393',
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-        }}
+        options={{headerShown: false}}
         component={CreatePostScreen}
       />
     </HomeStack.Navigator>

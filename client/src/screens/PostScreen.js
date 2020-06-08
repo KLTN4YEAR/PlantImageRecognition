@@ -153,7 +153,7 @@ class PostScreen extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.btnAdd}
-            onPress={() => this.props.navigation.navigate('CreatePost')}>
+            onPress={() => this.props.navigation.navigate('ImageBefore')}>
             <Icon
               size={35}
               type="font-awesome"

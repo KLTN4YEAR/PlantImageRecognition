@@ -6,11 +6,23 @@ export const styles = StyleSheet.create({
         backgroundColor: '#303030',
         flex: 1,
     },
+    viewHeader: {
+        flex: 1,
+        position: 'absolute',
+        top: 0,
+        padding: 10,
+        flexDirection: 'row',
+        backgroundColor: '#fff',
+        width: '100%',
+    },
+
 
     scrollView: {
         backgroundColor: 'transparent',
         marginHorizontal: 5,
         height: 'auto',
+        position: 'relative',
+        marginTop: 80,
     },
 
     viewUser: {
@@ -83,8 +95,27 @@ export const styles = StyleSheet.create({
 
     inputContent: {
         padding: 10,
+        color: '#DCF2DE',
     },
+    btnBack: {
+        width: '20%',
+        alignItems: 'flex-start',
+    },
+    lblCreate: {
+        width: '60%',
+        fontSize: 18,
+        fontWeight: 'bold',
 
+    },
+    btnSave: {
+        width: '20%',
+        alignSelf: 'flex-end',
+    },
+    lblButton: {
+        fontSize: 16,
+        color: 'green',
+        fontWeight: 'bold',
+    },
     viewImage: {
         padding: 5,
         position: 'absolute',
@@ -96,26 +127,29 @@ export const styles = StyleSheet.create({
     },
 
     btnGallery: {
-        borderBottomColor: '#d1d1d1',
+
         padding: 5,
-        borderBottomWidth: 1,
         height: 40,
-        borderTopColor: '#d1d1d1',
-        borderTopWidth: 1,
+        backgroundColor: '#303030',
+        borderRadius: 10,
         margin: 'auto',
+        marginBottom: 5,
     },
 
     btnCamera: {
         padding: 5,
         height: 40,
+        backgroundColor: '#303030',
+        borderRadius: 10,
         margin: 'auto',
-        borderBottomColor: '#d1d1d1',
-        borderBottomWidth: 1,
+        marginBottom: 5,
     },
 
     btnCancel: {
         padding: 5,
         height: 40,
+        backgroundColor: '#303030',
+        borderRadius: 10,
         margin: 'auto',
     },
 

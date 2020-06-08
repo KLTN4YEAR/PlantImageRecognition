@@ -57,7 +57,7 @@ class ImagePickerScreen extends Component {
     ImagePicker.openPicker(options)
       .then(image => {
         var path = Platform.OS === 'ios' ? image.uri : 'file://' + image.path;
-        this.props.navigation.navigate('ResultRNCamera', {
+        this.props.navigation.navigate('ResultBefore', {
           image: image,
         });
       })
@@ -77,6 +77,7 @@ class ImagePickerScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <View><Text>Chọn hình ảnh trước khi đăng bài</Text></View>
         <RNCamera
           ref={ref => {
             this.camera = ref;

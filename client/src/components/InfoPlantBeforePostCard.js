@@ -12,7 +12,7 @@ import {styles} from '../public/styleSheets/styleTfliteView';
 import ProgressCircle from 'react-native-progress-circle';
 import {viewInfoByEngName} from '../sqlite/dbFlowerOffline';
 
-class GetResultPlant extends Component {
+class InfoPlantBeforePost extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -52,9 +52,8 @@ class GetResultPlant extends Component {
     const {avatarPlant, fName, fId} = this.state;
     const {percent, navigation} = this.props;
     return (
-      <TouchableOpacity
-        style={styles.viewResult}
-        onPress={() => navigation.navigate('PlantInfo', {fId: fId})}>
+      <View
+        style={styles.viewResult}>
         {avatarPlant ? (
           <Image
             source={{
@@ -86,8 +85,8 @@ class GetResultPlant extends Component {
             <Text style={{fontSize: 15,color:'#fff'}}>{percent.toFixed(0) + '%'}</Text>
           </ProgressCircle>
         </View>
-      </TouchableOpacity>
+      </View>
     );
   }
 }
-export default GetResultPlant;
+export default InfoPlantBeforePost;

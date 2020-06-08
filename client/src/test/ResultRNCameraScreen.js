@@ -11,10 +11,7 @@ import {
 import {Icon} from 'react-native-elements';
 import {styles} from '../public/styleSheets/styleTfliteView';
 import Tflite from 'tflite-react-native';
-
-import GetInfoPlant from '../components/GetInfoPlant';
-
-import ProgressCircle from 'react-native-progress-circle';
+import GetInfoPlant from '../components/GetInfoPlantCard';
 
 let tflite = new Tflite();
 const height = 350;

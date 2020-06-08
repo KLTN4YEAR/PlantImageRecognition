@@ -2,7 +2,7 @@ import {openDatabase} from 'react-native-sqlite-storage';
 
 var db = openDatabase({
   name: 'plants.db',
-  createFromLocation: '~plants.db',
+  createFromLocation: '~db/plants.db',
   location: 'Library',
 });
 

@@ -24,6 +24,7 @@ class DetailPostScreen extends React.Component {
   // }
   render() {
     const {post, route} = this.props;
+    console.log('a',route)
 
     return (
       <ScrollView style={styles.scrollView}>
