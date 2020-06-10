@@ -105,3 +105,23 @@ export const viewInfoByEngName = (eName, getResultInfo) => {
     );
   });
 };
+
+// Get id flower by vn name
+export const getIdByVNName = (name, getResultInfo) => {
+  var temp = [];
+  db.transaction(function(tx) {
+    tx.executeSql(
+      'SELECT _id from plants where nameVN =?;',
+      [name],
+      (tx, results) => {
+        for (let i = 0; i < results.rows.length; ++i) {
+          temp.push(results.rows.item(i));
+        }
+        getResultInfo(temp);
+      },
+      err => {
+        console.log('transaction error: ', err.message);
+      },
+    );
+  });
+};

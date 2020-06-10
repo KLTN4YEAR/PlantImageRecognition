@@ -50,17 +50,16 @@ class ResultBeforePostScreen extends Component {
     this.setState({getAllPlant: result});
   };
 
+  async getVNNamePlant(EngName) {
+    await viewInfoByEngName(EngName, this.getResultInfo);
+  };
+  
   getResultInfo = result => {
     if (result) {
       this.setState({
-        getNamePlant:result[0].nameVN
+        getNamePlant: result[0].nameVN,
       });
     }
-  };
-
-  async getVNNamePlant(EngName){
-    console.log("a",EngName)
-    await viewInfoByEngName(EngName,this.getResultInfo)
   };
 
   findPlants(query) {
@@ -220,9 +219,7 @@ class ResultBeforePostScreen extends Component {
           {source ? (
             <View style={styles.boxes}>
               <View style={styles.lblSearchResult}>
-                <Text style={styles.lblResult}>
-                  Ảnh bạn đăng có thể là:
-                </Text>
+                <Text style={styles.lblResult}>Ảnh bạn đăng có thể là:</Text>
               </View>
               {this.renderResults()}
             </View>
@@ -234,8 +231,8 @@ class ResultBeforePostScreen extends Component {
           )}
           <View>
             <Text>
-              Bạn nghĩ nó là loài khác. Vui lòng thay đổi hoặc nhập vào
-              trường kết quả!
+              Bạn nghĩ nó là loài khác. Vui lòng thay đổi hoặc nhập vào trường
+              kết quả!
             </Text>
           </View>
         </ScrollView>
