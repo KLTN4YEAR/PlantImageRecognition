@@ -35,10 +35,12 @@ export const getPostInfo = (credentials, pid) => {
       authorization: 'Bearer ' + credentials.token,
     },
   };
+  console.log("a")
   return function(dispatch) {
     axios
       .get(`${API_URL}/api/post/getInfoPost/${pid}`, config)
       .then(response => {
+        console.log('a1',response);
         dispatch({
           type: GET_INFO_POST,
           payload: response.data.result.post,

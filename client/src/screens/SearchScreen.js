@@ -30,20 +30,17 @@ class SearchScreen extends React.Component {
 
   renderSort() {
     const {plants} = this.props;
-
+    const {search} = this.state;
     return (
-    
       <View style={styles.viewSearch}>
-        {this.state.search ? (
+        {search ? (
           <>
             <Text style={styles.labelResult}>
-              Kết quả cho: {this.state.search}
+              Kết quả cho: {search}
             </Text>
             {plants.length > 0 ? (
               plants.map((item, i) => {
-                return (
-                  <SearchResultItem i={i} key={item._id} plant={item} />
-                );
+                return <SearchResultItem i={i} key={item._id} plant={item} />;
               })
             ) : (
               <Text style={styles.txtNotify}>Không có kết quả</Text>

@@ -9,6 +9,7 @@ import {
     CLEAN_PROFILE,
     GET_AVATAR,
 } from '../config/type';
+import Toast from 'react-native-simple-toast';
 
 export const loginWithGoogle = (profile) => dispatch => {
     const config = {
@@ -20,6 +21,7 @@ export const loginWithGoogle = (profile) => dispatch => {
     axios.post(`${API_URL}/api/auth/google`, body, config)
         .then((response) => {
             auth.authenticate(response.data.result);
+            Toast.show('Đã login!');
             dispatch({
                 type: LOGIN_SUCCESS
             });
@@ -28,6 +30,7 @@ export const loginWithGoogle = (profile) => dispatch => {
             });
         })
         .catch(err => {
+            Toast.show('Lỗi!');
             dispatch(
                 returnErrors(err, 'GET_ERRORS')
             );
@@ -43,6 +46,7 @@ export const loginWithFacebook = (profile) => dispatch => {
             'Content-Type': 'application/json'
         }
     };
+
     const body = profile;
     axios.post(`${API_URL}/api/auth/facebook`, body, config)
         .then((response) => {

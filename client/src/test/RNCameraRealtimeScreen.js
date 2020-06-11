@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {RNCamera} from 'react-native-camera-tflite';
-import outputs from '../output/output-flower.json';
+import outputs from '../output/output-test.json';
 import _ from 'lodash';
 
 let _currentInstant = 0;
@@ -16,6 +16,7 @@ export default class App extends Component {
   }
 
   processOutput({data}) {
+    console.log("dt",data)
     const probs = _.map(data, item => _.round(item / 255.0, 0.02));
     console.log('probs', data);
     const orderedData = _.chain(data)
@@ -39,11 +40,11 @@ export default class App extends Component {
 
   render() {
     const modelParams = {
-      file: 'models/flowers_quant.tflite',
+      file: 'mobilenet_v1_1.0_224_quant.tflite',
       inputDimX: 224,
       inputDimY: 224,
-      outputDim: 50,
-      isQuantized: true,
+      outputDim: 1001,
+      isQuantized: false,
       freqms: 0,
     };
     return (
@@ -74,6 +75,7 @@ export default class App extends Component {
           // onGoogleVisionBarcodesDetected={({barcodes}) => {
           //   console.log(barcodes);
           // }}
+          
           onModelProcessed={data => this.processOutput(data)}
           modelParams={modelParams}
           >

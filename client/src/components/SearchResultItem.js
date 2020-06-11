@@ -7,6 +7,7 @@ import {Icon} from 'react-native-elements';
 class SearchResultList extends Component {
   render() {
     const {plant} = this.props;
+    //console.log("i",plant.images[0])
     return (
       <ScrollView style={styles.viewScroll}>
         <View style={styles.viewImg}>

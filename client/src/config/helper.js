@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-community/async-storage';
-export const API_URL = 'http://192.168.1.181:4000'; //đổi theo ip config và tắt tường lửa
+export const API_URL = 'https://regconitionplant.herokuapp.com'; //đổi theo ip config và tắt tường lửa
 export const CLIENT_ROOT_URL = 'http://192.168.31.158:3000';
 
 export const auth = {
