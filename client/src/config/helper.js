@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage';
-export const API_URL = 'https://regconitionplant.herokuapp.com'; //đổi theo ip config và tắt tường lửa
-export const CLIENT_ROOT_URL = 'http://192.168.31.158:3000';
+// export const API_URL = 'https://regconitionplant.herokuapp.com'; 
+export const API_URL = 'http://192.168.0.58:4000';
 
 export const auth = {
     async isAuthenticated() {
@@ -40,7 +40,6 @@ export const auth = {
         await AsyncStorage.removeItem('jwt');
         await AsyncStorage.removeItem('avatar');
         await AsyncStorage.removeItem('name');
-        console.log('remove', JSON.parse(await AsyncStorage.getItem('jwt')));
     },
 
     async authenticate(jwt) {

@@ -1,9 +1,10 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet,Dimensions} from 'react-native';
+const windowWidth = Dimensions.get('window').width;
 
 export const styles = StyleSheet.create({
          imgCard: {
-           height: 200,
-           width: 300,
+           height: windowWidth*0.6,
+           width: windowWidth,
            marginRight: 'auto',
            marginLeft: 'auto',
            borderRadius: 10,
@@ -98,6 +99,9 @@ export const styles = StyleSheet.create({
            marginRight: 'auto',
            marginBottom: 10,
            height: 'auto',
+           alignSelf:'center',
+           flex:1,
+           flexDirection:'row'
          },
 
          rowAdd: {

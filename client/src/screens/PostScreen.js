@@ -189,7 +189,7 @@ class PostScreen extends React.Component {
                             )}
                           </Col>
                           <Col size={85}>
-                            <Text style={styles.txtUserName} />
+                            <Text style={styles.txtUserName} >{item.postedBy?item.postedBy.fullName:"Unknown"}</Text>
                           </Col>
                         </Row>
                       </View>

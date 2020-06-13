@@ -48,7 +48,7 @@ function TabScreen() {
         },
       })}
       tabBarOptions={{
-        activeTintColor: '#59c393',
+        activeTintColor: '#33CC08',
         inactiveTintColor: 'rgba(209,242,194,0.4)',
         showIcon: true,
         tabStyle: {borderRadius: 10},
@@ -91,7 +91,7 @@ function UserScreen({navigation}) {
         options={{
           title: 'Chỉnh sửa thông tin cá nhân',
           headerStyle: {
-            backgroundColor: '#59c393',
+            backgroundColor: '#33CC08',
           },
           headerTintColor: '#fff',
           headerTitleStyle: {
@@ -129,7 +129,7 @@ function CameraScreen({navigation}) {
         options={{
           title: 'Kết quả',
           headerStyle: {
-            backgroundColor: '#59c393',
+            backgroundColor: '#33CC08',
           },
           headerTintColor: '#fff',
           headerTitleStyle: {
@@ -178,7 +178,7 @@ const HomeStack = createStackNavigator();
 
 function HomeScreen() {
   return (
-    <HomeStack.Navigator initialRouteName="Home">
+    <HomeStack.Navigator initialRouteName="Post">
       <HomeStack.Screen
         name="Post"
         options={{headerShown: false}}
@@ -189,12 +189,12 @@ function HomeScreen() {
         options={{headerShown: false}}
         component={DetailPostScreen}
       />
-      <Stack.Screen
+      <HomeStack.Screen
         name="AddDetail"
         options={{
           title: 'Đóng góp thông tin',
           headerStyle: {
-            backgroundColor: '#59c393',
+            backgroundColor: '#33CC08',
           },
           headerTintColor: '#fff',
           headerTitleStyle: {
@@ -203,17 +203,17 @@ function HomeScreen() {
         }}
         component={AddDetailScreen}
       />
-      <Stack.Screen
+      <HomeStack.Screen
         name="ImageBefore"
         options={{headerShown: false}}
         component={ImageBeforePostScreen}
       />
-      <Stack.Screen
+      <HomeStack.Screen
         name="ResultBefore"
         options={{headerShown: false}}
         component={ResultBeforePostScreen}
       />
-      <Stack.Screen
+      <HomeStack.Screen
         name="CreatePost"
         options={{headerShown: false}}
         component={CreatePostScreen}

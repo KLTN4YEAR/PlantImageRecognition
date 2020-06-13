@@ -112,7 +112,7 @@ class CreatePostScreen extends ValidationComponent {
     const {newPost, navigation} = this.props;
     const credentials = await auth.isAuthenticated();
     newPost(credentials, formatData);
-    navigation.navigate('CreatePost');
+    navigation.navigate('Post');
   };
 
   _pickImage = async () => {
@@ -185,7 +185,7 @@ class CreatePostScreen extends ValidationComponent {
               name="arrow-left"
               style={styles.icKind}
               size={20}
-              color="#000"
+              color="#fff"
             />
           </TouchableOpacity>
           <Text style={styles.lblCreate}>ĐĂNG BÀI</Text>

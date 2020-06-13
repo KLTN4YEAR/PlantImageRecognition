@@ -210,8 +210,8 @@ class ResultBeforePostScreen extends Component {
                   Ảnh bạn đăng có thể là:
                 </Text>
                 <Text style={styles.lblGY}>
-                  Nếu bạn nghĩ hoa bạn chia sẽ có trong kết quả. Vui lòng
-                  chọng để tiếp tục!
+                  Nếu bạn nghĩ thực vật bạn chia sẽ có trong kết quả. Vui lòng
+                  chọn để tiếp tục!
                 </Text>
               </View>
               {this.renderResults()}
