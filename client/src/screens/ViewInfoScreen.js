@@ -24,17 +24,19 @@ class ViewInfo extends React.Component {
   }
 
   loadData = async () => {
+    const{getInfo}=this.props;
     const data = await auth.isAuthenticated();
     if (data) {
-      await this.props.getInfo(data, data.user._id);
+      await getInfo(data, data.user._id);
     }
   };
 
   onClickLogout = async () => {
-    await this.props.logout();
+    const{logout,navigation}=this.props;
+    await logout();
     const data = await auth.isAuthenticated();
     if (!data) {
-      await this.props.navigation.navigate('Login');
+      await navigation.navigate('Login');
     }
   };
 

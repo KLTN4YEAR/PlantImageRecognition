@@ -29,6 +29,9 @@ import ResultBeforePostScreen from '../test/ResultBeforePostScreen';
 
 import {connect} from 'react-redux';
 
+import {auth} from '../config/helper'
+import AsyncStorage from '@react-native-community/async-storage';
+
 const Tab = createBottomTabNavigator();
 
 function TabScreen() {
@@ -144,30 +147,30 @@ function CameraScreen({navigation}) {
 
 const Stack = createStackNavigator();
 
-function NavigationScreen(props) {
-  const {isAuthenticated} = props;
+function NavigationScreen() {
+  const [isAuthenticated, setIsLogedin] = React.useState(false);
+  AsyncStorage.getItem('isAuthenticated').then(data => {
+    if (data != null && data == 'true') setIsLogedin(true);
+    else setIsLogedin(false);
+  });
+
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={isAuthenticated ? 'Login' : 'Tab'}>
+      <Stack.Navigator initialRouteName={isAuthenticated ? 'Tab' : 'Login'}>
         {isAuthenticated ? (
-          <Stack.Screen
-            name="Login"
-            options={{headerShown: false}}
-            component={LoginScreen}
-          />
-        ) : (
           <>
-            <Stack.Screen
-              name="Login"
-              options={{headerShown: false}}
-              component={LoginScreen}
-            />
             <Stack.Screen
               name="Tab"
               options={{headerShown: false}}
               component={TabScreen}
             />
           </>
+        ) : (
+          <Stack.Screen
+            name="Login"
+            options={{headerShown: false}}
+            component={LoginScreen}
+          />
         )}
       </Stack.Navigator>
     </NavigationContainer>
@@ -222,10 +225,4 @@ function HomeScreen() {
   );
 }
 
-function mapStateToProp(state) {
-  return {
-    isAuthenticate: state.auth.isAuthenticated,
-  };
-}
-
-export default connect(mapStateToProp)(NavigationScreen);
+export default (NavigationScreen);
