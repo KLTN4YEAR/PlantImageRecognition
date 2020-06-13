@@ -227,14 +227,14 @@ export default class ResultScreen extends React.Component {
                     multiline={true}
                     style={styles.txtDesc}
                     editable={false}
-                    defaultValue={resultPlant.characteristics}
+                    value={resultPlant.characteristics}
                   />
                 ) : (
                   <TextInput
                     multiline={true}
                     style={styles.txtDesc}
                     editable={false}
-                    defaultValue="Unknown"
+                    value="Unknown"
                   />
                 )}
               </View>
@@ -245,14 +245,14 @@ export default class ResultScreen extends React.Component {
                     multiline={true}
                     style={styles.txtDesc}
                     editable={false}
-                    defaultValue={resultPlant.meaning}
+                    value={resultPlant.meaning}
                   />
                 ) : (
                   <TextInput
                     multiline={true}
                     style={styles.txtDesc}
                     editable={false}
-                    defaultValue="Unknown"
+                    value="Unknown"
                   />
                 )}
               </View>

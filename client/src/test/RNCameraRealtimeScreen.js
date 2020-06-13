@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {RNCamera} from 'react-native-camera-tflite';
-import outputs from '../output/output-test.json';
+import outputs from '../output/output-flower.json';
 import _ from 'lodash';
 
 let _currentInstant = 0;
@@ -40,11 +40,11 @@ export default class App extends Component {
 
   render() {
     const modelParams = {
-      file: 'mobilenet_v1_1.0_224_quant.tflite',
+      file: 'models/lite_flowers_model_v7.tflite',
       inputDimX: 224,
       inputDimY: 224,
-      outputDim: 1001,
-      isQuantized: false,
+      outputDim: 50,
+      isQuantized: true,
       freqms: 0,
     };
     return (
