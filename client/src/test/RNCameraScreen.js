@@ -7,13 +7,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {RNCamera} from 'react-native-camera';
+import {RNCamera} from 'react-native-camera-tflite';
 import {styles} from '../public/styleSheets/styleRNCamera';
 import {Icon} from 'react-native-elements';
 import ImagePicker from 'react-native-image-crop-picker';
 import Toast from 'react-native-simple-toast';
 
-class ExampleApp extends Component {
+class ImagePickerScreen extends Component {
   state = {torchon: RNCamera.Constants.FlashMode.off};
   takePicture = async () => {
     if (this.camera) {
@@ -136,4 +136,4 @@ class ExampleApp extends Component {
     );
   }
 }
-export default ExampleApp;
+export default ImagePickerScreen;

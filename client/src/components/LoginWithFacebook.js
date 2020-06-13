@@ -36,7 +36,6 @@ class LoginFacebook extends Component {
     profile['email'] = obj.email;
     profile['avatar'] = obj.picture.data.url;
     this.props.loginWithFacebook(profile);
-    this.props.navigation.navigate('Tab');
   };
 
   loginWithFacebook = () => {

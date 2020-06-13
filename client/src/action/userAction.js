@@ -5,6 +5,7 @@ import {
     UPDATE_USER,
     ERROR_RESPONSE
 } from '../config/type';
+import Toast from 'react-native-simple-toast';
 
 export var successMess = '';
 //get info user
@@ -44,7 +45,7 @@ export const UpdateUserInfo = (credentials, uid, profile) => dispatch => {
     const body = profile;
     axios.put(`${API_URL}/api/user/updateInfo/${uid}`, body, config)
         .then(res => {
-            successMess = res.data.message;
+            Toast.show('Cập nhật thành công!');
             dispatch({
                 type: UPDATE_USER,
                 payload: res.data.result.user
@@ -52,5 +53,6 @@ export const UpdateUserInfo = (credentials, uid, profile) => dispatch => {
         })
         .catch(err => {
             console.log('err', err);
+            Toast.show('Cập nhật thất bại. Vui lòng thử lại sau!');
         });
 }

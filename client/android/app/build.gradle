@@ -133,11 +133,10 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        multiDexEnabled true
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
-
-        missingDimensionStrategy 'react-native-camera', 'general'
+        multiDexEnabled true
+        missingDimensionStrategy 'react-native-camera-tflite', 'general'
     }
     splits {
         abi {
@@ -196,12 +195,14 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
+
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+
     
-    implementation project(':react-native-camera')
+    implementation project(':react-native-camera-tflite')
     
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'

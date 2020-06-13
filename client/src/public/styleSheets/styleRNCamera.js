@@ -27,8 +27,10 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
-        backgroundColor: 'white',
-        height: 80,
+        backgroundColor: 'transparent',
+        height: 60,
+        position:'absolute',
+        bottom:20,
     },
 
 });

@@ -9,6 +9,7 @@ import AddDetailScreen from '../screens/AddDetailScreen';
 // import ImagePickerScreen from '../screens/ImagePickerScreen';
 import PlantInfoScreen from '../screens/PlantInfoScreen';
 
+// import ImagePickerScreen from '../test/RNCameraRealtimeScreen';
 import ImagePickerScreen from '../test/RNCameraScreen';
 import ResultRNCameraScreen from '../test/ResultRNCameraScreen';
 
@@ -21,6 +22,12 @@ import EditInfo from '../screens/EditInfoScreen';
 import CreatePostScreen from '../screens/CreatePostScreen';
 
 import DetailPostScreen from '../screens/PostDetailScreen';
+
+//idenity before create post
+import ImageBeforePostScreen from '../test/ImageBeforePostScreen';
+import ResultBeforePostScreen from '../test/ResultBeforePostScreen';
+
+import {connect} from 'react-redux';
 
 const Tab = createBottomTabNavigator();
 
@@ -41,7 +48,7 @@ function TabScreen() {
         },
       })}
       tabBarOptions={{
-        activeTintColor: '#59c393',
+        activeTintColor: '#33CC08',
         inactiveTintColor: 'rgba(209,242,194,0.4)',
         showIcon: true,
         tabStyle: {borderRadius: 10},
@@ -84,7 +91,7 @@ function UserScreen({navigation}) {
         options={{
           title: 'Chỉnh sửa thông tin cá nhân',
           headerStyle: {
-            backgroundColor: '#59c393',
+            backgroundColor: '#33CC08',
           },
           headerTintColor: '#fff',
           headerTitleStyle: {
@@ -122,7 +129,7 @@ function CameraScreen({navigation}) {
         options={{
           title: 'Kết quả',
           headerStyle: {
-            backgroundColor: '#59c393',
+            backgroundColor: '#33CC08',
           },
           headerTintColor: '#fff',
           headerTitleStyle: {
@@ -137,20 +144,31 @@ function CameraScreen({navigation}) {
 
 const Stack = createStackNavigator();
 
-function NavigationScreen() {
+function NavigationScreen(props) {
+  const {isAuthenticated} = props;
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen
-          name="Login"
-          options={{headerShown: false}}
-          component={LoginScreen}
-        />
-        <Stack.Screen
-          name="Tab"
-          options={{headerShown: false}}
-          component={TabScreen}
-        />
+      <Stack.Navigator initialRouteName={isAuthenticated ? 'Login' : 'Tab'}>
+        {isAuthenticated ? (
+          <Stack.Screen
+            name="Login"
+            options={{headerShown: false}}
+            component={LoginScreen}
+          />
+        ) : (
+          <>
+            <Stack.Screen
+              name="Login"
+              options={{headerShown: false}}
+              component={LoginScreen}
+            />
+            <Stack.Screen
+              name="Tab"
+              options={{headerShown: false}}
+              component={TabScreen}
+            />
+          </>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -160,7 +178,7 @@ const HomeStack = createStackNavigator();
 
 function HomeScreen() {
   return (
-    <HomeStack.Navigator initialRouteName="Home">
+    <HomeStack.Navigator initialRouteName="Post">
       <HomeStack.Screen
         name="Post"
         options={{headerShown: false}}
@@ -171,12 +189,12 @@ function HomeScreen() {
         options={{headerShown: false}}
         component={DetailPostScreen}
       />
-      <Stack.Screen
+      <HomeStack.Screen
         name="AddDetail"
         options={{
           title: 'Đóng góp thông tin',
           headerStyle: {
-            backgroundColor: '#59c393',
+            backgroundColor: '#33CC08',
           },
           headerTintColor: '#fff',
           headerTitleStyle: {
@@ -185,22 +203,29 @@ function HomeScreen() {
         }}
         component={AddDetailScreen}
       />
-      <Stack.Screen
+      <HomeStack.Screen
+        name="ImageBefore"
+        options={{headerShown: false}}
+        component={ImageBeforePostScreen}
+      />
+      <HomeStack.Screen
+        name="ResultBefore"
+        options={{headerShown: false}}
+        component={ResultBeforePostScreen}
+      />
+      <HomeStack.Screen
         name="CreatePost"
-        options={{
-          title: 'Tạo bài viết mới',
-          headerStyle: {
-            backgroundColor: '#59c393',
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-        }}
+        options={{headerShown: false}}
         component={CreatePostScreen}
       />
     </HomeStack.Navigator>
   );
 }
 
-export default NavigationScreen;
+function mapStateToProp(state) {
+  return {
+    isAuthenticate: state.auth.isAuthenticated,
+  };
+}
+
+export default connect(mapStateToProp)(NavigationScreen);

@@ -2,15 +2,13 @@
 import * as React from 'react';
 import {Text, View, ScrollView, ImageBackground} from 'react-native';
 
-import {Picker} from '@react-native-community/picker';
 import {Input, Image} from 'react-native-elements';
 import {styles} from '../public/styleSheets/styleEditInfo';
 import {Icon} from 'react-native-elements';
 import {connect} from 'react-redux';
 import {auth} from '../config/helper';
-import {UpdateUserInfo, successMess} from '../action/userAction';
+import {UpdateUserInfo} from '../action/userAction';
 import ValidationComponent from 'react-native-form-validator';
-import Toast from 'react-native-simple-toast';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
@@ -95,13 +93,8 @@ class EditInfo extends ValidationComponent {
     const {navigation, UpdateUserInfo} = this.props;
     const credentials = await auth.isAuthenticated();
     await UpdateUserInfo(credentials, credentials.user._id, profile);
-    if (successMess == 'update success') {
-      Toast.show('Cập nhật thành công!');
-      navigation.goBack();
-    } else {
-      Toast.show('Lỗi trong quá trình xử lý!');
-      navigation.goBack();
-    }
+    navigation.goBack();
+ 
   };
 
   showDatePicker = () => {
@@ -220,11 +213,7 @@ class EditInfo extends ValidationComponent {
           )}
         </ScrollView>
         <View style={styles.viewButton}>
-          {/* <TouchableOpacity
-            style={styles.btnCancel}
-            onPress={this.onSubmit.bind(this)}>
-            <Text style={styles.lblButton}>Huỷ</Text>
-          </TouchableOpacity> */}
+  
           <TouchableOpacity
             style={styles.btnSave}
             onPress={this.onSubmit.bind(this)}>

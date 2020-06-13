@@ -259,7 +259,7 @@ export const styles = StyleSheet.create({
         height: 300,
     },
     viewContribute: {
-        width: 250,
+        width: 350,
         backgroundColor: '#00afef',
         borderRadius: 10,
         margin: 20,

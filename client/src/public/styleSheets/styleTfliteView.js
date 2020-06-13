@@ -5,6 +5,23 @@ export const styles = StyleSheet.create({
         width: '100%',
         backgroundColor: '#303030',
     },
+    viewHeader: {
+        position: 'absolute',
+        backgroundColor: 'rgba(242,242,242,0.4)',
+        flex: 1,
+        zIndex: 3,
+        flexDirection: 'row',
+        width: '100%',
+        padding: 10,
+
+    },
+    btnBack: {
+        position: 'relative',
+        alignItems: 'flex-start',
+        width: "100%",
+        padding: 5,
+        marginLeft: 5,
+    },
     viewBtnChoose: {
         top: 0,
         flex: 1,
@@ -56,7 +73,7 @@ export const styles = StyleSheet.create({
         color: "#F2EBDF",
     },
     viewResult: {
-        backgroundColor: '#fff',
+        backgroundColor: 'rgba(115,115,115,0.4)',
         padding: 8,
         margin: 5,
         borderRadius: 5,
@@ -88,8 +105,8 @@ export const styles = StyleSheet.create({
     lblNameFlow: {
         margin: 5,
         padding: 5,
-        color: '#000',
-        fontSize: 13,
+        color: '#fff',
+        fontSize: 15,
         fontWeight: 'bold',
     },
     lblPercent: {

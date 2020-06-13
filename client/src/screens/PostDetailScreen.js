@@ -6,7 +6,8 @@ import {getPostInfo} from '../action/postAction';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {Col, Row, Grid} from 'react-native-easy-grid';
 import {Avatar} from 'react-native-elements';
-
+import {auth} from '../config/helper';
+var moment = require('moment');
 class DetailPostScreen extends React.Component {
   // async componentDidMount() {
   //   const {getPostInfo, route} = this.props;
@@ -24,10 +25,9 @@ class DetailPostScreen extends React.Component {
   // }
   render() {
     const {post, route} = this.props;
-
     return (
       <ScrollView style={styles.scrollView}>
-        {post ? (
+        {route.params?.post ? (
           <View>
             <View style={styles.viewImages}>
               {route.params?.post.images ? (
@@ -58,16 +58,25 @@ class DetailPostScreen extends React.Component {
                   </Col>
                   <Col size={60} style={styles.colPostBy}>
                     <Text style={styles.txtUserName}>
-                      {route.params?.post.postedBy.fullName}
+                      {route.params?.post.postedBy.fullName
+                        ? route.params?.post.postedBy.fullName
+                        : 'Unknown'}
                     </Text>
                     <Text style={styles.txtCreated}>
-                      {route.params?.post.created}
+                      {route.params?.post.created?
+                      moment(route.params?.post.created).format(
+                        'DD/MM/YYYY',
+                      ):"01/01/1900"}
                     </Text>
                   </Col>
                   <Col size={25}>
-                    <TouchableOpacity style={styles.btnPlantKind}>
-                      <Text style={styles.txtKind}>#Cúc</Text>
-                    </TouchableOpacity>
+                    {route.params?.post.namePlant && (
+                      <TouchableOpacity style={styles.btnPlantKind}>
+                        <Text style={styles.txtKind}>
+                          # {route.params?.post.namePlant}
+                        </Text>
+                      </TouchableOpacity>
+                    )}
                   </Col>
                 </Row>
               </Grid>
@@ -81,7 +90,9 @@ class DetailPostScreen extends React.Component {
               />
             </View>
             <View style={styles.viewContribute}>
-              <Text style={styles.txtContribute}>Đóng góp ở đây nè !!!!</Text>
+              <Text style={styles.txtContribute}>
+                Chức năng đóng góp đang hoàn thiện !!!!
+              </Text>
             </View>
           </View>
         ) : (
