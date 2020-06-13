@@ -158,39 +158,26 @@ class ResultBeforePostScreen extends Component {
     return (
       <SafeAreaView>
         <View style={styles.viewHeader}>
-          {/* <TouchableOpacity
-            style={styles.btnBack}
-            onPress={() => navigation.goBack()}>
-            <Icon
-              type="font-awesome"
-              name="arrow-left"
-              style={styles.icKind}
-              size={20}
-              color="#fff"
-            />
-          </TouchableOpacity> */}
-
           <Autocomplete
-            // autoCapitalize="none"
-            // autoCorrect={false}
+            inputContainerStyle={styles.autocompleteInput}
             containerStyle={styles.autocompleteContainer}
+            style={styles.autocompleteInputStyle}
+            listStyle={styles.autocompleteLst}
+            listContainerStyle={styles.autocompleteLstCon}
             defaultValue={getNamePlant}
+            keyExtractor={(item,index)=>index.toString()}
             data={
               getNamePlantN.length === 1 &&
               comp(getNamePlant, getNamePlantN[0].nameVN)
                 ? []
                 : getNamePlantN
             }
-            //defaultValue={query}
             onChangeText={text => this.setState({getNamePlant: text})}
             placeholder="Nhập tên hoa nếu bạn biết"
             renderItem={({item, i}) => (
               <TouchableOpacity
-                key={i}
                 onPress={() => this.setState({getNamePlant: item.nameVN})}>
-                <Text key={i} style={styles.itemText}>
-                  {item.nameVN}
-                </Text>
+                <Text style={styles.itemText}>{item.nameVN}</Text>
               </TouchableOpacity>
             )}
           />
@@ -219,7 +206,13 @@ class ResultBeforePostScreen extends Component {
           {source ? (
             <View style={styles.boxes}>
               <View style={styles.lblSearchResult}>
-                <Text style={styles.lblResult}>Ảnh bạn đăng có thể là:</Text>
+                <Text style={styles.lblResult}>
+                  Ảnh bạn đăng có thể là:
+                </Text>
+                <Text style={styles.lblGY}>
+                  Nếu bạn nghĩ hoa bạn chia sẽ có trong kết quả. Vui lòng
+                  chọng để tiếp tục!
+                </Text>
               </View>
               {this.renderResults()}
             </View>
@@ -229,12 +222,6 @@ class ResultBeforePostScreen extends Component {
               liệu. Vui lòng nhập tên mà bạn biết!
             </Text>
           )}
-          <View>
-            <Text>
-              Bạn nghĩ nó là loài khác. Vui lòng thay đổi hoặc nhập vào trường
-              kết quả!
-            </Text>
-          </View>
         </ScrollView>
       </SafeAreaView>
     );

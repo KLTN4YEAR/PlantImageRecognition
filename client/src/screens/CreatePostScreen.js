@@ -40,14 +40,6 @@ class CreatePostScreen extends ValidationComponent {
     };
   }
 
-  // successAlert = () => {
-  //   Toast.show('Chúc mừng bạn đã đăng thành công!');
-  // };
-
-  // failAlert = () => {
-  //   Toast.show('Bài viết không hợp lệ, vui lòng thử lại!');
-  // };
-
   onValidate() {
     return this.validate({
       name: {minlength: 4, maxlength: 25, required: true, spacing: true},
@@ -59,7 +51,7 @@ class CreatePostScreen extends ValidationComponent {
   async componentDidMount() {
     const {route} = this.props;
     await this.onGetIDflower(route.params?.nameVN);
-    this.setState({namePlant:route.params?.nameVN});
+    this.setState({namePlant: route.params?.nameVN});
   }
 
   async componentDidUpdate(prevProps) {
@@ -76,7 +68,6 @@ class CreatePostScreen extends ValidationComponent {
   }
 
   getResult = result => {
-    console.log('result');
     if (result) {
       this.setState({
         mentionedPlant: result[0]._id,
@@ -113,7 +104,6 @@ class CreatePostScreen extends ValidationComponent {
           type: item.mime,
         });
       });
-      // console.log('fm', formData);
       this.addPost(formData);
     }
   };
@@ -123,13 +113,6 @@ class CreatePostScreen extends ValidationComponent {
     const credentials = await auth.isAuthenticated();
     newPost(credentials, formatData);
     navigation.navigate('CreatePost');
-    // if (successMess == 'Created was successful') {
-    //   this.successAlert();
-    //   navigation.goBack();
-    // } else {
-    //   this.failAlert();
-    //   navigation.goBack();
-    // }
   };
 
   _pickImage = async () => {
@@ -191,7 +174,6 @@ class CreatePostScreen extends ValidationComponent {
 
   render() {
     const {profile, navigation, route} = this.props;
-
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.viewHeader}>
@@ -204,8 +186,6 @@ class CreatePostScreen extends ValidationComponent {
               style={styles.icKind}
               size={20}
               color="#000"
-              // reverseColor="#59c393"
-              // reverse
             />
           </TouchableOpacity>
           <Text style={styles.lblCreate}>ĐĂNG BÀI</Text>
@@ -215,74 +195,15 @@ class CreatePostScreen extends ValidationComponent {
             <Text style={styles.lblButton}>ĐĂNG</Text>
           </TouchableOpacity>
         </View>
-        {/* <View style={styles.viewImage}>
-          <TouchableOpacity
-            onPress={this._pickImage}
-            style={styles.btnGallery}>
-            <Grid>
-              <Row>
-                <Col size={20}>
-                  <Icon
-                    type="material"
-                    name="photo-library"
-                    style={styles.labelIcon}
-                    color="#59c393"
-                  />
-                </Col>
-                <Col size={80}>
-                  <Text style={styles.labelTxt}>Ảnh từ thư viện</Text>
-                </Col>
-              </Row>
-            </Grid>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={this._takePhoto}
-            style={styles.btnCamera}>
-            <Grid>
-              <Row>
-                <Col size={20}>
-                  <Icon
-                    type="material"
-                    name="photo-camera"
-                    style={styles.labelIcon}
-                    color="#59c393"
-                  />
-                </Col>
-                <Col size={80}>
-                  <Text style={styles.labelTxt}>Camera</Text>
-                </Col>
-              </Row>
-            </Grid>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.btnCancel}
-            onPress={() => navigation.goBack()}>
-            <Grid>
-              <Row>
-                <Col size={20}>
-                  <Icon
-                    type="material"
-                    name="cancel"
-                    style={styles.labelIcon}
-                    color="#59c393"
-                  />
-                </Col>
-                <Col size={80}>
-                  <Text style={styles.labelTxt}>Huỷ</Text>
-                </Col>
-              </Row>
-            </Grid>
-          </TouchableOpacity>
-        </View> */}
         <ScrollView style={styles.scrollView}>
           <View style={styles.viewUser}>
             <Grid>
               <Row style={styles.rowPostBy}>
-                <Col size={15}>
-                  {profile.Avatar ? (
+                <Col size={20}>
+                  {profile.avatar ? (
                     <Avatar
                       rounded
-                      size={40}
+                      size={50}
                       source={{
                         uri: profile.avatar,
                       }}
@@ -290,16 +211,29 @@ class CreatePostScreen extends ValidationComponent {
                   ) : (
                     <Avatar
                       rounded
-                      size={40}
+                      size={50}
                       source={require('../public/images/man.png')}
                     />
                   )}
                 </Col>
-                <Col size={85}>
+                <Col size={80}>
                   {profile.fullName ? (
-                    <Text style={styles.txtUserName}>{profile.fullName}</Text>
+                    <Text style={styles.txtUserName}>
+                      {profile.fullName}
+                    </Text>
                   ) : (
                     <Text style={styles.txtUserName}>Unknown</Text>
+                  )}
+                  {route.params?.nameVN ? (
+                    <TouchableOpacity style={styles.btnPlantName}>
+                      <Text style={styles.txtPlantName}>
+                        # {route.params?.nameVN}
+                      </Text>
+                    </TouchableOpacity>
+                  ) : (
+                    <TouchableOpacity style={styles.btnPlantName}>
+                      <Text style={styles.txtPlantName}>"Unknown"</Text>
+                    </TouchableOpacity>
                   )}
                 </Col>
               </Row>
@@ -307,32 +241,10 @@ class CreatePostScreen extends ValidationComponent {
           </View>
           <View style={styles.viewDataInput}>
             <View style={styles.viewInputContent}>
-              {/* <View style={styles.viewMentioned}>
-                <TextInput
-                  defaultValue="Id của thực vật (trên 12 ký tự số)?"
-                  style={styles.inputMention}
-                  underlineColorAndroid="transparent"
-                  multiline={true}
-                  onChangeText={text =>
-                    this.setState({mentionedPlant: text})
-                  }
-                />
-              </View> */}
-              <View style={styles.viewPlantName}>
-                <TextInput
-                  //defaultValue="Bạn có biết thực vật này tên gì không?"
-                  value={
-                    route.params?.nameVN ? route.params?.nameVN : 'Unknown'
-                  }
-                  style={styles.inputMention}
-                  underlineColorAndroid="transparent"
-                  multiline={true}
-                  onChangeText={text => this.setState({namePlant: text})}
-                />
-              </View>
               <View style={styles.viewContent}>
                 <TextInput
-                  defaultValue="Bạn muốn viết gì?"
+                  placeholder="Bạn muốn viết gì?"
+                  placeholderTextColor="#fff"
                   style={styles.inputContent}
                   underlineColorAndroid="transparent"
                   multiline={true}

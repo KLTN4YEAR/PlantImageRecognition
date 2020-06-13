@@ -27,6 +27,8 @@ import DetailPostScreen from '../screens/PostDetailScreen';
 import ImageBeforePostScreen from '../test/ImageBeforePostScreen';
 import ResultBeforePostScreen from '../test/ResultBeforePostScreen';
 
+import {connect} from 'react-redux';
+
 const Tab = createBottomTabNavigator();
 
 function TabScreen() {
@@ -142,20 +144,31 @@ function CameraScreen({navigation}) {
 
 const Stack = createStackNavigator();
 
-function NavigationScreen() {
+function NavigationScreen(props) {
+  const {isAuthenticated} = props;
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen
-          name="Login"
-          options={{headerShown: false}}
-          component={LoginScreen}
-        />
-        <Stack.Screen
-          name="Tab"
-          options={{headerShown: false}}
-          component={TabScreen}
-        />
+      <Stack.Navigator initialRouteName={isAuthenticated ? 'Login' : 'Tab'}>
+        {isAuthenticated ? (
+          <Stack.Screen
+            name="Login"
+            options={{headerShown: false}}
+            component={LoginScreen}
+          />
+        ) : (
+          <>
+            <Stack.Screen
+              name="Login"
+              options={{headerShown: false}}
+              component={LoginScreen}
+            />
+            <Stack.Screen
+              name="Tab"
+              options={{headerShown: false}}
+              component={TabScreen}
+            />
+          </>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -209,4 +222,10 @@ function HomeScreen() {
   );
 }
 
-export default NavigationScreen;
+function mapStateToProp(state) {
+  return {
+    isAuthenticate: state.auth.isAuthenticated,
+  };
+}
+
+export default connect(mapStateToProp)(NavigationScreen);

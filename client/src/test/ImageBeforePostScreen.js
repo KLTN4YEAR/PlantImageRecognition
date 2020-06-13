@@ -33,7 +33,7 @@ class ImagePickerScreen extends Component {
         mediaType: 'photo',
       })
         .then(image => {
-          this.props.navigation.navigate('ResultRNCamera', {
+          this.props.navigation.navigate('ResultBefore', {
             image: image,
           });
         })

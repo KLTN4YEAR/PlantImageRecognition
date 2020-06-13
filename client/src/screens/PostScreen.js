@@ -51,8 +51,8 @@ class PostScreen extends React.Component {
   };
 
   async componentDidMount() {
-    await this.loadData();
     await this.loadMoreData();
+    await this.loadData();
   }
 
   loadData = async () => {
@@ -74,9 +74,7 @@ class PostScreen extends React.Component {
   }
 
   loadMoreData = async () => {
-    console.log("A")
     const {getListPost, listPost} = this.props;
-    console.log('B',listPost);
     const {fetching_from_server, isListEnd, serverData} = this.state;
     if (!fetching_from_server && !isListEnd) {
       this.setState(
@@ -115,34 +113,39 @@ class PostScreen extends React.Component {
 
   render() {
     const {profile} = this.props;
-    
-    const{loading,serverData,refreshing}=this.state;
-    
+
+    const {loading, serverData, refreshing} = this.state;
+
     return (
       <SafeAreaView style={styles.viewSafeArea}>
         <View style={styles.stylesHead}>
-          <Image
-            source={require('../public/images/logohead.png')}
-            style={styles.imgLogoHead}
-          />
-          <Text style={styles.txtLogoHead}>RECOGNITION PLANT</Text>
-          <TouchableOpacity>
-            <Avatar
-              rounded
-              source={{
-                uri: profile.avatar,
-              }}
-            />
+          <TouchableOpacity style={styles.imgAva}>
+            {profile.avatar ? (
+              <Avatar
+                rounded
+                source={{
+                  uri: profile.avatar,
+                }}
+              />
+            ) : (
+              <Avatar
+                rounded
+                source={require('../public/images/man.png')}
+              />
+            )}
           </TouchableOpacity>
+          <View style={styles.viewLogoHead}>
+            <Text style={styles.txtLogoHead}>Cộng đồng</Text>
+          </View>
           <TouchableOpacity
             style={styles.btnAdd}
             onPress={() => this.props.navigation.navigate('ImageBefore')}>
             <Icon
-              size={35}
-              type="font-awesome"
-              name="plus"
+              size={30}
+              type="material"
+              name="add"
               iconStyle={styles.labelIconAdd}
-              color="#DCF2DE"
+              color="yellow"
             />
           </TouchableOpacity>
         </View>
@@ -169,7 +172,7 @@ class PostScreen extends React.Component {
                       <View style={styles.viewPostBy}>
                         <Row style={styles.rowPostBy}>
                           <Col size={15}>
-                            {/* {item.postedBy.avatar ? (
+                            {item.postedBy.avatar ? (
                               <Avatar
                                 rounded
                                 source={{
@@ -183,12 +186,10 @@ class PostScreen extends React.Component {
                                 rounded
                                 source={require('../public/images/man.png')}
                               />
-                            )} */}
+                            )}
                           </Col>
                           <Col size={85}>
-                            <Text style={styles.txtUserName}>
-                              {/* {item.postedBy.fullName} */}
-                            </Text>
+                            <Text style={styles.txtUserName} />
                           </Col>
                         </Row>
                       </View>

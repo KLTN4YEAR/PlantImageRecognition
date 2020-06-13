@@ -70,7 +70,6 @@ class LoginGoogle extends React.Component {
     profile['email'] = result.user.email;
     profile['avatar'] = result.user.photo;
     this.props.loginWithGoogle(profile);
-    this.props.navigation.navigate('Tab');
   };
 
   render() {

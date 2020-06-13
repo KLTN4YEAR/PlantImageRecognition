@@ -12,12 +12,33 @@ export const styles = StyleSheet.create({
     zIndex: 3,
     flexDirection: 'row',
     width: '100%',
-    padding: 10,
+    padding: 5,
   },
-  autocompleteContainer:{
-    position: 'relative',
-    width:'100%',
-    alignItems: 'flex-start',
+  autocompleteContainer: {
+    backgroundColor: 'transparent',
+    borderRadius: 10,
+  },
+  autocompleteInputStyle: {
+    backgroundColor: 'transparent',
+    fontSize: 16,
+    color: '#fff',
+    textAlign: 'center',
+    height: 40,
+  },
+  autocompleteInput: {
+    backgroundColor: 'transparent',
+    borderRadius: 10,
+  },
+  autocompleteLstCon: {
+    borderRadius: 10,
+  },
+  autocompleteLst: {
+    borderRadius: 10,
+    padding: 5,
+    backgroundColor: 'rgba(64,64,66,0.5)',
+  },
+  itemText: {
+    color: '#fff',
   },
   btnBack: {
     position: 'relative',
@@ -72,6 +93,11 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: '#F2EBDF',
+  },
+  lblGY: {
+    padding: 5,
+    fontSize: 10,
+    color: '#fff',
   },
   viewResult: {
     backgroundColor: 'rgba(115,115,115,0.4)',
@@ -134,5 +160,4 @@ export const styles = StyleSheet.create({
     height: windowWidth,
     width: windowWidth,
   },
- 
 });
