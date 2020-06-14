@@ -27,10 +27,13 @@ import DetailPostScreen from '../screens/PostDetailScreen';
 import ImageBeforePostScreen from '../test/ImageBeforePostScreen';
 import ResultBeforePostScreen from '../test/ResultBeforePostScreen';
 
-import {connect} from 'react-redux';
+//màn hình loading
+import AuthLoadingScreen from '../screens/AuthLoadingScreen';
 
+import {connect} from 'react-redux';
 import {auth} from '../config/helper'
 import AsyncStorage from '@react-native-community/async-storage';
+
 
 const Tab = createBottomTabNavigator();
 
@@ -148,30 +151,24 @@ function CameraScreen({navigation}) {
 const Stack = createStackNavigator();
 
 function NavigationScreen() {
-  const [isAuthenticated, setIsLogedin] = React.useState(false);
-  AsyncStorage.getItem('isAuthenticated').then(data => {
-    if (data != null && data == 'true') setIsLogedin(true);
-    else setIsLogedin(false);
-  });
-
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={isAuthenticated ? 'Tab' : 'Login'}>
-        {isAuthenticated ? (
-          <>
-            <Stack.Screen
-              name="Tab"
-              options={{headerShown: false}}
-              component={TabScreen}
-            />
-          </>
-        ) : (
-          <Stack.Screen
-            name="Login"
-            options={{headerShown: false}}
-            component={LoginScreen}
-          />
-        )}
+      <Stack.Navigator initialRouteName="Loading">
+        <Stack.Screen
+          name="Login"
+          options={{headerShown: false}}
+          component={LoginScreen}
+        />
+        <Stack.Screen
+          name="Loading"
+          options={{headerShown: false}}
+          component={AuthLoadingScreen}
+        />
+        <Stack.Screen
+          name="Tab"
+          options={{headerShown: false}}
+          component={TabScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
