@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import Facebook from '../components/LoginWithFacebook';
 import Google from '../components/LoginWithGoogle';
-import Toast from 'react-native-simple-toast';
+import * as Animatable from 'react-native-animatable';
 
 class LoginScreen extends React.Component {
   constructor(props) {
@@ -18,18 +18,11 @@ class LoginScreen extends React.Component {
     isAuthenticated: PropTypes.bool,
   };
 
-  componentDidMount() {
-    //  Animated.spring(this.animated, {
-    //    toValue: 100,
-    //    friction: 10, // control "bounciness"/ overshoot , default 7
-    //    duration: 1000,
-    //  }).start(); 
-  }
-
   render() {
     return (
       <View style={styles.container}>
-        <Animated.Image
+        <Animatable.Image
+          animation="zoomIn"
           source={require('../public/images/logo_transparent.png')}
           style={styles.imgLogo}
         />

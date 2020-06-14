@@ -116,7 +116,6 @@ export const styles = StyleSheet.create({
     flex: 0,
     padding: 5,
     marginTop: 15,
-    marginLeft: 20,
   },
   viewScience: {
     width: windowWidth,
@@ -137,12 +136,12 @@ export const styles = StyleSheet.create({
     color: '#fff',
     textTransform: 'uppercase',
     marginRight: 5,
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '700',
   },
   txtNameen: {
     color: '#fff',
-    fontSize: 18,
+    fontSize: 16,
     textTransform: 'uppercase',
     fontWeight: '800',
     marginRight: 5,

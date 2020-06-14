@@ -8,7 +8,7 @@ import Toast from 'react-native-simple-toast';
 import {connect} from 'react-redux';
 import {loginWithFacebook} from '../action/authAction';
 import PropTypes from 'prop-types';
-
+import * as Animatable from 'react-native-animatable';
 class LoginFacebook extends Component {
   state = {
     profile: {
@@ -64,7 +64,13 @@ class LoginFacebook extends Component {
       <TouchableOpacity
         style={styles.iconSocial}
         onPress={this.loginWithFacebook}>
-        <SocialIcon title="Sign In With Facebook" button type="facebook" />
+        <Animatable.View animation="slideInDown">
+          <SocialIcon
+            title="Sign In With Facebook"
+            button
+            type="facebook"
+          />
+        </Animatable.View>
       </TouchableOpacity>
     );
   }

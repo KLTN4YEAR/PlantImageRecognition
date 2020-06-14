@@ -15,6 +15,7 @@ import {Icon} from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 import {ConfirmDialog} from 'react-native-simple-dialogs';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
+import * as Animatable from 'react-native-animatable';
 
 // Gọi các sqlite function
 import {viewFlowerByName, viewFlowerById} from '../sqlite/dbFlowerOffline';
@@ -123,7 +124,7 @@ export default class ResultScreen extends React.Component {
               <Text style={styles.txtName}>Unknown</Text>
             )}
 
-            <View style={styles.viewKind}>
+            <Animatable.View animation="fadeIn" style={styles.viewKind}>
               <Icon
                 type="font-awesome"
                 name="pagelines"
@@ -142,7 +143,7 @@ export default class ResultScreen extends React.Component {
                   <Text style={styles.txtLoc}>| Unknown</Text>
                 </>
               )}
-            </View>
+            </Animatable.View>
           </View>
           <TouchableOpacity
             style={styles.btnCancel}
@@ -153,8 +154,6 @@ export default class ResultScreen extends React.Component {
               style={styles.icKind}
               size={20}
               color="#fff"
-              // reverseColor="#59c393"
-              // reverse
             />
           </TouchableOpacity>
         </View>

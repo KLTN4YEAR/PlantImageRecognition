@@ -8,6 +8,7 @@ import {loginWithGoogle} from '../action/authAction';
 import PropTypes from 'prop-types';
 import Toast from 'react-native-simple-toast';
 import {GoogleSignin, statusCodes} from '@react-native-community/google-signin';
+import * as Animatable from 'react-native-animatable';
 
 class LoginGoogle extends React.Component {
   state = {
@@ -79,7 +80,9 @@ class LoginGoogle extends React.Component {
       <TouchableOpacity
         style={styles.iconSocial}
         onPress={this.signInWithGoogleAsync}>
-        <SocialIcon title="Sign In With Google" button type="google" />
+        <Animatable.View animation="slideInUp">
+          <SocialIcon title="Sign In With Google" button type="google" />
+        </Animatable.View>
       </TouchableOpacity>
     );
   }

@@ -18,6 +18,7 @@ import PropTypes from 'prop-types';
 import {auth} from '../config/helper';
 import {getListPost} from '../action/postAction';
 import {getInfo} from '../action/userAction';
+import * as Animatable from 'react-native-animatable';
 
 class PostScreen extends React.Component {
   constructor(props) {
@@ -62,7 +63,7 @@ class PostScreen extends React.Component {
       await getInfo(data, data.user._id);
     }
   };
-  onRefresh=async()=> {
+  onRefresh = async () => {
     await this.setState({
       loading: false,
       isListEnd: false,
@@ -71,7 +72,7 @@ class PostScreen extends React.Component {
     });
     this.offset = '111111111111';
     await this.loadMoreData();
-  }
+  };
 
   loadMoreData = async () => {
     const {getListPost, listPost} = this.props;
@@ -135,7 +136,10 @@ class PostScreen extends React.Component {
             )}
           </TouchableOpacity>
           <View style={styles.viewLogoHead}>
-            <Text style={styles.txtLogoHead}>Cộng đồng</Text>
+            <Animatable.Text animation="bounce" style={styles.txtLogoHead}>
+              Cộng đồng
+            </Animatable.Text>
+            {/* <Text style={styles.txtLogoHead}>Cộng đồng</Text> */}
           </View>
           <TouchableOpacity
             style={styles.btnAdd}
@@ -168,7 +172,9 @@ class PostScreen extends React.Component {
               item ? (
                 <Grid>
                   <Row key={index}>
-                    <View style={styles.viewCard}>
+                    <Animatable.View
+                      animation="fadeInDown"
+                      style={styles.viewCard}>
                       <View style={styles.viewPostBy}>
                         <Row style={styles.rowPostBy}>
                           <Col size={15}>
@@ -259,7 +265,7 @@ class PostScreen extends React.Component {
                           </Col>
                         </Row>
                       </View>
-                    </View>
+                    </Animatable.View>
                   </Row>
                 </Grid>
               ) : (

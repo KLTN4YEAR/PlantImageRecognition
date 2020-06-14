@@ -8,6 +8,8 @@ import {connect} from 'react-redux';
 import {auth} from '../config/helper';
 import {getInfo} from '../action/userAction';
 import {logout} from '../action/authAction';
+import * as Animatable from 'react-native-animatable';
+
 var moment = require('moment');
 class ViewInfo extends React.Component {
   state = {
@@ -24,7 +26,7 @@ class ViewInfo extends React.Component {
   }
 
   loadData = async () => {
-    const{getInfo}=this.props;
+    const {getInfo} = this.props;
     const data = await auth.isAuthenticated();
     if (data) {
       await getInfo(data, data.user._id);
@@ -32,7 +34,7 @@ class ViewInfo extends React.Component {
   };
 
   onClickLogout = async () => {
-    const{logout,navigation}=this.props;
+    const {logout, navigation} = this.props;
     await logout();
     const data = await auth.isAuthenticated();
     if (!data) {
@@ -65,9 +67,7 @@ class ViewInfo extends React.Component {
                         iconStyle={styles.labelIconEdit}
                         color="white"
                       />
-                      <Text style={styles.labelEdit}>
-                        Chỉnh sửa thông tin
-                      </Text>
+                      <Text style={styles.labelEdit}>Chỉnh sửa thông tin</Text>
                     </Col>
                   </TouchableOpacity>
                 </Col>
@@ -100,9 +100,7 @@ class ViewInfo extends React.Component {
                 </Col>
                 <Col size={70}>
                   {profile.fullName ? (
-                    <Text style={styles.contentTxt}>
-                      {profile.fullName}
-                    </Text>
+                    <Text style={styles.contentTxt}>{profile.fullName}</Text>
                   ) : (
                     <Text style={styles.contentTxt}>Chưa cập nhật</Text>
                   )}
