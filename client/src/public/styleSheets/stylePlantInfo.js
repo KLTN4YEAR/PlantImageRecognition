@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
 
   viewHeader: {
     position: 'absolute',
-    backgroundColor: 'rgba(242,242,242,0.4)',
+    backgroundColor: 'rgba(33,31,32,0.4)',
     flex: 1,
     zIndex: 3,
     flexDirection: 'row',
@@ -18,13 +18,13 @@ export const styles = StyleSheet.create({
   btnBack: {
     position: 'relative',
     alignItems: 'flex-start',
-    width: '50%',
+    width: '15%',
     padding: 5,
   },
   btnCancel: {
     position: 'relative',
     alignItems: 'flex-end',
-    width: '50%',
+    width: '15%',
     padding: 5,
   },
   //Plant update style
@@ -46,30 +46,27 @@ export const styles = StyleSheet.create({
     marginRight: 'auto',
   },
   viewInfoHead: {
-    position: 'absolute',
-    bottom: 40,
     flex: 1,
-    left: 5,
+    width: '70%',
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   txtName: {
-    fontSize: 24,
+    fontSize: 16,
     fontFamily: 'Open Sans',
     fontWeight: 'bold',
-    marginLeft: 20,
-    padding: 5,
     color: '#fff',
   },
 
   viewKind: {
-    marginLeft: 20,
-    marginTop: 10,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginBottom: 5,
+    flex: 1,
   },
 
   txtKind: {
-    fontSize: 16,
+    fontSize: 13,
     fontFamily: 'Open Sans',
     fontWeight: 'normal',
     letterSpacing: 2,
@@ -83,10 +80,9 @@ export const styles = StyleSheet.create({
     marginRight: 'auto',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginBottom: 5,
   },
   txtLoc: {
-    fontSize: 16,
+    fontSize: 13,
     fontFamily: 'Open Sans',
     fontWeight: 'normal',
     letterSpacing: 2,
@@ -106,7 +102,7 @@ export const styles = StyleSheet.create({
   },
 
   txtDesc: {
-    fontSize: 16,
+    fontSize: 14,
     fontFamily: 'Open Sans',
     fontWeight: 'normal',
     padding: 5,
@@ -124,28 +120,29 @@ export const styles = StyleSheet.create({
   },
   viewScience: {
     width: windowWidth,
-    marginTop: 0,
-    marginLeft: 10,
-    marginBottom: 10,
-    padding: 5,
+    flex: 0,
+    flexDirection: 'row',
+    padding: 10,
+    alignItems: 'center',
   },
   viewLocation: {
     width: windowWidth,
-    marginTop: 0,
-    marginLeft: 10,
-    padding: 5,
-    marginBottom: 20,
+    flex: 0,
+    flexDirection: 'row',
+    padding: 10,
+    alignItems: 'center',
+    marginBottom: 10,
   },
   txtNamevi: {
     color: '#fff',
     textTransform: 'uppercase',
     marginRight: 5,
-    fontSize: 14,
+    fontSize: 18,
     fontWeight: '700',
   },
   txtNameen: {
     color: '#fff',
-    fontSize: 14,
+    fontSize: 18,
     textTransform: 'uppercase',
     fontWeight: '800',
     marginRight: 5,
@@ -153,12 +150,16 @@ export const styles = StyleSheet.create({
   txtNamesce: {
     fontSize: 14,
     fontWeight: '900',
-    color: '#59c393',
+    color: '#fff',
+    padding: 5,
   },
   txtLocation: {
     fontSize: 14,
     fontWeight: '900',
-    color: '#59c393',
+    color: '#fff',
+    flex: 1,
+    flexDirection: 'row',
+    padding: 5,
   },
   viewCharacter: {
     width: '92%',

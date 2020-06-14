@@ -80,4 +80,5 @@ export const logout = () => dispatch => {
     dispatch({
         type: CLEAR_ERRORS
     });
+    Toast.show('Đã đăng xuất!');
 };

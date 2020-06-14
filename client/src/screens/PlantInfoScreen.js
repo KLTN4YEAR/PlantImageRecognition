@@ -114,10 +114,36 @@ export default class ResultScreen extends React.Component {
               style={styles.icKind}
               size={20}
               color="#fff"
-              // reverseColor="#59c393"
-              // reverse
             />
           </TouchableOpacity>
+          <View style={styles.viewInfoHead}>
+            {resultPlant ? (
+              <Text style={styles.txtName}>{resultPlant.nameVN}</Text>
+            ) : (
+              <Text style={styles.txtName}>Unknown</Text>
+            )}
+
+            <View style={styles.viewKind}>
+              <Icon
+                type="font-awesome"
+                name="pagelines"
+                style={styles.icKind}
+                size={20}
+                color="#59c393"
+              />
+              {resultPlant ? (
+                <>
+                  <Text style={styles.txtKind}>{resultPlant.familiar}</Text>
+                  <Text style={styles.txtLoc}>| VietNam</Text>
+                </>
+              ) : (
+                <>
+                  <Text style={styles.txtKind}>Unknown</Text>
+                  <Text style={styles.txtLoc}>| Unknown</Text>
+                </>
+              )}
+            </View>
+          </View>
           <TouchableOpacity
             style={styles.btnCancel}
             onPress={() => this.props.navigation.navigate('ImagePicker')}>
@@ -145,38 +171,6 @@ export default class ResultScreen extends React.Component {
               onSnapToItem={index => this.setState({activeIndex: index})}
             />
             {this.pagination}
-            <View style={styles.viewInfoHead}>
-              {resultPlant ? (
-                <Text style={styles.txtName}>{resultPlant.nameVN}</Text>
-              ) : (
-                <Text style={styles.txtName}>Unknown</Text>
-              )}
-
-              <View style={styles.viewKind}>
-                <Icon
-                  type="font-awesome"
-                  name="pagelines"
-                  style={styles.icKind}
-                  size={20}
-                  color="#59c393"
-                />
-                {resultPlant ? (
-                  <>
-                    <Text style={styles.txtKind}>
-                      {resultPlant.familiar}
-                    </Text>
-                    <Text style={styles.txtLoc}>
-                      | VietNam
-                    </Text>
-                  </>
-                ) : (
-                  <>
-                    <Text style={styles.txtKind}>Unknown</Text>
-                    <Text style={styles.txtLoc}>| Unknown</Text>
-                  </>
-                )}
-              </View>
-            </View>
           </View>
           <LinearGradient
             colors={['#303030', '#121212', '#000000']}
@@ -200,6 +194,13 @@ export default class ResultScreen extends React.Component {
                 )}
               </View>
               <View style={styles.viewScience}>
+                <Icon
+                  type="material"
+                  name="local-florist"
+                  style={styles.icKind}
+                  size={18}
+                  color="#09A603"
+                />
                 {resultPlant ? (
                   <Text style={styles.txtNamesce}>
                     Tên khoa học: {resultPlant.nameScience}
@@ -211,6 +212,13 @@ export default class ResultScreen extends React.Component {
                 )}
               </View>
               <View style={styles.viewLocation}>
+                <Icon
+                  type="material"
+                  name="pin-drop"
+                  style={styles.icKind}
+                  size={18}
+                  color="#09A603"
+                />
                 {resultPlant ? (
                   <Text style={styles.txtLocation}>
                     Nguồn gốc: {resultPlant.location}
