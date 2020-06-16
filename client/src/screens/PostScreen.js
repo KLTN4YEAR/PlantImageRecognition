@@ -19,6 +19,10 @@ import {auth} from '../config/helper';
 import {getListPost} from '../action/postAction';
 import {getInfo} from '../action/userAction';
 import * as Animatable from 'react-native-animatable';
+import moment from 'moment';
+import localization from 'moment/locale/vi';
+
+moment.updateLocale('vi', localization);
 
 class PostScreen extends React.Component {
   constructor(props) {
@@ -52,6 +56,7 @@ class PostScreen extends React.Component {
   };
 
   async componentDidMount() {
+    
     await this.loadMoreData();
     await this.loadData();
   }
@@ -117,6 +122,7 @@ class PostScreen extends React.Component {
 
     const {loading, serverData, refreshing} = this.state;
 
+    
     return (
       <SafeAreaView style={styles.viewSafeArea}>
         <View style={styles.stylesHead}>
@@ -129,10 +135,7 @@ class PostScreen extends React.Component {
                 }}
               />
             ) : (
-              <Avatar
-                rounded
-                source={require('../public/images/man.png')}
-              />
+              <Avatar rounded source={require('../public/images/man.png')} />
             )}
           </TouchableOpacity>
           <View style={styles.viewLogoHead}>
@@ -200,6 +203,17 @@ class PostScreen extends React.Component {
                                 ? item.postedBy.fullName
                                 : 'Unknown'}
                             </Text>
+                            {item.created && (
+                              <Text style={styles.txtCreateAt}>
+                                {moment(
+                                  item.created,
+                                  'YYYY-MM-DD HH:mm:ss.SSS[Z]',
+                                )
+                                  
+                                  .startOf('day')
+                                  .fromNow()}
+                              </Text>
+                            )}
                           </Col>
                         </Row>
                       </View>
@@ -242,12 +256,9 @@ class PostScreen extends React.Component {
                             <TouchableOpacity
                               style={styles.touchAdd}
                               onPress={() =>
-                                this.props.navigation.navigate(
-                                  'DetailPost',
-                                  {
-                                    post: item,
-                                  },
-                                )
+                                this.props.navigation.navigate('DetailPost', {
+                                  post: item,
+                                })
                               }>
                               <Col size={15} style={styles.colBtnAdd}>
                                 <Icon
