@@ -39,8 +39,8 @@ class ResultCamera extends Component {
     this.setState({model});
     switch (model) {
       case flower:
-        var modelFile = 'models/lite_flowers_model_v5.tflite';
-        var labelsFile = 'models/lite_flowers_model_v5.txt';
+        var modelFile = 'models/lite_flowers_model_v7.tflite';
+        var labelsFile = 'models/lite_flowers_model_v7.txt';
         break;
       default:
         var modelFile = 'models/lite_flowers_model_v1.tflite';
