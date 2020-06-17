@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage';
-export const API_URL = 'https://regconitionplant.herokuapp.com';
-//export const API_URL = 'http://192.168.1.181:4000';
+//export const API_URL = 'https://regconitionplant.herokuapp.com';
+export const API_URL = 'http://192.168.1.181:4000';
 
 export const auth = {
   async isAuthenticated() {
