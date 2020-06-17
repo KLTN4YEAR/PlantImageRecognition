@@ -12,6 +12,7 @@ import {Icon} from 'react-native-elements';
 import {styles} from '../public/styleSheets/styleTfliteView';
 import Tflite from 'tflite-react-native';
 import GetInfoPlant from '../components/GetInfoPlantCard';
+import * as Animatable from 'react-native-animatable';
 
 let tflite = new Tflite();
 const height = 350;
@@ -38,8 +39,8 @@ class ResultCamera extends Component {
     this.setState({model});
     switch (model) {
       case flower:
-        var modelFile = 'models/lite_flowers_model_v5.tflite';
-        var labelsFile = 'models/lite_flowers_model_v5.txt';
+        var modelFile = 'models/lite_flowers_model_v8.tflite';
+        var labelsFile = 'models/lite_flowers_model_v8.txt';
         break;
       default:
         var modelFile = 'models/lite_flowers_model_v1.tflite';
@@ -122,10 +123,13 @@ class ResultCamera extends Component {
           </TouchableOpacity>
         </View>
         <ScrollView style={styles.viewContainer}>
-          <Image
-            source={{uri: route.params?.image.path}}
-            style={styles.imgCard}
-          />
+          <Animatable.View animation="zoomIn">
+            <Image
+              source={{uri: route.params?.image.path}}
+              style={styles.imgCard}
+            />
+          </Animatable.View>
+
           {source ? (
             <View style={styles.boxes}>
               <View style={styles.lblSearchResult}>

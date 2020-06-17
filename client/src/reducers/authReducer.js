@@ -19,7 +19,6 @@ export default function(state = initialState, action) {
                 ...state,
                 ...action.payload,
             };
-
         case LOGIN_SUCCESS:
             return {
                 ...state,

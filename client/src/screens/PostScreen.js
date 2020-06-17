@@ -18,6 +18,11 @@ import PropTypes from 'prop-types';
 import {auth} from '../config/helper';
 import {getListPost} from '../action/postAction';
 import {getInfo} from '../action/userAction';
+import * as Animatable from 'react-native-animatable';
+import moment from 'moment';
+import localization from 'moment/locale/vi';
+
+moment.updateLocale('vi', localization);
 
 class PostScreen extends React.Component {
   constructor(props) {
@@ -51,6 +56,7 @@ class PostScreen extends React.Component {
   };
 
   async componentDidMount() {
+    
     await this.loadMoreData();
     await this.loadData();
   }
@@ -62,16 +68,16 @@ class PostScreen extends React.Component {
       await getInfo(data, data.user._id);
     }
   };
-  onRefresh() {
-    this.setState({
+  onRefresh = async () => {
+    await this.setState({
       loading: false,
       isListEnd: false,
       serverData: [],
       fetching_from_server: false,
     });
     this.offset = '111111111111';
-    this.loadMoreData();
-  }
+    await this.loadMoreData();
+  };
 
   loadMoreData = async () => {
     const {getListPost, listPost} = this.props;
@@ -105,7 +111,7 @@ class PostScreen extends React.Component {
     return (
       <View style={styles.footer}>
         {this.state.fetching_from_server ? (
-          <ActivityIndicator color="black" style={{margin: 15}} />
+          <ActivityIndicator size="large" color="#33CC08" />
         ) : null}
       </View>
     );
@@ -116,6 +122,7 @@ class PostScreen extends React.Component {
 
     const {loading, serverData, refreshing} = this.state;
 
+    
     return (
       <SafeAreaView style={styles.viewSafeArea}>
         <View style={styles.stylesHead}>
@@ -128,14 +135,14 @@ class PostScreen extends React.Component {
                 }}
               />
             ) : (
-              <Avatar
-                rounded
-                source={require('../public/images/man.png')}
-              />
+              <Avatar rounded source={require('../public/images/man.png')} />
             )}
           </TouchableOpacity>
           <View style={styles.viewLogoHead}>
-            <Text style={styles.txtLogoHead}>Cộng đồng</Text>
+            <Animatable.Text animation="bounce" style={styles.txtLogoHead}>
+              Cộng đồng
+            </Animatable.Text>
+            {/* <Text style={styles.txtLogoHead}>Cộng đồng</Text> */}
           </View>
           <TouchableOpacity
             style={styles.btnAdd}
@@ -150,7 +157,7 @@ class PostScreen extends React.Component {
           </TouchableOpacity>
         </View>
         {loading ? (
-          <ActivityIndicator size="large" />
+          <ActivityIndicator size="large" color="#33CC08" />
         ) : (
           <FlatList
             style={styles.viewFlatList}
@@ -168,7 +175,9 @@ class PostScreen extends React.Component {
               item ? (
                 <Grid>
                   <Row key={index}>
-                    <View style={styles.viewCard}>
+                    <Animatable.View
+                      animation="fadeInDown"
+                      style={styles.viewCard}>
                       <View style={styles.viewPostBy}>
                         <Row style={styles.rowPostBy}>
                           <Col size={15}>
@@ -189,7 +198,22 @@ class PostScreen extends React.Component {
                             )}
                           </Col>
                           <Col size={85}>
-                            <Text style={styles.txtUserName} >{item.postedBy?item.postedBy.fullName:"Unknown"}</Text>
+                            <Text style={styles.txtUserName}>
+                              {item.postedBy
+                                ? item.postedBy.fullName
+                                : 'Unknown'}
+                            </Text>
+                            {item.created && (
+                              <Text style={styles.txtCreateAt}>
+                                {moment(
+                                  item.created,
+                                  'YYYY-MM-DD HH:mm:ss.SSS[Z]',
+                                )
+                                  
+                                  .startOf('day')
+                                  .fromNow()}
+                              </Text>
+                            )}
                           </Col>
                         </Row>
                       </View>
@@ -232,12 +256,9 @@ class PostScreen extends React.Component {
                             <TouchableOpacity
                               style={styles.touchAdd}
                               onPress={() =>
-                                this.props.navigation.navigate(
-                                  'DetailPost',
-                                  {
-                                    post: item,
-                                  },
-                                )
+                                this.props.navigation.navigate('DetailPost', {
+                                  post: item,
+                                })
                               }>
                               <Col size={15} style={styles.colBtnAdd}>
                                 <Icon
@@ -255,7 +276,7 @@ class PostScreen extends React.Component {
                           </Col>
                         </Row>
                       </View>
-                    </View>
+                    </Animatable.View>
                   </Row>
                 </Grid>
               ) : (

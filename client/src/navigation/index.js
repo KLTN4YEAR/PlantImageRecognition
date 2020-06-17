@@ -27,7 +27,13 @@ import DetailPostScreen from '../screens/PostDetailScreen';
 import ImageBeforePostScreen from '../test/ImageBeforePostScreen';
 import ResultBeforePostScreen from '../test/ResultBeforePostScreen';
 
+//màn hình loading
+import AuthLoadingScreen from '../screens/AuthLoadingScreen';
+
 import {connect} from 'react-redux';
+import {auth} from '../config/helper'
+import AsyncStorage from '@react-native-community/async-storage';
+
 
 const Tab = createBottomTabNavigator();
 
@@ -144,31 +150,25 @@ function CameraScreen({navigation}) {
 
 const Stack = createStackNavigator();
 
-function NavigationScreen(props) {
-  const {isAuthenticated} = props;
+function NavigationScreen() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={isAuthenticated ? 'Login' : 'Tab'}>
-        {isAuthenticated ? (
-          <Stack.Screen
-            name="Login"
-            options={{headerShown: false}}
-            component={LoginScreen}
-          />
-        ) : (
-          <>
-            <Stack.Screen
-              name="Login"
-              options={{headerShown: false}}
-              component={LoginScreen}
-            />
-            <Stack.Screen
-              name="Tab"
-              options={{headerShown: false}}
-              component={TabScreen}
-            />
-          </>
-        )}
+      <Stack.Navigator initialRouteName="Loading">
+        <Stack.Screen
+          name="Login"
+          options={{headerShown: false}}
+          component={LoginScreen}
+        />
+        <Stack.Screen
+          name="Loading"
+          options={{headerShown: false}}
+          component={AuthLoadingScreen}
+        />
+        <Stack.Screen
+          name="Tab"
+          options={{headerShown: false}}
+          component={TabScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -222,10 +222,4 @@ function HomeScreen() {
   );
 }
 
-function mapStateToProp(state) {
-  return {
-    isAuthenticate: state.auth.isAuthenticated,
-  };
-}
-
-export default connect(mapStateToProp)(NavigationScreen);
+export default (NavigationScreen);

@@ -1,46 +1,33 @@
 import React from 'react';
-import {Image, View, Text, ImageBackground, ToastAndroid} from 'react-native';
+import {Image, View, Text, Animated} from 'react-native';
 import {styles} from '../public/styleSheets/styleLoginScreen';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import Facebook from '../components/LoginWithFacebook';
 import Google from '../components/LoginWithGoogle';
-import Toast from 'react-native-simple-toast';
+import * as Animatable from 'react-native-animatable';
 
 class LoginScreen extends React.Component {
-  static propTypes = {
-    isAuthenticated: PropTypes.bool,
-  };
-
-  componentDidMount() {
-    this.checkLogin();
+  constructor(props) {
+    super(props);
+    // init animated with value = 0
+    this.animated = new Animated.Value(0);
   }
 
-  checkLogin = async () => {
-    const data = await this.props.isAuthenticated;
-    if (data) {
-      Toast.show('Đã login!');
-      await this.props.navigation.navigate('Tab');
-    }
+  static propTypes = {
+    isAuthenticated: PropTypes.bool,
   };
 
   render() {
     return (
       <View style={styles.container}>
-        <Image
+        <Animatable.Image
+          animation="zoomIn"
           source={require('../public/images/logo_transparent.png')}
           style={styles.imgLogo}
         />
         <Facebook navigation={this.props.navigation} />
         <Google navigation={this.props.navigation} />
-        <Text style={styles.txtTemp}>
-          By using our Services, you are agreeing to these terms
-        </Text>
-        {/* <ImageBackground
-              source={require('../public/images/backgroundlogin.jpg')}
-              style={styles.imgBack}
-              blurRadius={0.9}
-            /> */}
       </View>
     );
   }

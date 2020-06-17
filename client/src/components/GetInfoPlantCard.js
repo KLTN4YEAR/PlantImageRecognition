@@ -11,7 +11,7 @@ import {
 import {styles} from '../public/styleSheets/styleTfliteView';
 import ProgressCircle from 'react-native-progress-circle';
 import {viewInfoByEngName} from '../sqlite/dbFlowerOffline';
-
+import * as Animatable from 'react-native-animatable';
 class GetInfoPlant extends Component {
   constructor(props) {
     super(props);
@@ -69,23 +69,25 @@ class GetInfoPlant extends Component {
           />
         )}
 
-        <View style={styles.viewTrend}>
+        <Animatable.View animation="fadeIn" style={styles.viewTrend}>
           {fName ? (
             <Text style={styles.lblNameFlow}>{fName}</Text>
           ) : (
             <Text style={styles.lblNameFlow}>Unknown</Text>
           )}
-        </View>
-        <View style={styles.viewSimilar}>
+        </Animatable.View>
+        <Animatable.View animation="fadeInRight" style={styles.viewSimilar}>
           <ProgressCircle
             percent={percent}
             radius={30}
             borderWidth={5}
             color="#3399FF"
             bgColor="rgba(3,12,38,0.4)">
-            <Text style={{fontSize: 15,color:'#fff'}}>{percent.toFixed(0) + '%'}</Text>
+            <Text style={{fontSize: 15, color: '#fff'}}>
+              {percent.toFixed(0) + '%'}
+            </Text>
           </ProgressCircle>
-        </View>
+        </Animatable.View>
       </TouchableOpacity>
     );
   }

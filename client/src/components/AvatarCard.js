@@ -5,33 +5,13 @@ import {styles} from '../public/styleSheets/styleAvatarCard';
 import {connect} from 'react-redux';
 import {auth} from '../config/helper';
 import {getInfo} from '../action/userAction';
+import * as Animatable from 'react-native-animatable';
 
 class AvatarCard extends Component {
-  // state = {
-  //     fullName: '',
-  //     address: '',
-  //     avatar: '',
-
-  // };
-
-  // componentDidMount = async () => {
-  //     await this.loadData();
-  // };
-
-  // componentDidUpdate()
-
-  // loadData = async () => {
-  //     const data = await auth.isAuthenticated();
-  //     if (data) {
-  //         await this.props.getInfo(data, data.user._id);
-  //         await this.initValueForUser();
-  //     }
-  // };
-
   render() {
     const {profile} = this.props;
     return (
-      <View style={styles.headerContainer}>
+      <Animatable.View animation="flipInX" style={styles.headerContainer}>
         <ImageBackground
           style={styles.headerBackgroundImage}
           blurRadius={10}
@@ -78,7 +58,7 @@ class AvatarCard extends Component {
             </View>
           </View>
         </ImageBackground>
-      </View>
+      </Animatable.View>
     );
   }
 }

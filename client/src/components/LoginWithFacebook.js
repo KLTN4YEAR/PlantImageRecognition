@@ -4,11 +4,11 @@ import {AccessToken, LoginManager} from 'react-native-fbsdk';
 
 import {styles} from '../public/styleSheets/styleLoginScreen';
 import {SocialIcon} from 'react-native-elements';
-
+import Toast from 'react-native-simple-toast';
 import {connect} from 'react-redux';
 import {loginWithFacebook} from '../action/authAction';
 import PropTypes from 'prop-types';
-
+import * as Animatable from 'react-native-animatable';
 class LoginFacebook extends Component {
   state = {
     profile: {
@@ -24,6 +24,7 @@ class LoginFacebook extends Component {
   };
 
   loginFB = async token => {
+    const{loginWithFacebook, navigation}=this.props;
     const response = await fetch(
       `https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,about,picture.type(large)`,
     );
@@ -35,14 +36,16 @@ class LoginFacebook extends Component {
     profile['facebookId'] = obj.id;
     profile['email'] = obj.email;
     profile['avatar'] = obj.picture.data.url;
-    this.props.loginWithFacebook(profile);
+    await loginWithFacebook(profile);
+    await navigation.navigate('Tab');
+
   };
 
   loginWithFacebook = () => {
     LoginManager.logInWithPermissions(['public_profile']).then(
       login => {
         if (login.isCancelled) {
-          console.log('Login cancelled');
+          Toast.show('Tác vụ đã hủy');
         } else {
           AccessToken.getCurrentAccessToken().then(data => {
             const accessToken = data.accessToken.toString();
@@ -51,7 +54,7 @@ class LoginFacebook extends Component {
         }
       },
       error => {
-        console.log('Login fail with error: ' + error);
+        Toast.show('Có lỗi xảy ra: ' + error);
       },
     );
   };
@@ -61,7 +64,13 @@ class LoginFacebook extends Component {
       <TouchableOpacity
         style={styles.iconSocial}
         onPress={this.loginWithFacebook}>
-        <SocialIcon title="Sign In With Facebook" button type="facebook" />
+        <Animatable.View animation="slideInDown">
+          <SocialIcon
+            title="Sign In With Facebook"
+            button
+            type="facebook"
+          />
+        </Animatable.View>
       </TouchableOpacity>
     );
   }

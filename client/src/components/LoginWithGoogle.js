@@ -1,13 +1,14 @@
 import React from 'react';
-import {TouchableOpacity, Alert} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import {styles} from '../public/styleSheets/styleLoginScreen';
 import {SocialIcon} from 'react-native-elements';
 import {OauthKey} from '../ultils/googleSignInID';
 import {connect} from 'react-redux';
 import {loginWithGoogle} from '../action/authAction';
 import PropTypes from 'prop-types';
-
+import Toast from 'react-native-simple-toast';
 import {GoogleSignin, statusCodes} from '@react-native-community/google-signin';
+import * as Animatable from 'react-native-animatable';
 
 class LoginGoogle extends React.Component {
   state = {
@@ -44,18 +45,18 @@ class LoginGoogle extends React.Component {
       switch (error.code) {
         case statusCodes.SIGN_IN_CANCELLED:
           // sign in was cancelled
-          Alert.alert('cancelled');
+          Toast.show('Tác vụ đã hủy');
           break;
         case statusCodes.IN_PROGRESS:
           // operation (eg. sign in) already in progress
-          Alert.alert('in progress');
+          Toast.show('Đang xử lý');
           break;
         case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
           // android only
-          Alert.alert('play services not available or outdated');
+          Toast.show('Dịch vụ không khả dụng');
           break;
         default:
-          Alert.alert('Something went wrong', error.toString());
+          Toast.show('Có lỗi xảy ra', error.toString());
           this.setState({
             error,
           });
@@ -66,10 +67,12 @@ class LoginGoogle extends React.Component {
   loginGG = async result => {
     const profile = this.state.profile;
     profile['fullName'] = result.user.name;
+    const {loginWithGoogle, navigation} = this.props;
     profile['googleId'] = result.user.id;
     profile['email'] = result.user.email;
     profile['avatar'] = result.user.photo;
-    this.props.loginWithGoogle(profile);
+    await loginWithGoogle(profile);
+    await navigation.navigate('Tab');
   };
 
   render() {
@@ -77,7 +80,9 @@ class LoginGoogle extends React.Component {
       <TouchableOpacity
         style={styles.iconSocial}
         onPress={this.signInWithGoogleAsync}>
-        <SocialIcon title="Sign In With Google" button type="google" />
+        <Animatable.View animation="slideInUp">
+          <SocialIcon title="Sign In With Google" button type="google" />
+        </Animatable.View>
       </TouchableOpacity>
     );
   }

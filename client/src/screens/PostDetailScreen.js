@@ -7,7 +7,10 @@ import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {Col, Row, Grid} from 'react-native-easy-grid';
 import {Avatar} from 'react-native-elements';
 import {auth} from '../config/helper';
-var moment = require('moment');
+import moment from 'moment';
+import localization from 'moment/locale/vi';
+
+moment.updateLocale('vi', localization);
 class DetailPostScreen extends React.Component {
   // async componentDidMount() {
   //   const {getPostInfo, route} = this.props;
@@ -63,10 +66,14 @@ class DetailPostScreen extends React.Component {
                         : 'Unknown'}
                     </Text>
                     <Text style={styles.txtCreated}>
-                      {route.params?.post.created?
-                      moment(route.params?.post.created).format(
-                        'DD/MM/YYYY',
-                      ):"01/01/1900"}
+                      {route.params?.post.created
+                        ? moment(
+                            route.params?.post.created,
+                            'YYYY-MM-DD HH:mm:ss.SSS[Z]',
+                          )
+                            .startOf('day')
+                            .fromNow()
+                        : '01/01/1900'}
                     </Text>
                   </Col>
                   <Col size={25}>
