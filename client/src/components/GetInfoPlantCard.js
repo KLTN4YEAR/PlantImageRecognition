@@ -54,7 +54,12 @@ class GetInfoPlant extends Component {
     return (
       <TouchableOpacity
         style={styles.viewResult}
-        onPress={() => navigation.navigate('PlantInfo', {fId: fId})}>
+        onPress={() =>
+          navigation.navigate('PlantInfo', {
+            fId: fId,
+            backScreen: 'ImagePicker',
+          })
+        }>
         {avatarPlant ? (
           <Image
             source={{

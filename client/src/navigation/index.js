@@ -14,7 +14,7 @@ import ImagePickerScreen from '../test/RNCameraScreen';
 import ResultRNCameraScreen from '../test/ResultRNCameraScreen';
 
 import ResultCameraScreen from '../screens/ResultCameraScreen';
-import SearchScreen from './../screens/SearchScreen';
+import SearchPlantScreen from './../screens/SearchScreen';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ViewInfo from '../screens/ViewInfoScreen';
 import EditInfo from '../screens/EditInfoScreen';
@@ -30,9 +30,8 @@ import ResultBeforePostScreen from '../test/ResultBeforePostScreen';
 //màn hình loading
 import AuthLoadingScreen from '../screens/AuthLoadingScreen';
 
-import {connect} from 'react-redux';
-import {auth} from '../config/helper'
-import AsyncStorage from '@react-native-community/async-storage';
+import ViewPostUser from "../screens/PostUserScreen";
+
 
 
 const Tab = createBottomTabNavigator();
@@ -91,6 +90,11 @@ function UserScreen({navigation}) {
             e.preventDefault();
           },
         }}
+      />
+      <StackUser.Screen
+        name="PostUser"
+        options={{headerShown: false}}
+        component={ViewPostUser}
       />
       <StackUser.Screen
         name="EditInfo"
@@ -219,6 +223,24 @@ function HomeScreen() {
         component={CreatePostScreen}
       />
     </HomeStack.Navigator>
+  );
+}
+
+const SearchStack=createStackNavigator();
+function SearchScreen() {
+  return (
+    <SearchStack.Navigator initialRouteName="Search">
+      <SearchStack.Screen
+        name="Search"
+        options={{headerShown: false}}
+        component={SearchPlantScreen}
+      />
+      <SearchStack.Screen
+        name="PlantInfo"
+        options={{headerShown: false}}
+        component={PlantInfoScreen}
+      />
+    </SearchStack.Navigator>
   );
 }
 

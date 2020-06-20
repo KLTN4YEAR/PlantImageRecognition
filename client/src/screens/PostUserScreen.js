@@ -16,7 +16,7 @@ import {Icon} from 'react-native-elements';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {auth} from '../config/helper';
-import {getListPost} from '../action/postAction';
+import {getListPostUer} from '../action/postAction';
 import {getInfo} from '../action/userAction';
 import * as Animatable from 'react-native-animatable';
 import moment from 'moment';
@@ -24,7 +24,7 @@ import localization from 'moment/locale/vi';
 
 moment.updateLocale('vi', localization);
 
-class PostScreen extends React.Component {
+class PostUserScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -72,7 +72,6 @@ class PostScreen extends React.Component {
     const {getInfo} = this.props;
     const data = await auth.isAuthenticated();
     this.setState({userInfo: data});
-
     if (data) {
       await getInfo(data, data.user._id);
     }
@@ -89,7 +88,7 @@ class PostScreen extends React.Component {
   };
 
   loadMoreData = async () => {
-    const {getListPost, listPost} = this.props;
+    const {getListPostUer, listPost} = this.props;
     const {fetching_from_server, isListEnd, serverData} = this.state;
     if (!fetching_from_server && !isListEnd) {
       this.setState(
@@ -98,7 +97,7 @@ class PostScreen extends React.Component {
         },
         async () => {
           const credentials = await auth.isAuthenticated();
-          let lstPost = await getListPost(credentials, this.offset);
+          let lstPost = await getListPostUer(credentials, this.offset);
           if (lstPost.length > 0) {
             this.offset = lstPost[lstPost.length - 1]._id;
             this.setState({
@@ -148,17 +147,18 @@ class PostScreen extends React.Component {
           </TouchableOpacity>
           <View style={styles.viewLogoHead}>
             <Animatable.Text animation="bounce" style={styles.txtLogoHead}>
-              Cộng đồng
+              Bài viết của{' '}
+              {userInfo && userInfo.user.fullName ? userInfo.user.fullName : ''}
             </Animatable.Text>
             {/* <Text style={styles.txtLogoHead}>Cộng đồng</Text> */}
           </View>
           <TouchableOpacity
             style={styles.btnAdd}
-            onPress={() => this.props.navigation.navigate('ImageBefore')}>
+            onPress={() => this.props.navigation.goBack()}>
             <Icon
               size={30}
               type="material"
-              name="add"
+              name="close"
               iconStyle={styles.labelIconAdd}
               color="yellow"
             />
@@ -287,7 +287,7 @@ class PostScreen extends React.Component {
                   </Row>
                 </Grid>
               ) : (
-                <Text>loading</Text>
+                <Text>Bạn chưa đăng bài</Text>
               )
             }
             ItemSeparatorComponent={() => <View style={styles.separator} />}
@@ -310,5 +310,5 @@ function mapStateToProp(state) {
 
 export default connect(
   mapStateToProp,
-  {getListPost, getInfo},
-)(PostScreen);
+  {getListPostUer, getInfo},
+)(PostUserScreen);

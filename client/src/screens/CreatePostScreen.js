@@ -26,6 +26,14 @@ class CreatePostScreen extends ValidationComponent {
   constructor(props) {
     super(props);
     this.state = {
+      userInfo: {
+        token: null,
+        user: {
+          avatar: null,
+          fullName: null,
+        },
+      },
+
       postedBy: '',
       LocalImage: [],
       content: '',
@@ -50,6 +58,8 @@ class CreatePostScreen extends ValidationComponent {
 
   async componentDidMount() {
     const {route} = this.props;
+    const data = await auth.isAuthenticated();
+    this.setState({userInfo:data})
     await this.onGetIDflower(route.params?.nameVN);
     this.setState({namePlant: route.params?.nameVN});
   }
@@ -57,9 +67,9 @@ class CreatePostScreen extends ValidationComponent {
   async componentDidUpdate(prevProps) {
     const {route} = this.props;
     const name = route.params?.nameVN;
-    const data = await auth.isAuthenticated();
+    
     if (route !== prevProps.route) {
-      await this.onGetIDflower(route.params?.nameVN);
+      await this.onGetIDflower(name);
     }
   }
 
@@ -116,12 +126,18 @@ class CreatePostScreen extends ValidationComponent {
   addPost = async formatData => {
     const {newPost, navigation} = this.props;
     const credentials = await auth.isAuthenticated();
-    newPost(credentials, formatData);
-    navigation.navigate('Post');
+    if (credentials) {
+      newPost(credentials, formatData);
+      navigation.navigate('Post');
+    }
+    else{
+      Toast.show("Có lỗi xảy ra. Xin thử lại!")
+    }
   };
 
   render() {
     const {profile, navigation, route} = this.props;
+    const{userInfo}=this.state;
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.viewHeader}>
@@ -148,12 +164,12 @@ class CreatePostScreen extends ValidationComponent {
             <Grid>
               <Row style={styles.rowPostBy}>
                 <Col size={20}>
-                  {profile.avatar ? (
+                  {userInfo.user.avatar ? (
                     <Avatar
                       rounded
                       size={50}
                       source={{
-                        uri: profile.avatar,
+                        uri: userInfo.user.avatar,
                       }}
                     />
                   ) : (
@@ -165,8 +181,10 @@ class CreatePostScreen extends ValidationComponent {
                   )}
                 </Col>
                 <Col size={80}>
-                  {profile.fullName ? (
-                    <Text style={styles.txtUserName}>{profile.fullName}</Text>
+                  {userInfo.user.fullName ? (
+                    <Text style={styles.txtUserName}>
+                      {userInfo.user.fullName}
+                    </Text>
                   ) : (
                     <Text style={styles.txtUserName}>Unknown</Text>
                   )}
