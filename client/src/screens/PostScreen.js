@@ -71,9 +71,9 @@ class PostScreen extends React.Component {
   loadData = async () => {
     const {getInfo} = this.props;
     const data = await auth.isAuthenticated();
-    this.setState({userInfo: data});
 
     if (data) {
+      this.setState({userInfo: data});
       await getInfo(data, data.user._id);
     }
   };
@@ -98,18 +98,20 @@ class PostScreen extends React.Component {
         },
         async () => {
           const credentials = await auth.isAuthenticated();
-          let lstPost = await getListPost(credentials, this.offset);
-          if (lstPost.length > 0) {
-            this.offset = lstPost[lstPost.length - 1]._id;
-            this.setState({
-              serverData: [...serverData, ...lstPost],
-              fetching_from_server: false,
-            });
-          } else {
-            this.setState({
-              fetching_from_server: false,
-              isListEnd: true,
-            });
+          if (credentials) {
+            let lstPost = await getListPost(credentials, this.offset);
+            if (lstPost.length > 0) {
+              this.offset = lstPost[lstPost.length - 1]._id;
+              this.setState({
+                serverData: [...serverData, ...lstPost],
+                fetching_from_server: false,
+              });
+            } else {
+              this.setState({
+                fetching_from_server: false,
+                isListEnd: true,
+              });
+            }
           }
         },
       );

@@ -34,15 +34,23 @@ class ViewInfo extends React.Component {
     }
   };
 
-  onClickLogout = () => {
+  onClickLogout = async () => {
     const {logout, navigation} = this.props;
     logout();
-    const data = auth.isAuthenticated();
-    this.RBSheet.close();
+    const data = await auth.isAuthenticated();
     if (!data) {
-      navigation.navigate('Login');
+      this.RBSheet.close();
     }
   };
+
+  async componentDidUpdate(prevProps) {
+    const {isAuthenticated, navigation} = this.props;
+    if (isAuthenticated !== prevProps.isAuthenticated) {
+      if (!isAuthenticated) {
+        navigation.navigate('Login');
+      }
+    }
+  }
 
   onClickEdit = () => {
     const {navigation, profile} = this.props;
@@ -222,7 +230,7 @@ class ViewInfo extends React.Component {
 
 function mapStateToProp(state) {
   return {
-    authenticate: state.auth.isAuthenticated,
+    isAuthenticated: state.auth.isAuthenticated,
     profile: state.user.profile,
     avatar: state.user.avatar,
   };

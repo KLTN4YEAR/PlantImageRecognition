@@ -23,8 +23,17 @@ class LoginFacebook extends Component {
     isAuthenticated: PropTypes.bool,
   };
 
+  async componentDidUpdate(prevProps) {
+    const {isAuthenticated, navigation} = this.props;
+    if (isAuthenticated !== prevProps.isAuthenticated) {
+      if (isAuthenticated) {
+        navigation.navigate('Tab');
+      }
+    }
+  }
+
   loginFB = async token => {
-    const{loginWithFacebook, navigation}=this.props;
+    const {loginWithFacebook, navigation} = this.props;
     const response = await fetch(
       `https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,about,picture.type(large)`,
     );
@@ -37,8 +46,6 @@ class LoginFacebook extends Component {
     profile['email'] = obj.email;
     profile['avatar'] = obj.picture.data.url;
     await loginWithFacebook(profile);
-    await navigation.navigate('Tab');
-
   };
 
   loginWithFacebook = () => {
@@ -65,11 +72,7 @@ class LoginFacebook extends Component {
         style={styles.iconSocial}
         onPress={this.loginWithFacebook}>
         <Animatable.View animation="slideInDown">
-          <SocialIcon
-            title="Sign In With Facebook"
-            button
-            type="facebook"
-          />
+          <SocialIcon title="Sign In With Facebook" button type="facebook" />
         </Animatable.View>
       </TouchableOpacity>
     );
