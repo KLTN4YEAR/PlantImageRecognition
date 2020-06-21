@@ -43,7 +43,7 @@ export const loginWithGoogle = (profile) => dispatch => {
 export const loginWithFacebook = (profile) => dispatch => {
     const config = {
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
         }
     };
 

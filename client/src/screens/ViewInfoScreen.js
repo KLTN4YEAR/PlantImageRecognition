@@ -34,13 +34,30 @@ class ViewInfo extends React.Component {
     }
   };
 
-  onClickLogout = async () => {
+  onClickLogout = () => {
     const {logout, navigation} = this.props;
-    await logout();
-    const data = await auth.isAuthenticated();
+    logout();
+    const data = auth.isAuthenticated();
+    this.RBSheet.close();
     if (!data) {
-      await navigation.navigate('Login');
+      navigation.navigate('Login');
     }
+  };
+
+  onClickEdit = () => {
+    const {navigation, profile} = this.props;
+    this.RBSheet.close();
+    navigation.navigate('EditInfo', {
+      profile: profile,
+    });
+  };
+
+  onClickViewPost = () => {
+    const {navigation, profile} = this.props;
+    this.RBSheet.close();
+    navigation.navigate('PostUser', {
+      profile: profile,
+    });
   };
 
   render() {
@@ -74,14 +91,10 @@ class ViewInfo extends React.Component {
                 backgroundColor: 'transparent',
               },
             }}>
-            <View style={styles.viewOption}>
+            <Animatable.View animation="fadeInUp" style={styles.viewOption}>
               <TouchableOpacity
                 style={styles.touchEdit}
-                onPress={() =>
-                  navigation.navigate('EditInfo', {
-                    profile: profile,
-                  })
-                }>
+                onPress={this.onClickEdit}>
                 <Icon
                   size={30}
                   type="font-awesome"
@@ -93,11 +106,7 @@ class ViewInfo extends React.Component {
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.touchEdit}
-                onPress={() =>
-                  navigation.navigate('PostUser', {
-                    profile: profile,
-                  })
-                }>
+                onPress={this.onClickViewPost}>
                 <Icon
                   size={30}
                   type="font-awesome"
@@ -120,7 +129,7 @@ class ViewInfo extends React.Component {
 
                 <Text style={styles.labelEdit}>Đăng xuất</Text>
               </TouchableOpacity>
-            </View>
+            </Animatable.View>
           </RBSheet>
         </View>
 
