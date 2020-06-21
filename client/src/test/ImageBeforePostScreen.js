@@ -96,9 +96,6 @@ class ImagePickerScreen extends Component {
             buttonPositive: 'Ok',
             buttonNegative: 'Cancel',
           }}
-          onGoogleVisionBarcodesDetected={({barcodes}) => {
-            console.log(barcodes);
-          }}
         />
         <View style={styles.viewBtn}>
           <TouchableOpacity

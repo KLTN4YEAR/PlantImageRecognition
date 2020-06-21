@@ -12,6 +12,8 @@ import {styles} from '../public/styleSheets/styleTfliteView';
 import ProgressCircle from 'react-native-progress-circle';
 import {viewInfoByEngName} from '../sqlite/dbFlowerOffline';
 import * as Animatable from 'react-native-animatable';
+
+import ImageResizer from 'react-native-image-resizer';
 class GetInfoPlant extends Component {
   constructor(props) {
     super(props);
@@ -19,6 +21,7 @@ class GetInfoPlant extends Component {
       fName: null,
       avatarPlant: null,
       fId: null,
+      resizedImageUri: null,
     };
   }
   async componentDidMount() {
@@ -45,12 +48,27 @@ class GetInfoPlant extends Component {
         avatarPlant: result[0].img1,
         fId: result[0]._id,
       });
+      this.resize(this.state.avatarPlant);
     }
   };
 
+  resize = imgUri => {
+    ImageResizer.createResizedImage(imgUri, 120, 120, 'JPEG', 80)
+      .then(({uri}) => {
+        this.setState({
+          resizedImageUri: uri,
+        });
+        console.log("n",uri)
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   render() {
-    const {avatarPlant, fName, fId} = this.state;
+    const {avatarPlant, fName, fId, resizedImageUri} = this.state;
     const {percent, navigation} = this.props;
+    console.log('ne', resizedImageUri);
     return (
       <TouchableOpacity
         style={styles.viewResult}
@@ -60,7 +78,14 @@ class GetInfoPlant extends Component {
             backScreen: 'ImagePicker',
           })
         }>
-        {avatarPlant ? (
+        {resizedImageUri ? (
+          <Image
+            source={{
+              uri: resizedImageUri,
+            }}
+            style={styles.imgFlow}
+          />
+        ) : avatarPlant ? (
           <Image
             source={{
               uri: avatarPlant,
