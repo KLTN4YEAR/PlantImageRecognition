@@ -147,8 +147,7 @@ class PostUserScreen extends React.Component {
           </TouchableOpacity>
           <View style={styles.viewLogoHead}>
             <Animatable.Text animation="bounce" style={styles.txtLogoHead}>
-              Bài viết của{' '}
-              {userInfo && userInfo.user.fullName ? userInfo.user.fullName : ''}
+              Quản lý bài viết
             </Animatable.Text>
             {/* <Text style={styles.txtLogoHead}>Cộng đồng</Text> */}
           </View>
@@ -156,7 +155,7 @@ class PostUserScreen extends React.Component {
             style={styles.btnAdd}
             onPress={() => this.props.navigation.goBack()}>
             <Icon
-              size={30}
+              size={20}
               type="material"
               name="close"
               iconStyle={styles.labelIconAdd}
@@ -166,7 +165,7 @@ class PostUserScreen extends React.Component {
         </View>
         {loading ? (
           <ActivityIndicator size="large" color="#33CC08" />
-        ) : (
+        ) : serverData.length!==0 ? (
           <FlatList
             style={styles.viewFlatList}
             keyExtractor={(item, index) => index.toString()}
@@ -182,6 +181,12 @@ class PostUserScreen extends React.Component {
             renderItem={({item, index}) =>
               item ? (
                 <Grid>
+                  {/* <Text style={{color:"#fff", alignSelf:"center",justifyContent:'center'}}>
+                    Bài viết của{' '}
+                    {userInfo && userInfo.user.fullName
+                      ? userInfo.user.fullName
+                      : ''}
+                  </Text> */}
                   <Row key={index}>
                     <Animatable.View
                       animation="fadeInDown"
@@ -287,12 +292,16 @@ class PostUserScreen extends React.Component {
                   </Row>
                 </Grid>
               ) : (
-                <Text>Bạn chưa đăng bài</Text>
+                <Text style={{color: '#fff'}}>
+                  Bạn chưa đăng bài
+                </Text>
               )
             }
             ItemSeparatorComponent={() => <View style={styles.separator} />}
             ListFooterComponent={this.renderFooter.bind(this)}
           />
+        ) : (
+          <Text style={{color: '#fff',padding:10, alignSelf:'center',fontWeight:"bold"}}>Bạn chưa có bài viết nào</Text>
         )}
       </SafeAreaView>
     );

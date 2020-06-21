@@ -20,3 +20,5 @@ export const SEARCH_PLANT = 'SEARCH_PLANT';
 export const GET_INFO_POST = 'GET_INFO_POST';
 
 export const GET_LIST_POST = 'GET_LIST_POST';
+
+export const CHECK_AUTHEN='CHECK_AUTHEN';

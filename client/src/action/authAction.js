@@ -8,6 +8,7 @@ import {
     CLEAR_ERRORS,
     CLEAN_PROFILE,
     GET_AVATAR,
+    CHECK_AUTHEN,
 } from '../config/type';
 import Toast from 'react-native-simple-toast';
 
@@ -69,6 +70,12 @@ export const loginWithFacebook = (profile) => dispatch => {
             });
         });
 }
+
+export const checkAuthenticated=()=>dispatch=>{
+     dispatch({
+       type: CHECK_AUTHEN,
+     });
+};
 
 export const logout = () => dispatch => {
     dispatch({

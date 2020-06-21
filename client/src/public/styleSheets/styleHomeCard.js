@@ -7,7 +7,6 @@ export const styles = StyleSheet.create({
     width: windowWidth,
     marginRight: 'auto',
     marginLeft: 'auto',
-    borderRadius: 10,
   },
   viewFlatList: {
     width: '100%',
@@ -99,13 +98,8 @@ export const styles = StyleSheet.create({
     textTransform: 'capitalize',
   },
   viewImg: {
-    marginLeft: 'auto',
-    marginRight: 'auto',
     marginBottom: 10,
-    height: 'auto',
     alignSelf: 'center',
-    flex: 1,
-    flexDirection: 'row',
   },
 
   rowAdd: {
@@ -178,8 +172,6 @@ export const styles = StyleSheet.create({
   },
 
   viewBtn: {
-    borderTopWidth: 1,
-    borderTopColor: '#d1d1d1',
     position: 'relative',
     display: 'flex',
     flex: 1,

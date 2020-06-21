@@ -56,7 +56,6 @@ class ImagePickerScreen extends Component {
     };
     ImagePicker.openPicker(options)
       .then(image => {
-        var path = Platform.OS === 'ios' ? image.uri : 'file://' + image.path;
         this.props.navigation.navigate('ResultBefore', {
           image: image,
         });

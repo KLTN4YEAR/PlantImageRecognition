@@ -32,6 +32,7 @@ import AuthLoadingScreen from '../screens/AuthLoadingScreen';
 
 import ViewPostUser from "../screens/PostUserScreen";
 
+import {useIsFocused} from '@react-navigation/native';
 
 
 const Tab = createBottomTabNavigator();
@@ -39,6 +40,7 @@ const Tab = createBottomTabNavigator();
 function TabScreen() {
   return (
     <Tab.Navigator
+      initialRouteName="Camera"
       screenOptions={({route}) => ({
         tabBarIcon: ({focused, color, size}) => {
           if (route.name === 'Home') {
@@ -116,13 +118,13 @@ function UserScreen({navigation}) {
 
 const StackCamera = createStackNavigator();
 
-function CameraScreen({navigation}) {
+function CameraScreen() {
   return (
     <StackCamera.Navigator initialRouteName="ImagePicker">
       <StackUser.Screen
         name="ImagePicker"
         options={{headerShown: false}}
-        component={ImagePickerScreen}
+        component={IMGPickerScreen}
       />
       <StackUser.Screen
         name="PlantInfo"
@@ -150,6 +152,12 @@ function CameraScreen({navigation}) {
       />
     </StackCamera.Navigator>
   );
+};
+
+function IMGPickerScreen({navigation}) {
+  // This hook returns `true` if the screen is focused, `false` otherwise
+  const isFocused = useIsFocused();
+  return <ImagePickerScreen navigation={navigation} isFocused={isFocused} />;
 }
 
 const Stack = createStackNavigator();
