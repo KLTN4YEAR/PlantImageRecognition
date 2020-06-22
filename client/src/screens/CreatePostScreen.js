@@ -22,15 +22,25 @@ import ValidationComponent from 'react-native-form-validator';
 
 import {getIdByVNName} from '../sqlite/dbFlowerOffline';
 
+import ImageResizer from 'react-native-image-resizer';
+
 class CreatePostScreen extends ValidationComponent {
   constructor(props) {
     super(props);
     this.state = {
-      postedBy: '',
+      userInfo: {
+        token: null,
+        user: {
+          avatar: null,
+          fullName: null,
+        },
+      },
+      resizedImageUri: null,
+      postedBy: null,
       LocalImage: [],
-      content: '',
-      mentionedPlant: '',
-      namePlant: '',
+      content: null,
+      mentionedPlant: null,
+      namePlant: null,
       post: {
         mentionedPlant: '111111111111',
         namePlant: '',
@@ -50,16 +60,20 @@ class CreatePostScreen extends ValidationComponent {
 
   async componentDidMount() {
     const {route} = this.props;
+    const data = await auth.isAuthenticated();
+    this.setState({userInfo: data});
     await this.onGetIDflower(route.params?.nameVN);
     this.setState({namePlant: route.params?.nameVN});
+
+    //optimize image
+    this.resize();
   }
 
   async componentDidUpdate(prevProps) {
     const {route} = this.props;
     const name = route.params?.nameVN;
-    const data = await auth.isAuthenticated();
     if (route !== prevProps.route) {
-      await this.onGetIDflower(route.params?.nameVN);
+      await this.onGetIDflower(name);
     }
   }
 
@@ -75,6 +89,26 @@ class CreatePostScreen extends ValidationComponent {
     }
   };
 
+  //Optimize image before post
+  resize = () => {
+    const {route} = this.props;
+    ImageResizer.createResizedImage(
+      route.params?.image.path,
+      500,
+      500,
+      'JPEG',
+      80,
+    )
+      .then(({uri}) => {
+        this.setState({
+          resizedImageUri: uri,
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   //lưu những thay đổi nơi input vào state
   onChange = e => {
     this.setState({[e.target.name]: e.target.value});
@@ -83,13 +117,14 @@ class CreatePostScreen extends ValidationComponent {
   onSubmit = e => {
     e.preventDefault(); //chấp nó bấm submit liên tục nè
     if (this.onValidate()) {
-      const {post} = this.state;
+      const {post, resizedImageUri} = this.state;
       const {route} = this.props;
-      const imagePlant = route.params?.image;
+
+      //const imagePlant = resizedImageUri;
       post['mentionedPlant'] = this.state.mentionedPlant;
       post['namePlant'] = this.state.namePlant;
       post['content'] = this.state.content;
-      post['plant_images'] = imagePlant;
+      post['plant_images'] = resizedImageUri;
 
       // create fromData to create post
       let formData = new FormData();
@@ -97,18 +132,17 @@ class CreatePostScreen extends ValidationComponent {
       formData.append('namePlant', post.namePlant);
       formData.append('content', post.content);
 
-      let fileName = post.plant_images.path.substring(
-        post.plant_images.path.lastIndexOf('/') + 1,
+      let fileType = post.plant_images.substring(
+        post.plant_images.lastIndexOf('.') + 1,
+      );
+      let fileName = post.plant_images.substring(
+        post.plant_images.lastIndexOf('/') + 1,
       );
       formData.append('plant_images', {
-        uri:
-          Platform.OS === 'ios'
-            ? post.plant_images.uri
-            : 'file://' + post.plant_images.path,
+        uri: post.plant_images,
         name: fileName,
-        type: post.plant_images.mime,
+        type: `image/${fileType}`,
       });
-
       this.addPost(formData);
     }
   };
@@ -116,12 +150,18 @@ class CreatePostScreen extends ValidationComponent {
   addPost = async formatData => {
     const {newPost, navigation} = this.props;
     const credentials = await auth.isAuthenticated();
-    newPost(credentials, formatData);
-    navigation.navigate('Post');
+    if (credentials) {
+      newPost(credentials, formatData);
+      navigation.navigate('Post');
+    } else {
+      Toast.show('Có lỗi xảy ra. Xin thử lại!');
+    }
   };
 
   render() {
     const {profile, navigation, route} = this.props;
+    const {userInfo, resizedImageUri} = this.state;
+
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.viewHeader}>
@@ -148,12 +188,12 @@ class CreatePostScreen extends ValidationComponent {
             <Grid>
               <Row style={styles.rowPostBy}>
                 <Col size={20}>
-                  {profile.avatar ? (
+                  {userInfo.user.avatar ? (
                     <Avatar
                       rounded
                       size={50}
                       source={{
-                        uri: profile.avatar,
+                        uri: userInfo.user.avatar,
                       }}
                     />
                   ) : (
@@ -165,8 +205,10 @@ class CreatePostScreen extends ValidationComponent {
                   )}
                 </Col>
                 <Col size={80}>
-                  {profile.fullName ? (
-                    <Text style={styles.txtUserName}>{profile.fullName}</Text>
+                  {userInfo.user.fullName ? (
+                    <Text style={styles.txtUserName}>
+                      {userInfo.user.fullName}
+                    </Text>
                   ) : (
                     <Text style={styles.txtUserName}>Unknown</Text>
                   )}
@@ -201,7 +243,11 @@ class CreatePostScreen extends ValidationComponent {
             <View style={styles.viewDisplayImage}>
               <View style={styles.viewImgDisplay}>
                 <Image
-                  source={{uri: route.params?.image.path}}
+                  source={{
+                    uri: resizedImageUri
+                      ? resizedImageUri
+                      : route.params?.image.path,
+                  }}
                   style={styles.imgDisplay}
                 />
               </View>

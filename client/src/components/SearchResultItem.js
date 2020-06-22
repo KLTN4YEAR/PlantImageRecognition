@@ -7,15 +7,13 @@ import {Icon} from 'react-native-elements';
 class SearchResultList extends Component {
   render() {
     const {plant} = this.props;
-    //console.log("i",plant.images[0])
     return (
       <ScrollView style={styles.viewScroll}>
         <View style={styles.viewImg}>
           {plant.images[0] ? (
             <Image
               source={{
-                uri:
-                  'https://previews.123rf.com/images/glopphy/glopphy1703/glopphy170300106/74798864-pink-flower-closeup-vector-image-logo-design.jpg',
+                uri: plant.images[0],
               }}
               style={styles.imgCard}
             />
@@ -30,7 +28,7 @@ class SearchResultList extends Component {
           )}
 
           <View style={styles.viewInfo}>
-            <Text style={styles.txtName}>{plant.name}</Text>
+            <Text style={styles.txtName}>{plant.nameVN}</Text>
             <Text style={styles.txtDec} numberOfLines={2}>
               {plant.characteristics}
             </Text>

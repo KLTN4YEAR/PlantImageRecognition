@@ -16,7 +16,6 @@ export const searchPlant = (credentials, plantName) => {
     return function(dispatch) {
         axios.get(`${API_URL}/api/plant/searchPlant?filter=` + plantName, config)
             .then((response) => {
-               // console.log("a",response.data.result.plants)
                 dispatch({
                     type: SEARCH_PLANT,
                     payload: response.data.result.plants

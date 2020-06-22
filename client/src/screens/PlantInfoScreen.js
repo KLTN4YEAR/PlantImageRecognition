@@ -101,8 +101,11 @@ export default class ResultScreen extends React.Component {
   };
   render() {
     const {resultPlant, images} = this.state;
-    const{navigation}=this.props;
-    const defaultImg=["https://www.chanchao.com.tw/VietnamPrintPack/images/default.jpg"];
+    const {navigation,route} = this.props;
+    const defaultImg = [
+      'https://www.chanchao.com.tw/VietnamPrintPack/images/default.jpg',
+    ];
+    const backScreen = route.params?.backScreen;
     return (
       <SafeAreaView>
         <View style={styles.viewHeader}>
@@ -147,7 +150,9 @@ export default class ResultScreen extends React.Component {
           </View>
           <TouchableOpacity
             style={styles.btnCancel}
-            onPress={() => this.props.navigation.navigate('ImagePicker')}>
+            onPress={() =>
+              navigation.navigate(`${backScreen}`)
+            }>
             <Icon
               type="font-awesome"
               name="times"

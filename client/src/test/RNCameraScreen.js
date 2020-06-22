@@ -38,6 +38,7 @@ class ImagePickerScreen extends Component {
           });
         })
         .catch(err => {
+          console.log('Error: ', err);
           Toast.show('Có lỗi xảy ra!');
         });
     }
@@ -45,6 +46,7 @@ class ImagePickerScreen extends Component {
 
   //Mode of select Image with Gallery
   onSelectImage() {
+    const {navigation} = this.props;
     const options = {
       cropping: true,
       compressImageQuality: 1.0,
@@ -56,12 +58,12 @@ class ImagePickerScreen extends Component {
     };
     ImagePicker.openPicker(options)
       .then(image => {
-        var path = Platform.OS === 'ios' ? image.uri : 'file://' + image.path;
-        this.props.navigation.navigate('ResultRNCamera', {
+        navigation.navigate('ResultRNCamera', {
           image: image,
         });
       })
       .catch(err => {
+        console.log('Error: ', err);
         Toast.show('Có lỗi xảy ra!');
       });
   }
@@ -75,63 +77,75 @@ class ImagePickerScreen extends Component {
     this.setState({torchon: tstate});
   }
   render() {
+    const {isFocused} = this.props;
     return (
       <View style={styles.container}>
-        <RNCamera
-          ref={ref => {
-            this.camera = ref;
-          }}
-          style={styles.preview}
-          type={RNCamera.Constants.Type.back}
-          flashMode={this.state.torchon}
-          androidCameraPermissionOptions={{
-            title: 'Permission to use camera',
-            message: 'We need your permission to use your camera',
-            buttonPositive: 'Ok',
-            buttonNegative: 'Cancel',
-          }}
-          androidRecordAudioPermissionOptions={{
-            title: 'Permission to use audio recording',
-            message: 'We need your permission to use your audio',
-            buttonPositive: 'Ok',
-            buttonNegative: 'Cancel',
-          }}
-          onGoogleVisionBarcodesDetected={({barcodes}) => {
-            console.log(barcodes);
-          }}
-        />
-        <View style={styles.viewBtn}>
-          <TouchableOpacity
-            style={styles.btnGallery}
-            onPress={this.toggleTorch.bind(this)}>
-            {this.state.torchon == RNCamera.Constants.FlashMode.off ? (
-              <Icon
-                name="flash-off"
-                type="material"
-                color="#59c393"
-                size={30}
-              />
-            ) : (
-              <Icon name="flash-on" type="material" color="#59c393" size={30} />
-            )}
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={this.takePicture.bind(this)}
-            style={styles.btnCapture}>
-            <Icon
-              raised
-              name="camera"
-              type="font-awesome"
-              color="#59c393"
-              size={35}
+        {isFocused && (
+          <>
+            <RNCamera
+              ref={ref => {
+                this.camera = ref;
+              }}
+              style={styles.preview}
+              type={RNCamera.Constants.Type.back}
+              flashMode={this.state.torchon}
+              androidCameraPermissionOptions={{
+                title: 'Permission to use camera',
+                message: 'We need your permission to use your camera',
+                buttonPositive: 'Ok',
+                buttonNegative: 'Cancel',
+              }}
+              androidRecordAudioPermissionOptions={{
+                title: 'Permission to use audio recording',
+                message: 'We need your permission to use your audio',
+                buttonPositive: 'Ok',
+                buttonNegative: 'Cancel',
+              }}
             />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.btnGallery}
-            onPress={this.onSelectImage.bind(this)}>
-            <Icon name="image" type="font-awesome" color="#59c393" size={30} />
-          </TouchableOpacity>
-        </View>
+            <View style={styles.viewBtn}>
+              <TouchableOpacity
+                style={styles.btnGallery}
+                onPress={this.toggleTorch.bind(this)}>
+                {this.state.torchon == RNCamera.Constants.FlashMode.off ? (
+                  <Icon
+                    name="flash-off"
+                    type="material"
+                    color="#59c393"
+                    size={30}
+                  />
+                ) : (
+                  <Icon
+                    name="flash-on"
+                    type="material"
+                    color="#59c393"
+                    size={30}
+                  />
+                )}
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={this.takePicture.bind(this)}
+                style={styles.btnCapture}>
+                <Icon
+                  raised
+                  name="camera"
+                  type="font-awesome"
+                  color="#59c393"
+                  size={35}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.btnGallery}
+                onPress={this.onSelectImage.bind(this)}>
+                <Icon
+                  name="image"
+                  type="font-awesome"
+                  color="#59c393"
+                  size={30}
+                />
+              </TouchableOpacity>
+            </View>
+          </>
+        )}
       </View>
     );
   }

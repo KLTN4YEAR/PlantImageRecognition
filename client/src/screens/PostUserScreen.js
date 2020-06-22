@@ -16,7 +16,7 @@ import {Icon} from 'react-native-elements';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {auth} from '../config/helper';
-import {getListPost} from '../action/postAction';
+import {getListPostUer} from '../action/postAction';
 import {getInfo} from '../action/userAction';
 import * as Animatable from 'react-native-animatable';
 import moment from 'moment';
@@ -24,7 +24,7 @@ import localization from 'moment/locale/vi';
 
 moment.updateLocale('vi', localization);
 
-class PostScreen extends React.Component {
+class PostUserScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -71,9 +71,8 @@ class PostScreen extends React.Component {
   loadData = async () => {
     const {getInfo} = this.props;
     const data = await auth.isAuthenticated();
-
+    this.setState({userInfo: data});
     if (data) {
-      this.setState({userInfo: data});
       await getInfo(data, data.user._id);
     }
   };
@@ -89,7 +88,7 @@ class PostScreen extends React.Component {
   };
 
   loadMoreData = async () => {
-    const {getListPost, listPost} = this.props;
+    const {getListPostUer, listPost} = this.props;
     const {fetching_from_server, isListEnd, serverData} = this.state;
     if (!fetching_from_server && !isListEnd) {
       this.setState(
@@ -98,20 +97,18 @@ class PostScreen extends React.Component {
         },
         async () => {
           const credentials = await auth.isAuthenticated();
-          if (credentials) {
-            let lstPost = await getListPost(credentials, this.offset);
-            if (lstPost.length > 0) {
-              this.offset = lstPost[lstPost.length - 1]._id;
-              this.setState({
-                serverData: [...serverData, ...lstPost],
-                fetching_from_server: false,
-              });
-            } else {
-              this.setState({
-                fetching_from_server: false,
-                isListEnd: true,
-              });
-            }
+          let lstPost = await getListPostUer(credentials, this.offset);
+          if (lstPost.length > 0) {
+            this.offset = lstPost[lstPost.length - 1]._id;
+            this.setState({
+              serverData: [...serverData, ...lstPost],
+              fetching_from_server: false,
+            });
+          } else {
+            this.setState({
+              fetching_from_server: false,
+              isListEnd: true,
+            });
           }
         },
       );
@@ -150,17 +147,17 @@ class PostScreen extends React.Component {
           </TouchableOpacity>
           <View style={styles.viewLogoHead}>
             <Animatable.Text animation="bounce" style={styles.txtLogoHead}>
-              Cộng đồng
+              Quản lý bài viết
             </Animatable.Text>
             {/* <Text style={styles.txtLogoHead}>Cộng đồng</Text> */}
           </View>
           <TouchableOpacity
             style={styles.btnAdd}
-            onPress={() => this.props.navigation.navigate('ImageBefore')}>
+            onPress={() => this.props.navigation.goBack()}>
             <Icon
-              size={30}
+              size={20}
               type="material"
-              name="add"
+              name="close"
               iconStyle={styles.labelIconAdd}
               color="yellow"
             />
@@ -168,7 +165,7 @@ class PostScreen extends React.Component {
         </View>
         {loading ? (
           <ActivityIndicator size="large" color="#33CC08" />
-        ) : (
+        ) : serverData.length!==0 ? (
           <FlatList
             style={styles.viewFlatList}
             keyExtractor={(item, index) => index.toString()}
@@ -184,6 +181,12 @@ class PostScreen extends React.Component {
             renderItem={({item, index}) =>
               item ? (
                 <Grid>
+                  {/* <Text style={{color:"#fff", alignSelf:"center",justifyContent:'center'}}>
+                    Bài viết của{' '}
+                    {userInfo && userInfo.user.fullName
+                      ? userInfo.user.fullName
+                      : ''}
+                  </Text> */}
                   <Row key={index}>
                     <Animatable.View
                       animation="fadeInDown"
@@ -289,12 +292,16 @@ class PostScreen extends React.Component {
                   </Row>
                 </Grid>
               ) : (
-                <Text>loading</Text>
+                <Text style={{color: '#fff'}}>
+                  Bạn chưa đăng bài
+                </Text>
               )
             }
             ItemSeparatorComponent={() => <View style={styles.separator} />}
             ListFooterComponent={this.renderFooter.bind(this)}
           />
+        ) : (
+          <Text style={{color: '#fff',padding:10, alignSelf:'center',fontWeight:"bold"}}>Bạn chưa có bài viết nào</Text>
         )}
       </SafeAreaView>
     );
@@ -312,5 +319,5 @@ function mapStateToProp(state) {
 
 export default connect(
   mapStateToProp,
-  {getListPost, getInfo},
-)(PostScreen);
+  {getListPostUer, getInfo},
+)(PostUserScreen);

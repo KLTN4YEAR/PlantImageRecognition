@@ -56,7 +56,6 @@ class ImagePickerScreen extends Component {
     };
     ImagePicker.openPicker(options)
       .then(image => {
-        var path = Platform.OS === 'ios' ? image.uri : 'file://' + image.path;
         this.props.navigation.navigate('ResultBefore', {
           image: image,
         });
@@ -96,9 +95,6 @@ class ImagePickerScreen extends Component {
             message: 'We need your permission to use your audio',
             buttonPositive: 'Ok',
             buttonNegative: 'Cancel',
-          }}
-          onGoogleVisionBarcodesDetected={({barcodes}) => {
-            console.log(barcodes);
           }}
         />
         <View style={styles.viewBtn}>

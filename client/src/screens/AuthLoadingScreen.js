@@ -1,12 +1,8 @@
 import React from 'react';
-import {
-  View,
-  StatusBar,
-  ActivityIndicator,
-  StyleSheet,
-} from 'react-native';
+import {View, StatusBar, ActivityIndicator, StyleSheet} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-
+import {checkAuthenticated} from '../action/authAction';
+import {connect} from 'react-redux';
 class AuthLoadingScreen extends React.Component {
   constructor() {
     super();
@@ -14,10 +10,17 @@ class AuthLoadingScreen extends React.Component {
   }
 
   _bootstrap = async () => {
-    //const {navigation} = this.props;
     const userToken = await AsyncStorage.getItem('jwt');
     this.props.navigation.navigate(userToken ? 'Tab' : 'Login');
-  };
+  }
+
+  async componentDidMount(){
+    const {checkAuthenticated} = this.props;
+    const userToken = await AsyncStorage.getItem('jwt');
+    if(userToken){
+      checkAuthenticated();
+    }
+  }
 
   render() {
     return (
@@ -28,8 +31,13 @@ class AuthLoadingScreen extends React.Component {
     );
   }
 }
+function mapStateToProp(state) {
+  return {
+    isAuthenticate: state.auth.isAuthenticated,
+  };
+}
 
-export default AuthLoadingScreen;
+export default connect(mapStateToProp,{checkAuthenticated,})(AuthLoadingScreen);
 
 const styles = StyleSheet.create({
   container: {

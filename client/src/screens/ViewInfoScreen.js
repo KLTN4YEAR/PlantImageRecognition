@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Text, ScrollView, TouchableOpacity} from 'react-native';
+import {Text, ScrollView, TouchableOpacity, View, Button} from 'react-native';
 import {Col, Row, Grid} from 'react-native-easy-grid';
 import {styles} from '../public/styleSheets/styleViewInfo';
 import {Icon} from 'react-native-elements';
@@ -9,6 +9,7 @@ import {auth} from '../config/helper';
 import {getInfo} from '../action/userAction';
 import {logout} from '../action/authAction';
 import * as Animatable from 'react-native-animatable';
+import RBSheet from 'react-native-raw-bottom-sheet';
 
 var moment = require('moment');
 class ViewInfo extends React.Component {
@@ -35,11 +36,36 @@ class ViewInfo extends React.Component {
 
   onClickLogout = async () => {
     const {logout, navigation} = this.props;
-    await logout();
+    logout();
     const data = await auth.isAuthenticated();
     if (!data) {
-      await navigation.navigate('Login');
+      this.RBSheet.close();
     }
+  };
+
+  async componentDidUpdate(prevProps) {
+    const {isAuthenticated, navigation} = this.props;
+    if (isAuthenticated !== prevProps.isAuthenticated) {
+      if (!isAuthenticated) {
+        navigation.navigate('Login');
+      }
+    }
+  }
+
+  onClickEdit = () => {
+    const {navigation, profile} = this.props;
+    this.RBSheet.close();
+    navigation.navigate('EditInfo', {
+      profile: profile,
+    });
+  };
+
+  onClickViewPost = () => {
+    const {navigation, profile} = this.props;
+    this.RBSheet.close();
+    navigation.navigate('PostUser', {
+      profile: profile,
+    });
   };
 
   render() {
@@ -47,47 +73,77 @@ class ViewInfo extends React.Component {
     return (
       <ScrollView style={styles.container}>
         <AvatarCard navigation={navigation} />
+
+        <View style={styles.iconOption}>
+          <TouchableOpacity onPress={() => this.RBSheet.open()}>
+            <Icon
+              size={30}
+              type="font-awesome"
+              name="navicon"
+              iconStyle={styles.labelIconAdd}
+              color="rgba(64,64,64, 0.8)"
+            />
+          </TouchableOpacity>
+          <RBSheet
+            ref={ref => {
+              this.RBSheet = ref;
+            }}
+            height={200}
+            openDuration={250}
+            customStyles={{
+              container: {
+                justifyContent: 'center',
+                alignItems: 'center',
+              },
+              wrapper: {
+                backgroundColor: 'transparent',
+              },
+            }}>
+            <Animatable.View animation="fadeInUp" style={styles.viewOption}>
+              <TouchableOpacity
+                style={styles.touchEdit}
+                onPress={this.onClickEdit}>
+                <Icon
+                  size={30}
+                  type="font-awesome"
+                  name="edit"
+                  iconStyle={styles.labelIconEdit}
+                  color="black"
+                />
+                <Text style={styles.labelEdit}>Chỉnh sửa thông tin</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.touchEdit}
+                onPress={this.onClickViewPost}>
+                <Icon
+                  size={30}
+                  type="font-awesome"
+                  name="newspaper-o"
+                  iconStyle={styles.labelIconEdit}
+                  color="black"
+                />
+                <Text style={styles.labelEdit}>Xem bài viết cá nhân</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.touchEdit}
+                onPress={this.onClickLogout}>
+                <Icon
+                  size={30}
+                  type="font-awesome"
+                  name="sign-out"
+                  iconStyle={styles.labelIconLogout}
+                  color="black"
+                />
+
+                <Text style={styles.labelEdit}>Đăng xuất</Text>
+              </TouchableOpacity>
+            </Animatable.View>
+          </RBSheet>
+        </View>
+
         {profile ? (
           <Row size={60} style={styles.viewInfo}>
             <Grid>
-              <Row style={styles.rowEdit}>
-                <Col size={85} style={styles.editCol}>
-                  <TouchableOpacity
-                    style={styles.touchEdit}
-                    onPress={() =>
-                      navigation.navigate('EditInfo', {
-                        profile: profile,
-                      })
-                    }>
-                    <Col size={30} style={styles.colBtnEdit}>
-                      <Icon
-                        size={20}
-                        type="font-awesome"
-                        name="edit"
-                        iconStyle={styles.labelIconEdit}
-                        color="white"
-                      />
-                      <Text style={styles.labelEdit}>Chỉnh sửa thông tin</Text>
-                    </Col>
-                  </TouchableOpacity>
-                </Col>
-                <Col size={15} style={styles.logoutCol}>
-                  <TouchableOpacity
-                    style={styles.touchLogout}
-                    onPress={this.onClickLogout}>
-                    <Col size={30} style={styles.colBtnLogout}>
-                      <Icon
-                        size={20}
-                        type="font-awesome"
-                        name="sign-out"
-                        iconStyle={styles.labelIconLogout}
-                        color="white"
-                      />
-                    </Col>
-                  </TouchableOpacity>
-                </Col>
-              </Row>
-
               <Row style={styles.rowInfo}>
                 <Col size={30} style={styles.colInfo}>
                   <Icon
@@ -174,7 +230,7 @@ class ViewInfo extends React.Component {
 
 function mapStateToProp(state) {
   return {
-    authenticate: state.auth.isAuthenticated,
+    isAuthenticated: state.auth.isAuthenticated,
     profile: state.user.profile,
     avatar: state.user.avatar,
   };

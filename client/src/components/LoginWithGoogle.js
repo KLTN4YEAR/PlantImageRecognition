@@ -28,6 +28,14 @@ class LoginGoogle extends React.Component {
     this._configureGoogleSignIn();
   }
 
+  async componentDidUpdate(prevProps) {
+    const {isAuthenticated,navigation} = this.props;
+    if (isAuthenticated !== prevProps.isAuthenticated) {
+      if (isAuthenticated) {
+        navigation.navigate('Tab');
+      }
+    }
+  }
   _configureGoogleSignIn() {
     GoogleSignin.configure({
       androidClientId: OauthKey,
@@ -65,14 +73,13 @@ class LoginGoogle extends React.Component {
   };
 
   loginGG = async result => {
-    const profile = this.state.profile;
+    const {loginWithGoogle, navigation, isAuthenticated} = this.props;
+    const {profile} = this.state;
     profile['fullName'] = result.user.name;
-    const {loginWithGoogle, navigation} = this.props;
     profile['googleId'] = result.user.id;
     profile['email'] = result.user.email;
     profile['avatar'] = result.user.photo;
     await loginWithGoogle(profile);
-    await navigation.navigate('Tab');
   };
 
   render() {

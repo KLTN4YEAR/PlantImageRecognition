@@ -62,7 +62,7 @@ class DetailPostScreen extends React.Component {
                   <Col size={60} style={styles.colPostBy}>
                     <Text style={styles.txtUserName}>
                       {route.params?.post.postedBy.fullName
-                        ? route.params?.post.postedBy.fullName
+                        ? route.params?.post.postedBy.fullName.trim()
                         : 'Unknown'}
                     </Text>
                     <Text style={styles.txtCreated}>
@@ -93,7 +93,7 @@ class DetailPostScreen extends React.Component {
                 multiline={true}
                 style={styles.txtDec}
                 editable={false}
-                value={route.params?.post.content}
+                value={route.params?.post.content.trim()}
               />
             </View>
             <View style={styles.viewContribute}>

@@ -1,6 +1,13 @@
 import * as React from 'react';
 import {SearchBar} from 'react-native-elements';
-import {Text, View, Image, SafeAreaView, ScrollView} from 'react-native';
+import {
+  Text,
+  View,
+  Image,
+  SafeAreaView,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import {styles} from '../public/styleSheets/styleSearchView';
 import {Col, Row, Grid} from 'react-native-easy-grid';
 import {Icon} from 'react-native-elements';
@@ -29,18 +36,32 @@ class SearchScreen extends React.Component {
   };
 
   renderSort() {
-    const {plants} = this.props;
+    const {plants, navigation} = this.props;
     const {search} = this.state;
     return (
       <View style={styles.viewSearch}>
         {search ? (
           <>
-            <Text style={styles.labelResult}>
-              Kết quả cho: {search}
-            </Text>
+            <Text style={styles.labelResult}>Kết quả cho: {search}</Text>
             {plants.length > 0 ? (
               plants.map((item, i) => {
-                return <SearchResultItem i={i} key={item._id} plant={item} />;
+                return (
+                  <TouchableOpacity
+                    key={item._id}
+                    
+                    onPress={() => {
+                      navigation.navigate('PlantInfo', {
+                        fId: item._id,
+                        backScreen:"Search"
+                      });
+                    }}>
+                    <SearchResultItem
+                      i={i}
+                      key={item._id}
+                      plant={item}
+                    />
+                  </TouchableOpacity>
+                );
               })
             ) : (
               <Text style={styles.txtNotify}>Không có kết quả</Text>

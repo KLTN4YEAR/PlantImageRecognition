@@ -14,7 +14,7 @@ import ImagePickerScreen from '../test/RNCameraScreen';
 import ResultRNCameraScreen from '../test/ResultRNCameraScreen';
 
 import ResultCameraScreen from '../screens/ResultCameraScreen';
-import SearchScreen from './../screens/SearchScreen';
+import SearchPlantScreen from './../screens/SearchScreen';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ViewInfo from '../screens/ViewInfoScreen';
 import EditInfo from '../screens/EditInfoScreen';
@@ -30,9 +30,9 @@ import ResultBeforePostScreen from '../test/ResultBeforePostScreen';
 //màn hình loading
 import AuthLoadingScreen from '../screens/AuthLoadingScreen';
 
-import {connect} from 'react-redux';
-import {auth} from '../config/helper'
-import AsyncStorage from '@react-native-community/async-storage';
+import ViewPostUser from "../screens/PostUserScreen";
+
+import {useIsFocused} from '@react-navigation/native';
 
 
 const Tab = createBottomTabNavigator();
@@ -40,6 +40,7 @@ const Tab = createBottomTabNavigator();
 function TabScreen() {
   return (
     <Tab.Navigator
+      initialRouteName="Camera"
       screenOptions={({route}) => ({
         tabBarIcon: ({focused, color, size}) => {
           if (route.name === 'Home') {
@@ -93,6 +94,11 @@ function UserScreen({navigation}) {
         }}
       />
       <StackUser.Screen
+        name="PostUser"
+        options={{headerShown: false}}
+        component={ViewPostUser}
+      />
+      <StackUser.Screen
         name="EditInfo"
         options={{
           title: 'Chỉnh sửa thông tin cá nhân',
@@ -112,13 +118,13 @@ function UserScreen({navigation}) {
 
 const StackCamera = createStackNavigator();
 
-function CameraScreen({navigation}) {
+function CameraScreen() {
   return (
     <StackCamera.Navigator initialRouteName="ImagePicker">
       <StackUser.Screen
         name="ImagePicker"
         options={{headerShown: false}}
-        component={ImagePickerScreen}
+        component={IMGPickerScreen}
       />
       <StackUser.Screen
         name="PlantInfo"
@@ -146,6 +152,12 @@ function CameraScreen({navigation}) {
       />
     </StackCamera.Navigator>
   );
+};
+
+function IMGPickerScreen({navigation}) {
+  // This hook returns `true` if the screen is focused, `false` otherwise
+  const isFocused = useIsFocused();
+  return <ImagePickerScreen navigation={navigation} isFocused={isFocused} />;
 }
 
 const Stack = createStackNavigator();
@@ -219,6 +231,24 @@ function HomeScreen() {
         component={CreatePostScreen}
       />
     </HomeStack.Navigator>
+  );
+}
+
+const SearchStack=createStackNavigator();
+function SearchScreen() {
+  return (
+    <SearchStack.Navigator initialRouteName="Search">
+      <SearchStack.Screen
+        name="Search"
+        options={{headerShown: false}}
+        component={SearchPlantScreen}
+      />
+      <SearchStack.Screen
+        name="PlantInfo"
+        options={{headerShown: false}}
+        component={PlantInfoScreen}
+      />
+    </SearchStack.Navigator>
   );
 }
 
