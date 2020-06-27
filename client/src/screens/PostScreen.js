@@ -22,6 +22,8 @@ import * as Animatable from 'react-native-animatable';
 import moment from 'moment';
 import localization from 'moment/locale/vi';
 
+import {InputItem, List, Toast} from '@ant-design/react-native';
+
 moment.updateLocale('vi', localization);
 
 class PostScreen extends React.Component {
@@ -66,6 +68,8 @@ class PostScreen extends React.Component {
   async componentDidMount() {
     await this.loadMoreData();
     await this.loadData();
+    
+
   }
 
   loadData = async () => {
@@ -245,7 +249,9 @@ class PostScreen extends React.Component {
                             <TouchableOpacity
                               style={styles.touchAdd}
                               onPress={() =>
-                                this.props.navigation.navigate('AddDetail')
+                                this.props.navigation.navigate('AddDetail', {
+                                  post: item,
+                                })
                               }>
                               <Col size={15} style={styles.colBtnAdd}>
                                 <Icon

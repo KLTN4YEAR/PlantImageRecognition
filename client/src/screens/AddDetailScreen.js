@@ -1,100 +1,129 @@
 import * as React from 'react';
-import {Text, ScrollView, Image} from 'react-native';
-import {Button, Input} from 'react-native-elements';
-import {Col, Row, Grid} from 'react-native-easy-grid';
+import {
+  Text,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  View,
+  SafeAreaView,
+} from 'react-native';
 import {styles} from '../public/styleSheets/styleAddDetail';
-import {Icon} from 'react-native-elements';
+import {InputItem, List, TextareaItem, Icon} from '@ant-design/react-native';
+const Item = List.Item;
+const Brief = Item.Brief;
+export default class AddDetailScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: '',
+    
+    };
+  }
 
-export default function AddDetailScreen({navigation}) {
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <Button
-          buttonStyle={styles.btnDone}
-          onPress={() => navigation.goBack()}
-          icon={<Icon name="check" size={24} color="white" />}
-          iconRight
-        />
-      ),
-    });
-  });
+  successContribute = () => {};
 
-  return (
-    <ScrollView style={styles.container}>
-      <Row size={60} style={styles.viewInfo}>
-        <Grid>
-          <Row style={styles.rowImage}>
-            <Image
-              source={{
-                uri:
-                  'https://mrhoa.com/wp-content/uploads/2019/01/hoa-hong-phan-dep.jpg',
+  render() {
+    const {route} = this.props;
+    return (
+      <View style={styles.container}>
+        <ScrollView
+          style={styles.lstContribute}
+          automaticallyAdjustContentInsets={false}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}>
+          <View style={styles.rowImage}>
+            {route.params?.post.images ? (
+              route.params?.post.images.map((item, index) => {
+                return (
+                  <Image
+                    key={index}
+                    source={{uri: item}}
+                    style={styles.imgCard}
+                  />
+                );
+              })
+            ) : (
+              <Text>Không có ảnh</Text>
+            )}
+          </View>
+          <List
+            renderHeader={'Đóng góp'}
+            renderFooter="Đóng góp của bạn góp phần giàu dữ liệu cho cộng đồng">
+            <Item
+              arrow="down"
+              thumb="https://img.icons8.com/bubbles/250/000000/edit.png"
+              onClick={() => {}}>
+              Thông tin cơ bản
+            </Item>
+            <InputItem
+              clear
+              onChange={value => {
+                this.setState({
+                  value,
+                });
               }}
-              style={styles.imgCard}
-            />
-          </Row>
-          <Row style={styles.rowInfo}>
-            <Col size={30} style={styles.colInfo}>
-              <Icon
-                type="font-awesome"
-                name="font"
-                style={styles.labelIcon}
-                color="#59c393"
-              />
-              <Text style={styles.labelTxt}>Tên thực vật</Text>
-            </Col>
-            <Col size={70}>
-              <Input placeholder="Hoa hồng" inputStyle={styles.labelEdit} />
-            </Col>
-          </Row>
-          <Row style={styles.rowInfo}>
-            <Col size={30} style={styles.colInfo}>
-              <Icon
-                type="font-awesome"
-                name="map-marker"
-                style={styles.labelIcon}
-                color="#59c393"
-              />
-              <Text style={styles.labelTxt}>Nơi phân bố</Text>
-            </Col>
-            <Col size={70}>
-              <Input placeholder="Tây Ninh" inputStyle={styles.labelEdit} />
-            </Col>
-          </Row>
-          <Row style={styles.rowInfo}>
-            <Col size={30} style={styles.colInfo}>
-              <Icon
-                type="font-awesome"
-                name="leaf"
-                style={styles.labelIcon}
-                color="#59c393"
-              />
-              <Text style={styles.labelTxt}>Giống loài</Text>
-            </Col>
-            <Col size={70}>
-              <Input placeholder="Hoa hồng" inputStyle={styles.labelEdit} />
-            </Col>
-          </Row>
-          <Row style={styles.rowInfo}>
-            <Col size={30} style={styles.colInfo}>
-              <Icon
-                type="font-awesome"
-                name="align-center"
-                style={styles.labelIcon}
-                color="#59c393"
-              />
-              <Text style={styles.labelTxt}>Mô tả</Text>
-            </Col>
-            <Col size={70}>
-              <Input
-                multiline={true}
-                numberOfLines={4}
-                placeholder="Hoa hồng đỏ là một giống loài thuộc loại hoa hồng có gai, phân bố chủ yếu ở các nước ôn đới"
-                inputStyle={styles.labelEdit}
-              />
-            </Col>
-          </Row>
-        </Grid>
-      </Row>
-    </ScrollView>
-  );
+              extra={<Icon name="info-circle" size="md" color="red" />}
+              placeholder="Vui lòng nhập tên hoa mà bạn biết">
+              Tên hoa
+            </InputItem>
+            <InputItem
+              clear
+              onChange={value => {
+                this.setState({
+                  value,
+                });
+              }}
+              extra={<Icon name="info-circle" size="md" color="red" />}
+              placeholder="Loại hoa?">
+              Phân loại
+            </InputItem>
+            <InputItem
+              clear
+              onChange={value => {
+                this.setState({
+                  value,
+                });
+              }}
+              extra={<Icon name="info-circle" size="md" color="red" />}
+              placeholder="Bạn đã gặp nó ở đâu?">
+              Phân bố
+            </InputItem>
+            <Item
+              arrow="down"
+              thumb="https://img.icons8.com/bubbles/250/000000/plus.png"
+              onClick={() => {}}>
+              Thông tin thêm
+            </Item>
+            <Item
+              extra={<Icon name="plus-circle" size="md" color="green" />}
+              multipleLine
+              onClick={() => {}}>
+              Đặc điểm <TextareaItem rows={2} autoHeight count={250} />
+            </Item>
+            <Item
+              multipleLine
+              extra={<Icon name="plus-circle" size="md" color="green" />}
+              onClick={() => {}}>
+              Ý nghĩa <TextareaItem rows={2} autoHeight count={250} />
+            </Item>
+            <Item
+              multipleLine
+              onClick={() => {}}
+              extra={<Icon name="plus-circle" size="md" color="green" />}>
+              Bình luận <TextareaItem rows={4} count={250} />
+            </Item>
+          </List>
+          <Item/>
+        </ScrollView>
+
+        <View style={styles.viewBtn}>
+          <TouchableOpacity
+            style={styles.btnContribute}
+            onPress={this.successContribute}>
+            <Text style={styles.txtContribute}>ĐÓNG GÓP</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
 }

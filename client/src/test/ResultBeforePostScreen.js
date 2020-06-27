@@ -13,7 +13,7 @@ import {styles} from '../public/styleSheets/styleResultBefore';
 import Tflite from 'tflite-react-native';
 
 import InfoPlantBeforePost from '../components/InfoPlantBeforePostCard';
-
+import {Steps, WingBlank} from '@ant-design/react-native';
 // Gọi các sqlite function
 import {viewAllFlower, viewInfoByEngName} from '../sqlite/dbFlowerOffline';
 
@@ -23,6 +23,7 @@ let tflite = new Tflite();
 const height = 350;
 const width = 350;
 const flower = 'Flower';
+const Step = Steps.Step;
 
 class ResultBeforePostScreen extends Component {
   constructor(props) {
@@ -165,7 +166,7 @@ class ResultBeforePostScreen extends Component {
             listStyle={styles.autocompleteLst}
             listContainerStyle={styles.autocompleteLstCon}
             defaultValue={getNamePlant}
-            keyExtractor={(item,index)=>index.toString()}
+            keyExtractor={(item, index) => index.toString()}
             data={
               getNamePlantN.length === 1 &&
               comp(getNamePlant, getNamePlantN[0].nameVN)
@@ -210,8 +211,8 @@ class ResultBeforePostScreen extends Component {
                   Ảnh bạn đăng có thể là:
                 </Text>
                 <Text style={styles.lblGY}>
-                  Nếu bạn nghĩ thực vật bạn chia sẽ có trong kết quả. Vui lòng
-                  chọn để tiếp tục!
+                  Nếu bạn nghĩ thực vật bạn chia sẽ có trong kết quả. Vui
+                  lòng chọn để tiếp tục!
                 </Text>
               </View>
               {this.renderResults()}

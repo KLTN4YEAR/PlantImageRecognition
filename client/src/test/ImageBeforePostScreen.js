@@ -13,8 +13,17 @@ import {Icon} from 'react-native-elements';
 import ImagePicker from 'react-native-image-crop-picker';
 import Toast from 'react-native-simple-toast';
 
+import {Steps, WingBlank} from '@ant-design/react-native';
+const Step = Steps.Step;
 class ImagePickerScreen extends Component {
-  state = {torchon: RNCamera.Constants.FlashMode.off};
+  constructor(props) {
+    super(props);
+    this.state = {
+      torchon: RNCamera.Constants.FlashMode.off,
+    };
+  }
+
+  // state = {torchon: RNCamera.Constants.FlashMode.off};
   takePicture = async () => {
     if (this.camera) {
       const options = {
@@ -76,7 +85,37 @@ class ImagePickerScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View><Text>Chọn hình ảnh trước khi đăng bài</Text></View>
+        {/* <View style={styles.viewStep} >
+          <WingBlank size="lg">
+            <Steps size="small" current={0} direction="vertical">
+              <Step
+                key={0}
+                title="Chọn ảnh"
+                status="progress"
+                size="small"
+              />
+              <Step
+                key={1}
+                title="Phân tích"
+                status="wait"
+                size="small"
+              />
+
+              <Step
+                key={2}
+                title="Hoàn thành"
+                status="wait"
+                size="small"
+              />
+              <Step
+                key={3}
+                title="Đăng"
+                status="wait"
+                size="small"
+              />
+            </Steps>
+          </WingBlank>
+        </View> */}
         <RNCamera
           ref={ref => {
             this.camera = ref;
@@ -109,7 +148,12 @@ class ImagePickerScreen extends Component {
                 size={30}
               />
             ) : (
-              <Icon name="flash-on" type="material" color="#59c393" size={30} />
+              <Icon
+                name="flash-on"
+                type="material"
+                color="#59c393"
+                size={30}
+              />
             )}
           </TouchableOpacity>
           <TouchableOpacity
@@ -126,7 +170,12 @@ class ImagePickerScreen extends Component {
           <TouchableOpacity
             style={styles.btnGallery}
             onPress={this.onSelectImage.bind(this)}>
-            <Icon name="image" type="font-awesome" color="#59c393" size={30} />
+            <Icon
+              name="image"
+              type="font-awesome"
+              color="#59c393"
+              size={30}
+            />
           </TouchableOpacity>
         </View>
       </View>

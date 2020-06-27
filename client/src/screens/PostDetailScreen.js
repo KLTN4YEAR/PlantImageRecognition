@@ -6,6 +6,8 @@ import {getPostInfo} from '../action/postAction';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {Col, Row, Grid} from 'react-native-easy-grid';
 import {Avatar} from 'react-native-elements';
+
+import ContributeComment from '../components/ContributeComment';
 import {auth} from '../config/helper';
 import moment from 'moment';
 import localization from 'moment/locale/vi';
@@ -96,10 +98,8 @@ class DetailPostScreen extends React.Component {
                 value={route.params?.post.content.trim()}
               />
             </View>
-            <View style={styles.viewContribute}>
-              <Text style={styles.txtContribute}>
-                Chức năng đóng góp đang hoàn thiện !!!!
-              </Text>
+            <View style={{padding: 10, backgroundColor: 'transparent'}}>
+              <ContributeComment/>
             </View>
           </View>
         ) : (
