@@ -10,6 +10,9 @@ export const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: '#303030',
   },
+  viewFlatList: {
+    backgroundColor: '#303030',
+  },
   viewCard: {
     width: 'auto',
     height: 280,
@@ -32,7 +35,7 @@ export const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     padding: 5,
-    backgroundColor: 'rgba(191, 186, 176, 0.1)',
+    backgroundColor: 'transparent',
   },
   rowCreate: {
     padding: 2,
@@ -254,5 +257,81 @@ export const styles = StyleSheet.create({
   imgPlantCarousel: {
     width: '100%',
     height: 300,
+  },
+  viewList: {
+    padding: 10,
+  },
+  viewModal: {
+    flex: 1,
+    marginTop: 10,
+   
+  },
+  modalContribute: {
+    width: '100%',
+  },
+  viewContribute: {
+    width: '100%',
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: 'rgba(191, 186, 176, 0.1)',
+    padding: 5,
+  },
+  avatarContribute: {
+    width: '25%',
+    alignItems: 'center',
+    padding: 10,
+  },
+  imgContribute: {
+    width: 40,
+    height: 40,
+    borderRadius: 50,
+  },
+  contentContribute: {
+    width: '75%',
+  },
+  headerContribute: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  nameContribute: {
+    width: '70%',
+    fontWeight: 'bold',
+    color: '#ffff',
+    fontSize: 14,
+  },
+  dateContribute: {
+    alignContent: 'flex-end',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
+    fontSize: 10,
+    color: '#d1d1d1',
+  },
+  viewCommentContribute: {
+    borderRadius: 3,
+    marginTop: 10,
+  },
+  txtCommentContribute: {color: '#fff'},
+  btnViewCB: {
+    width: 70,
+    height: 20,
+    borderRadius: 5,
+    backgroundColor: 'tomato',
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignSelf: 'center',
+    padding: 3,
+    marginTop: 5,
+  },
+  txtBtnCB: {
+    fontSize: 10,
+    color: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+    alignSelf: 'center',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    fontWeight: 'bold',
   },
 });
