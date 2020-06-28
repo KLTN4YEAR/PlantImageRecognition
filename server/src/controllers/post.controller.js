@@ -37,7 +37,7 @@ const createPost = async(req, res) => {
 
     for (let i = 0; i < myFile.length; i++) {
         let imageUrl = '';
-        imageUrl = await uploadImage(myFile[i], typePlant, namePlant);
+        imageUrl = await uploadImage.uploadImage(myFile[i], typePlant, namePlant);
         listPathImage.push(imageUrl);
     }
 
@@ -60,7 +60,7 @@ const createPost = async(req, res) => {
         })
 }
 
-const getList = async(req, res) => {
+const getList = async (req, res) => {
     const formatData = {
         lastId: req.params.lastId
     }
@@ -100,3 +100,4 @@ module.exports = {
     getInfoPost,
     getList
 };
+
