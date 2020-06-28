@@ -1,5 +1,5 @@
-import {StyleSheet} from 'react-native';
-
+import {StyleSheet,Dimensions} from 'react-native';
+const windowHeight = Dimensions.get('window').height;
 export const styles = StyleSheet.create({
   imgCard: {
     height: 150,
@@ -28,7 +28,8 @@ export const styles = StyleSheet.create({
     marginTop: 5,
     marginLeft: 'auto',
     marginRight: 'auto',
-    padding: 10,
+    paddingLeft: 10,
+    paddingRight:10,
   },
 
   rowPostBy: {
@@ -69,6 +70,8 @@ export const styles = StyleSheet.create({
     marginLeft: 10,
     flex: 1,
     flexDirection: 'column',
+    borderBottomColor:'#f1f1f1',
+    borderBottomWidth:0.5
   },
   viewKind: {
     width: '100%',
@@ -259,7 +262,8 @@ export const styles = StyleSheet.create({
     height: 300,
   },
   viewList: {
-    padding: 10,
+    paddingRight:10,
+    paddingLeft:10,
   },
   viewModal: {
     flex: 1,
@@ -268,6 +272,7 @@ export const styles = StyleSheet.create({
   },
   modalContribute: {
     width: '100%',
+    maxHeight:windowHeight*0.7
   },
   viewContribute: {
     width: '100%',
@@ -275,6 +280,23 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: 'rgba(191, 186, 176, 0.1)',
     padding: 5,
+  },
+  lblContribute:{
+    flex:1,
+    flexDirection:'row',
+    alignSelf:'flex-start',
+    justifyContent:'center',
+    alignItems:'flex-start',
+    alignContent:'flex-start',
+    // backgroundColor:'green',
+    padding:10,
+    borderRadius:15,
+  },
+  txtLblContribute:{
+    color:'#fff',
+    fontSize:16,
+    fontWeight:'bold',
+    marginLeft:5,
   },
   avatarContribute: {
     width: '25%',

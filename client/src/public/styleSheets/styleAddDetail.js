@@ -122,11 +122,21 @@ export const styles = StyleSheet.create({
            flex: 1,
            flexDirection: 'row',
            alignSelf: 'center',
-           backgroundColor: '#303030',
+           backgroundColor: '#303032',
            width: '100%',
            alignItems: 'center',
            justifyContent: 'center',
-           padding: 10,
+  
+         },
+         modeOnly:{
+           width:"30%",
+           alignSelf:'flex-start',
+           alignItems:'flex-start',
+           justifyContent:'center',
+         },
+         txtMode:{
+           fontSize:10,
+           color:'#f1f1f1'
          },
          lstContribute:{
            flex:1,

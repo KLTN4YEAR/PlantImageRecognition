@@ -6,12 +6,18 @@ import {getPostInfo} from '../action/postAction';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {Col, Row, Grid} from 'react-native-easy-grid';
 import {Avatar} from 'react-native-elements';
-
+import * as Animatable from 'react-native-animatable';
 import {auth} from '../config/helper';
 import moment from 'moment';
 import localization from 'moment/locale/vi';
 import {contribute} from '../json/contribute';
-import {Button, Modal, Provider, List} from '@ant-design/react-native';
+import {
+  Button,
+  Modal,
+  Provider,
+  List,
+  TextareaItem,
+} from '@ant-design/react-native';
 
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -37,7 +43,7 @@ class DetailPostScreen extends React.Component {
       <View style={styles.scrollView}>
         {route.params?.post ? (
           <>
-            <View style={styles.viewImages}>
+            <Animatable.View animation="fadeInUp" style={styles.viewImages}>
               {route.params?.post.images ? (
                 route.params?.post.images.map((item, index) => {
                   return (
@@ -51,7 +57,7 @@ class DetailPostScreen extends React.Component {
               ) : (
                 <Text>Không có ảnh</Text>
               )}
-            </View>
+            </Animatable.View>
             <View style={styles.viewPostBy}>
               <Grid style={styles.viewPostBy}>
                 <Row style={styles.rowPostBy}>
@@ -101,6 +107,18 @@ class DetailPostScreen extends React.Component {
                 value={route.params?.post.content.trim()}
               />
             </View>
+            <View style={styles.lblContribute}>
+              <Image
+                source={{
+                  uri:
+                    'https://img.icons8.com/plasticine/25/000000/delete-chat--v2.png',
+                }}
+                style={{width: 25, height: 25}}
+              />
+              <Text style={styles.txtLblContribute}>
+                Bình luận & Đóng góp
+              </Text>
+            </View>
           </>
         ) : (
           <Text>Không có dữ liệu</Text>
@@ -134,7 +152,7 @@ class DetailPostScreen extends React.Component {
                     closable
                     animationType="slide"
                     footer={footerButtons}>
-                    <View
+                    <ScrollView
                       style={styles.modalContribute}
                       automaticallyAdjustContentInsets={false}
                       showsHorizontalScrollIndicator={false}
@@ -171,22 +189,30 @@ class DetailPostScreen extends React.Component {
                           onClick={() => {}}>
                           Thông tin thêm
                         </Item>
-                        <Item
-                          extra="Hồng là loài hoa tượng trưng cho vẻ đẹp của tình yêu. Hồng là loài hoa tượng trưng cho vẻ đẹp của tình yêu.Hồng là loài hoa tượng trưng cho vẻ đẹp của tình yêu"
-                          multipleLine>
-                          Đặc điểm
-                        </Item>
-                        <Item
-                          extra="Hồng là loài hoa tượng trưng cho vẻ đẹp của tình yêu. Hồng là loài hoa tượng trưng cho vẻ đẹp của tình yêu.Hồng là loài hoa tượng trưng cho vẻ đẹp của tình yêu"
-                          multipleLine>
-                          Ý nghĩa
-                        </Item>
+                        <Item multipleLine>Đặc điểm</Item>
+                        <TextareaItem
+                          autoHeight
+                          style={{paddingVertical: 5}}
+                          rows={3}
+                          value={item.characteristics}
+                          editable={false}
+                        />
+                        <Item multipleLine>Ý nghĩa</Item>
+                        <TextareaItem
+                          autoHeight
+                          style={{paddingVertical: 5}}
+                          rows={3}
+                          value={item.meaning}
+                          editable={false}
+                        />
                       </List>
-                    </View>
+                    </ScrollView>
                   </Modal>
                 </View>
 
-                <View style={styles.viewContribute}>
+                <Animatable.View
+                  animation="fadeInDown"
+                  style={styles.viewContribute}>
                   <View style={styles.avatarContribute}>
                     {item.avatar ? (
                       <Image
@@ -218,7 +244,9 @@ class DetailPostScreen extends React.Component {
                       <Text style={styles.nameContribute}>
                         {item.fullName ? item.fullName : 'unknown '}
                       </Text>
-                      <Text style={styles.dateContribute}>27/06/2020</Text>
+                      <Text style={styles.dateContribute}>
+                        {moment(item.created).format('DD/MM/YYYY')}
+                      </Text>
                     </View>
                     <View style={styles.viewCommentContribute}>
                       <Text style={styles.txtCommentContribute}>
@@ -226,7 +254,7 @@ class DetailPostScreen extends React.Component {
                       </Text>
                     </View>
                   </View>
-                </View>
+                </Animatable.View>
               </View>
             ) : (
               <Text>loading</Text>

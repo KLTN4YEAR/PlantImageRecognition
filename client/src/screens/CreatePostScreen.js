@@ -122,7 +122,7 @@ class CreatePostScreen extends ValidationComponent {
 
       //const imagePlant = resizedImageUri;
       post['mentionedPlant'] = this.state.mentionedPlant;
-      post['namePlant'] = this.state.namePlant;
+      post['namePlant'] = route.params?.nameVN?route.params?.nameVN:this.state.namePlant;
       post['content'] = this.state.content;
       post['plant_images'] = resizedImageUri;
 
