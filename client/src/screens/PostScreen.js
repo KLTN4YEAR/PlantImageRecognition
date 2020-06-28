@@ -31,11 +31,8 @@ class PostScreen extends React.Component {
     super(props);
     this.state = {
       userInfo: {
-        token: null,
-        user: {
-          avatar: null,
-          fullName: null,
-        },
+        avatar: null,
+        fullName: null,
       },
 
       refreshing: false,
@@ -68,8 +65,15 @@ class PostScreen extends React.Component {
   async componentDidMount() {
     await this.loadMoreData();
     await this.loadData();
-    
+  }
 
+  componentDidUpdate(prevProps) {
+    const {profile} = this.props;
+    if (prevProps.profile !== profile) {
+      if (profile) {
+        this.setState({userInfo: profile});
+      }
+    }
   }
 
   loadData = async () => {
@@ -77,7 +81,7 @@ class PostScreen extends React.Component {
     const data = await auth.isAuthenticated();
 
     if (data) {
-      this.setState({userInfo: data});
+      this.setState({userInfo: data.user});
       await getInfo(data, data.user._id);
     }
   };
@@ -141,11 +145,11 @@ class PostScreen extends React.Component {
       <SafeAreaView style={styles.viewSafeArea}>
         <View style={styles.stylesHead}>
           <TouchableOpacity style={styles.imgAva}>
-            {userInfo && userInfo.user.avatar ? (
+            {userInfo && userInfo ? (
               <Avatar
                 rounded
                 source={{
-                  uri: userInfo.user.avatar,
+                  uri: userInfo.avatar,
                 }}
               />
             ) : (

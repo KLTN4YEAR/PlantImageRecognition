@@ -50,6 +50,7 @@ class ViewInfo extends React.Component {
         navigation.navigate('Login');
       }
     }
+    this.loadData();
   }
 
   onClickEdit = () => {
