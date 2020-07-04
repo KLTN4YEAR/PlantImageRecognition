@@ -183,7 +183,9 @@ export const styles = StyleSheet.create({
     margin: 25,
     backgroundColor: '#d4d5d6',
   },
-
+btnComment:{
+flex:1,
+},
   txtName: {
     width: '100%',
   },
@@ -297,6 +299,7 @@ export const styles = StyleSheet.create({
     fontSize:16,
     fontWeight:'bold',
     marginLeft:5,
+    width:"85%"
   },
   avatarContribute: {
     width: '25%',
@@ -334,8 +337,8 @@ export const styles = StyleSheet.create({
   },
   txtCommentContribute: {color: '#fff'},
   btnViewCB: {
-    width: 70,
-    height: 20,
+    width: 75,
+    height: 25,
     borderRadius: 5,
     backgroundColor: 'tomato',
     alignItems: 'center',
@@ -344,9 +347,10 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     padding: 3,
     marginTop: 5,
+    padding:10,
   },
   txtBtnCB: {
-    fontSize: 10,
+    fontSize: 7,
     color: '#fff',
     justifyContent: 'center',
     alignItems: 'center',

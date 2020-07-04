@@ -48,9 +48,10 @@ class ViewInfo extends React.Component {
     if (isAuthenticated !== prevProps.isAuthenticated) {
       if (!isAuthenticated) {
         navigation.navigate('Login');
+      } else {
+        this.loadData();
       }
     }
-    this.loadData();
   }
 
   onClickEdit = () => {
@@ -71,6 +72,7 @@ class ViewInfo extends React.Component {
 
   render() {
     const {navigation, profile} = this.props;
+    console.log("B",profile)
     return (
       <ScrollView style={styles.container}>
         <AvatarCard navigation={navigation} />
@@ -82,7 +84,7 @@ class ViewInfo extends React.Component {
               type="font-awesome"
               name="navicon"
               iconStyle={styles.labelIconAdd}
-              color="rgba(64,64,64, 0.8)"
+              color="#f1f1f1"
             />
           </TouchableOpacity>
           <RBSheet

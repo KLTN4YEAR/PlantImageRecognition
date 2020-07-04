@@ -21,7 +21,6 @@ import {getInfo} from '../action/userAction';
 import * as Animatable from 'react-native-animatable';
 import moment from 'moment';
 import localization from 'moment/locale/vi';
-
 import {InputItem, List, Toast} from '@ant-design/react-native';
 
 moment.updateLocale('vi', localization);
@@ -45,7 +44,7 @@ class PostScreen extends React.Component {
     };
     this.offset = '111111111111';
   }
-  //định nghĩa các prop
+  ư
   static propTypes = {
     isAuthenticated: PropTypes.bool,
   };
@@ -266,7 +265,7 @@ class PostScreen extends React.Component {
                                   color="rgb(242,235,223)"
                                 />
                                 <Text style={styles.labelAdd}>
-                                  Thêm thông tin
+                                  Đóng góp
                                 </Text>
                               </Col>
                             </TouchableOpacity>

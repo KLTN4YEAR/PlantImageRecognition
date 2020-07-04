@@ -65,7 +65,7 @@ export const styles = StyleSheet.create({
     },
 
     userCityText: {
-        color: '#A5A5A5',
+        color: '#d1d1d1',
         fontSize: 15,
         fontWeight: '600',
         textAlign: 'center',

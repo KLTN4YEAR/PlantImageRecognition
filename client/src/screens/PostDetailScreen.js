@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {getPostInfo} from '../action/postAction';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {Col, Row, Grid} from 'react-native-easy-grid';
-import {Avatar} from 'react-native-elements';
+import {Avatar, Icon} from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 import {auth} from '../config/helper';
 import moment from 'moment';
@@ -37,27 +37,35 @@ class DetailPostScreen extends React.Component {
       visible: false,
     });
   };
+
+  onClickComment=()=>{
+    const{navigation,route}=this.props;
+    navigation.navigate('AddDetail', {
+      post: route.params?.post,
+    });
+  };
+  
   renderInfor() {
     const {post, route} = this.props;
     return (
       <View style={styles.scrollView}>
         {route.params?.post ? (
           <>
-            <Animatable.View animation="fadeInUp" style={styles.viewImages}>
-              {route.params?.post.images ? (
-                route.params?.post.images.map((item, index) => {
-                  return (
-                    <Image
-                      key={index}
-                      source={{uri: item}}
-                      style={styles.imgPlantCarousel}
-                    />
-                  );
-                })
-              ) : (
-                <Text>Không có ảnh</Text>
-              )}
-            </Animatable.View>
+            {/* <Animatable.View animation="fadeInUp" style={styles.viewImages}> */}
+            {route.params?.post.images ? (
+              route.params?.post.images.map((item, index) => {
+                return (
+                  <Image
+                    key={index}
+                    source={{uri: item}}
+                    style={styles.imgPlantCarousel}
+                  />
+                );
+              })
+            ) : (
+              <Text>Không có ảnh</Text>
+            )}
+            {/* </Animatable.View> */}
             <View style={styles.viewPostBy}>
               <Grid style={styles.viewPostBy}>
                 <Row style={styles.rowPostBy}>
@@ -115,9 +123,18 @@ class DetailPostScreen extends React.Component {
                 }}
                 style={{width: 25, height: 25}}
               />
-              <Text style={styles.txtLblContribute}>
-                Bình luận & Đóng góp
-              </Text>
+              <Text style={styles.txtLblContribute}>Bình luận & Đóng góp</Text>
+              <TouchableOpacity
+                onPress={this.onClickComment}
+                style={styles.btnComment}>
+                <Icon
+                  size={20}
+                  type="font-awesome"
+                  name="comments-o"
+                  iconStyle={styles.labelIconAdd}
+                  color="rgb(242,235,223)"
+                />
+              </TouchableOpacity>
             </View>
           </>
         ) : (
@@ -157,8 +174,7 @@ class DetailPostScreen extends React.Component {
                       automaticallyAdjustContentInsets={false}
                       showsHorizontalScrollIndicator={false}
                       showsVerticalScrollIndicator={false}>
-                      <List
-                        renderHeader={'Thông tin người dùng đã đóng góp'}>
+                      <List renderHeader={'Thông tin người dùng đã đóng góp'}>
                         <Item
                           arrow="down"
                           thumb="https://img.icons8.com/bubbles/250/000000/edit.png"
@@ -166,9 +182,7 @@ class DetailPostScreen extends React.Component {
                           Thông tin cơ bản
                         </Item>
                         <Item
-                          extra={
-                            item.nameVN ? item.nameVN : 'Chưa cập nhật'
-                          }>
+                          extra={item.nameVN ? item.nameVN : 'Chưa cập nhật'}>
                           Tên hoa
                         </Item>
                         <Item
@@ -210,9 +224,7 @@ class DetailPostScreen extends React.Component {
                   </Modal>
                 </View>
 
-                <Animatable.View
-                  animation="fadeInDown"
-                  style={styles.viewContribute}>
+                <View style={styles.viewContribute}>
                   <View style={styles.avatarContribute}>
                     {item.avatar ? (
                       <Image
@@ -254,19 +266,15 @@ class DetailPostScreen extends React.Component {
                       </Text>
                     </View>
                   </View>
-                </Animatable.View>
+                </View>
               </View>
             ) : (
               <Text>loading</Text>
             )
           }
-          // ItemSeparatorComponent={() => (
-          //   <View style={styles.separator} />
-          // )}
           ListHeaderComponent={this.renderInfor.bind(this)}
+          ListFooterComponent={<View style={{marginBottom: 55}} />}
         />
-
-        {/* <ContributeComment /> */}
       </Provider>
     );
   }

@@ -34,6 +34,7 @@ import ViewPostUser from "../screens/PostUserScreen";
 
 import {useIsFocused} from '@react-navigation/native';
 
+import * as Animatable from 'react-native-animatable';
 
 const Tab = createBottomTabNavigator();
 
@@ -44,29 +45,31 @@ function TabScreen() {
       screenOptions={({route}) => ({
         tabBarIcon: ({focused, color, size}) => {
           if (route.name === 'Home') {
-            return <Icon name="home" color={color} size={28} />;
+            return  <Icon name="home" color={color} size={35} />;
           } else if (route.name === 'User') {
-            return <Icon name="user" color={color} size={28} />;
+            return <Icon name="user" color={color} size={35} />;
           } else if (route.name === 'Camera') {
-            return <Icon name="camera" color={color} size={28} />;
+            return <Icon name="camera" color={color} size={35} />;
           } else if (route.name === 'Search') {
-            return <Icon name="search" color={color} size={28} />;
+            return <Icon name="search" color={color} size={35} />;
           }
         },
       })}
       tabBarOptions={{
         activeTintColor: '#33CC08',
-        inactiveTintColor: 'rgba(209,242,194,0.4)',
+        inactiveTintColor: 'rgba(209,242,194,0.2)',
         showIcon: true,
-        tabStyle: {borderRadius: 10},
-        labelStyle: {
-          fontSize: 12,
-          fontFamily: 'Calibri',
-          letterSpacing: 1,
-        },
+        showLabel: false,
         style: {
-          backgroundColor: 'rgb(38,38,38)',
-          borderRadius: 0,
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+          backgroundColor: '#000000',
+          position: 'absolute',
+          bottom: 0,
+          padding: 10,
+          width: "100%",
+          zIndex: 8,
+          borderTopColor:'#000',
         },
       }}>
       <Tab.Screen name="Home" component={HomeScreen} />

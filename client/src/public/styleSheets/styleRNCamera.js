@@ -41,6 +41,6 @@ export const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     height: 60,
     position: 'absolute',
-    bottom: 20,
+    bottom: 60,
   },
 });

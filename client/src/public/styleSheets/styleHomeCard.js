@@ -11,6 +11,7 @@ export const styles = StyleSheet.create({
   viewFlatList: {
     width: '100%',
     padding: 10,
+    marginBottom:50,
   },
 
   stylesHead: {

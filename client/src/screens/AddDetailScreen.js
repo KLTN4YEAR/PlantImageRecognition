@@ -44,7 +44,7 @@ export default class AddDetailScreen extends React.Component {
           automaticallyAdjustContentInsets={false}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}>
-          <Animatable.View animation="fadeInUp" style={styles.rowImage}>
+          {/* <Animatable.View animation="fadeInUp" style={styles.rowImage}> */}
             {route.params?.post.images ? (
               route.params?.post.images.map((item, index) => {
                 return (
@@ -58,8 +58,8 @@ export default class AddDetailScreen extends React.Component {
             ) : (
               <Text>Không có ảnh</Text>
             )}
-          </Animatable.View>
-          <Animatable.View animation="fadeInDown">
+          {/* </Animatable.View> */}
+          {/* <Animatable.View animation="fadeInDown"> */}
             {!checked ? (
               <List
                 renderHeader={'Đóng góp'}
@@ -153,7 +153,7 @@ export default class AddDetailScreen extends React.Component {
                 </Item>
               </List>
             )}
-          </Animatable.View>
+          {/* </Animatable.View> */}
         </ScrollView>
         <View style={styles.viewBtn}>
           <View style={styles.modeOnly}>
