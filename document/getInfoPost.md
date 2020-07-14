@@ -27,6 +27,24 @@
         },
         created     //created date
         mentionedPlant
+    },
+    
+    contributes: {
+                _id,
+                nameVN,
+                familiar,
+                location,
+                characteristics,
+                meaning,
+                comment,
+                contributedBy: {    //info user contributes
+                    _id,
+                    fullName,
+                    avatar,
+                    email
+                },
+                postContributed     // id post contributed
+                created,            // date create
     }
 }
 ```
