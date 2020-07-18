@@ -248,6 +248,11 @@ function HomeScreen() {
         options={{headerShown: false}}
         component={CreatePostScreen}
       />
+      <HomeStack.Screen
+        name="PlantInfo"
+        options={{headerShown: false}}
+        component={PlantInfoScreen}
+      />
     </HomeStack.Navigator>
   );
 }

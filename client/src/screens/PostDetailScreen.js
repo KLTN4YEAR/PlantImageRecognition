@@ -65,7 +65,8 @@ class DetailPostScreen extends React.Component {
   };
 
   renderInfor() {
-    const {post, route} = this.props;
+    const {post, route, contributes,navigation} = this.props;
+   
     return (
       <View style={styles.scrollView}>
         {route.params?.post ? (
@@ -114,7 +115,20 @@ class DetailPostScreen extends React.Component {
                         : '01/01/1900'}
                     </Text>
                     {route.params?.post?.mentionedPlant?.nameVN && (
-                      <TouchableOpacity style={styles.btnPlantKind}>
+                      <TouchableOpacity
+                        style={styles.btnPlantKind}
+                        onPress={() => {
+                          navigation.navigate(
+                            'PlantInfo',
+                            {
+                              fId:
+                                route.params?.post
+                                  ?.mentionedPlant
+                                  ?._id,
+                              backScreen: 'Post',
+                            },
+                          );
+                        }}>
                         <Text style={styles.txtKind}>
                           # {route.params?.post.mentionedPlant.nameVN}
                         </Text>
@@ -153,6 +167,17 @@ class DetailPostScreen extends React.Component {
                 />
               </TouchableOpacity>
             </View>
+            {contributes?.length === 0 && (
+              <Text
+                style={{
+                  color: '#ffffff',
+                  padding: 10,
+                  marginLeft: 'auto',
+                  marginRight: 'auto',
+                }}>
+                Chưa có đóng góp nào!!!
+              </Text>
+            )}
           </>
         ) : (
           <Text>Không có dữ liệu</Text>
@@ -161,7 +186,7 @@ class DetailPostScreen extends React.Component {
     );
   }
   render() {
-    const {contributes,navigation} = this.props;
+    const {contributes, navigation} = this.props;
 
     return (
       <Provider>
@@ -186,7 +211,6 @@ class DetailPostScreen extends React.Component {
           renderItem={({item, index}) =>
             item ? (
               <View style={styles.viewList}>
-                
                 <View style={styles.viewContribute}>
                   <View style={styles.avatarContribute}>
                     {item.contributedBy.avatar ? (
@@ -239,7 +263,9 @@ class DetailPostScreen extends React.Component {
                 </View>
               </View>
             ) : (
-              <Text>loading</Text>
+              <View style={styles.viewList}>
+                <Text>loading</Text>
+              </View>
             )
           }
           ListHeaderComponent={this.renderInfor.bind(this)}
