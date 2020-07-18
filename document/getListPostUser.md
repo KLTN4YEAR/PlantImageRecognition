@@ -1,5 +1,5 @@
 # Get List Post Of User
-***URL Get info user: localhost:4000/api/post/getListPostUser/5ea90d94130f0a1aa4516f0d***
+***URL Get List Post Of User: localhost:4000/api/post/getListPostUser/5ea90d94130f0a1aa4516f0d***
 
 ***Author: required login and must have token attach Bearer in header***
 
