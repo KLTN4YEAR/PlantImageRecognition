@@ -44,7 +44,7 @@ class PostUserScreen extends React.Component {
       serverData: [],
       fetching_from_server: false,
     };
-    this.offset = '111111111111';
+    this.offset = 'zzzzzzzzzzzz';
   }
   //định nghĩa các prop
   static propTypes = {

@@ -124,22 +124,22 @@ const StackCamera = createStackNavigator();
 function CameraScreen() {
   return (
     <StackCamera.Navigator initialRouteName="ImagePicker">
-      <StackUser.Screen
+      <StackCamera.Screen
         name="ImagePicker"
         options={{headerShown: false}}
         component={IMGPickerScreen}
       />
-      <StackUser.Screen
+      <StackCamera.Screen
         name="PlantInfo"
         options={{headerShown: false}}
         component={PlantInfoScreen}
       />
-      <StackUser.Screen
+      <StackCamera.Screen
         name="ResultRNCamera"
         options={{headerShown: false}}
         component={ResultRNCameraScreen}
       />
-      <StackUser.Screen
+      <StackCamera.Screen
         name="ResultCamera"
         options={{
           title: 'Kết quả',

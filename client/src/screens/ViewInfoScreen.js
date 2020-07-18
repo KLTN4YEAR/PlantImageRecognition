@@ -72,7 +72,7 @@ class ViewInfo extends React.Component {
 
   render() {
     const {navigation, profile} = this.props;
-    console.log("B",profile)
+
     return (
       <ScrollView style={styles.container}>
         <AvatarCard navigation={navigation} />

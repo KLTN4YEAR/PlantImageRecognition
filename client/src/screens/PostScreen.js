@@ -44,7 +44,7 @@ class PostScreen extends React.Component {
     };
     this.offset = '111111111111';
   }
-  ư
+  
   static propTypes = {
     isAuthenticated: PropTypes.bool,
   };
@@ -78,7 +78,7 @@ class PostScreen extends React.Component {
   loadData = async () => {
     const {getInfo} = this.props;
     const data = await auth.isAuthenticated();
-
+console.log("a",data)
     if (data) {
       this.setState({userInfo: data.user});
       await getInfo(data, data.user._id);
@@ -91,7 +91,7 @@ class PostScreen extends React.Component {
       serverData: [],
       fetching_from_server: false,
     });
-    this.offset = '111111111111';
+    this.offset = 'zzzzzzzzzzzz';
     await this.loadMoreData();
   };
 

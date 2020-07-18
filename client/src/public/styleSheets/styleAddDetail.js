@@ -124,6 +124,7 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     backgroundColor: '#303032',
     width: '100%',
+    padding:10,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -145,12 +146,13 @@ export const styles = StyleSheet.create({
   },
   btnContribute: {
     backgroundColor: '#33CC08',
-    width: 200,
+    width: "55%",
     borderRadius: 5,
     justifyContent: 'center',
     alignContent: 'center',
     alignSelf: 'center',
     padding: 3,
+    height:40,
   },
 
   txtContribute: {

@@ -32,19 +32,106 @@ class DetailPostScreen extends React.Component {
       visible: false,
     };
   }
+  async componentDidMount() {
+    const {route, getPostInfo} = this.props;
+    const id = route.params?.post._id;
+    const credentials = await auth.isAuthenticated();
+    if (id) {
+      await getPostInfo(credentials, id);
+    }
+  }
+
+  async componentDidUpdate(prevProps) {
+    const {route, getPostInfo} = this.props;
+    const id = route.params?.post._id;
+    const credentials = await auth.isAuthenticated();
+    if (route !== prevProps.route) {
+      await getPostInfo(credentials, id);
+    }
+  }
+
   onClose = () => {
     this.setState({
       visible: false,
     });
   };
 
-  onClickComment=()=>{
-    const{navigation,route}=this.props;
+  onClickComment = () => {
+    const {navigation, route} = this.props;
     navigation.navigate('AddDetail', {
       post: route.params?.post,
     });
   };
-  
+
+  renderModal(id){
+    const {contributes}=this.props;
+    contributes.filter((item=>item.id===id)).map((value)=>{
+      return (
+        <View style={styles.viewModal}>
+          <Modal
+            key={index}
+            title="ĐÓNG GÓP"
+            transparent
+            onClose={this.onClose}
+            maskClosable
+            visible={this.state.visible}
+            closable
+            animationType="slide"
+            footer={footerButtons}>
+            <ScrollView
+              style={styles.modalContribute}
+              automaticallyAdjustContentInsets={false}
+              showsHorizontalScrollIndicator={false}
+              showsVerticalScrollIndicator={false}>
+              <List renderHeader={'Thông tin người dùng đã đóng góp'}>
+                <Item
+                  arrow="down"
+                  thumb="https://img.icons8.com/bubbles/250/000000/edit.png"
+                  onClick={() => {}}>
+                  Thông tin cơ bản
+                </Item>
+                <Item extra={value.nameVN ? value.nameVN : 'Chưa cập nhật'}>
+                  Tên hoa
+                </Item>
+                <Item
+                  extra={value.familiar ? value.familiar : 'Chưa cập nhật'}>
+                  Phân loại
+                </Item>
+                <Item
+                  extra={value.location ? value.location : 'Chưa cập nhật'}>
+                  Phân bố
+                </Item>
+                <Item
+                  arrow="down"
+                  thumb="https://img.icons8.com/bubbles/250/000000/plus.png"
+                  onClick={() => {}}>
+                  Thông tin thêm
+                </Item>
+                <Item multipleLine>Đặc điểm</Item>
+                <TextareaItem
+                  autoHeight
+                  style={{paddingVertical: 5}}
+                  rows={3}
+                  value={value.characteristics}
+                  editable={false}
+                />
+                <Item multipleLine>Ý nghĩa</Item>
+                <TextareaItem
+                  autoHeight
+                  style={{paddingVertical: 5}}
+                  rows={3}
+                  value={value.meaning}
+                  editable={false}
+                />
+              </List>
+            </ScrollView>
+          </Modal>
+        </View>
+      );
+    })
+    
+  }
+
   renderInfor() {
     const {post, route} = this.props;
     return (
@@ -78,7 +165,7 @@ class DetailPostScreen extends React.Component {
                       size={50}
                     />
                   </Col>
-                  <Col size={60} style={styles.colPostBy}>
+                  <Col size={85} style={styles.colPostBy}>
                     <Text style={styles.txtUserName}>
                       {route.params?.post.postedBy.fullName
                         ? route.params?.post.postedBy.fullName.trim()
@@ -94,12 +181,10 @@ class DetailPostScreen extends React.Component {
                             .fromNow()
                         : '01/01/1900'}
                     </Text>
-                  </Col>
-                  <Col size={25}>
-                    {route.params?.post.namePlant && (
+                    {route.params?.post?.mentionedPlant?.nameVN && (
                       <TouchableOpacity style={styles.btnPlantKind}>
                         <Text style={styles.txtKind}>
-                          # {route.params?.post.namePlant}
+                          # {route.params?.post.mentionedPlant.nameVN}
                         </Text>
                       </TouchableOpacity>
                     )}
@@ -145,91 +230,29 @@ class DetailPostScreen extends React.Component {
   }
   render() {
     const footerButtons = [
-      {text: 'Cancel', onPress: () => console.log('cancel')},
+      {text: 'Hủy', onPress: () => console.log('cancel')},
       {text: 'Ok', onPress: () => console.log('ok')},
     ];
+    const {contributes} = this.props;
 
     return (
       <Provider>
         <FlatList
           style={styles.viewFlatList}
           keyExtractor={(item, index) => index.toString()}
-          data={contribute}
+          data={contributes}
           scrollEnabled={true}
           renderItem={({item, index}) =>
-            item ? (
+            item ? (    
               <View style={styles.viewList}>
-                <View style={styles.viewModal}>
-                  <Modal
-                    title="ĐÓNG GÓP"
-                    transparent
-                    onClose={this.onClose}
-                    maskClosable
-                    visible={this.state.visible}
-                    closable
-                    animationType="slide"
-                    footer={footerButtons}>
-                    <ScrollView
-                      style={styles.modalContribute}
-                      automaticallyAdjustContentInsets={false}
-                      showsHorizontalScrollIndicator={false}
-                      showsVerticalScrollIndicator={false}>
-                      <List renderHeader={'Thông tin người dùng đã đóng góp'}>
-                        <Item
-                          arrow="down"
-                          thumb="https://img.icons8.com/bubbles/250/000000/edit.png"
-                          onClick={() => {}}>
-                          Thông tin cơ bản
-                        </Item>
-                        <Item
-                          extra={item.nameVN ? item.nameVN : 'Chưa cập nhật'}>
-                          Tên hoa
-                        </Item>
-                        <Item
-                          extra={
-                            item.familiar ? item.familiar : 'Chưa cập nhật'
-                          }>
-                          Phân loại
-                        </Item>
-                        <Item
-                          extra={
-                            item.location ? item.location : 'Chưa cập nhật'
-                          }>
-                          Phân bố
-                        </Item>
-                        <Item
-                          arrow="down"
-                          thumb="https://img.icons8.com/bubbles/250/000000/plus.png"
-                          onClick={() => {}}>
-                          Thông tin thêm
-                        </Item>
-                        <Item multipleLine>Đặc điểm</Item>
-                        <TextareaItem
-                          autoHeight
-                          style={{paddingVertical: 5}}
-                          rows={3}
-                          value={item.characteristics}
-                          editable={false}
-                        />
-                        <Item multipleLine>Ý nghĩa</Item>
-                        <TextareaItem
-                          autoHeight
-                          style={{paddingVertical: 5}}
-                          rows={3}
-                          value={item.meaning}
-                          editable={false}
-                        />
-                      </List>
-                    </ScrollView>
-                  </Modal>
-                </View>
+            
 
                 <View style={styles.viewContribute}>
                   <View style={styles.avatarContribute}>
-                    {item.avatar ? (
+                    {item.contributedBy.avatar ? (
                       <Image
                         source={{
-                          uri: item.avatar,
+                          uri: item.contributedBy.avatar,
                         }}
                         style={styles.imgContribute}
                       />
@@ -244,6 +267,7 @@ class DetailPostScreen extends React.Component {
                     )}
                     {item.nameVN && (
                       <TouchableOpacity
+                        key={item.nameVN}
                         onPress={() => this.setState({visible: true})}
                         style={styles.btnViewCB}>
                         <Text style={styles.txtBtnCB}>Xem đóng góp</Text>
@@ -254,7 +278,9 @@ class DetailPostScreen extends React.Component {
                   <View style={styles.contentContribute}>
                     <View style={styles.headerContribute}>
                       <Text style={styles.nameContribute}>
-                        {item.fullName ? item.fullName : 'unknown '}
+                        {item.contributedBy.fullName
+                          ? item.contributedBy.fullName
+                          : 'unknown '}
                       </Text>
                       <Text style={styles.dateContribute}>
                         {moment(item.created).format('DD/MM/YYYY')}
@@ -262,7 +288,7 @@ class DetailPostScreen extends React.Component {
                     </View>
                     <View style={styles.viewCommentContribute}>
                       <Text style={styles.txtCommentContribute}>
-                        {item.comment ? item.comment : ''}
+                        {item.comment ? item.comment : item.nameVN}
                       </Text>
                     </View>
                   </View>
@@ -270,8 +296,8 @@ class DetailPostScreen extends React.Component {
               </View>
             ) : (
               <Text>loading</Text>
-            )
-          }
+            )}
+          
           ListHeaderComponent={this.renderInfor.bind(this)}
           ListFooterComponent={<View style={{marginBottom: 55}} />}
         />
@@ -282,7 +308,8 @@ class DetailPostScreen extends React.Component {
 function mapStateToProp(state) {
   return {
     authenticate: state.auth.isAuthenticated,
-    post: state.post.post,
+    post: state.post.post.post,
+    contributes: state.post.post.contributes,
   };
 }
 

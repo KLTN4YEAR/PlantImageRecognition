@@ -42,7 +42,7 @@ class CreatePostScreen extends ValidationComponent {
       mentionedPlant: null,
       namePlant: null,
       post: {
-        mentionedPlant: '111111111111',
+        mentionedPlant: null,
         namePlant: '',
         content: '',
         plant_images: [''],
