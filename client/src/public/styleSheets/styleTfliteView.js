@@ -134,12 +134,5 @@ export const styles = StyleSheet.create({
         height: windowWidth,
         width: windowWidth,
     },
-    viewHeader: {
-        position: 'absolute',
-        top: 0,
-        width: '100%',
-        backgroundColor: 'rgba(100,100,100,0.2)',
-        height: 30,
-        zIndex: 2
-    },
+  
 });

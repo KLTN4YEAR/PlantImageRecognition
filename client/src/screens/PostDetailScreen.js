@@ -30,6 +30,7 @@ class DetailPostScreen extends React.Component {
 
     this.state = {
       visible: false,
+      modalItem: {},
     };
   }
   async componentDidMount() {
@@ -62,75 +63,6 @@ class DetailPostScreen extends React.Component {
       post: route.params?.post,
     });
   };
-
-  renderModal(id){
-    const {contributes}=this.props;
-    contributes.filter((item=>item.id===id)).map((value)=>{
-      return (
-        <View style={styles.viewModal}>
-          <Modal
-            key={index}
-            title="ĐÓNG GÓP"
-            transparent
-            onClose={this.onClose}
-            maskClosable
-            visible={this.state.visible}
-            closable
-            animationType="slide"
-            footer={footerButtons}>
-            <ScrollView
-              style={styles.modalContribute}
-              automaticallyAdjustContentInsets={false}
-              showsHorizontalScrollIndicator={false}
-              showsVerticalScrollIndicator={false}>
-              <List renderHeader={'Thông tin người dùng đã đóng góp'}>
-                <Item
-                  arrow="down"
-                  thumb="https://img.icons8.com/bubbles/250/000000/edit.png"
-                  onClick={() => {}}>
-                  Thông tin cơ bản
-                </Item>
-                <Item extra={value.nameVN ? value.nameVN : 'Chưa cập nhật'}>
-                  Tên hoa
-                </Item>
-                <Item
-                  extra={value.familiar ? value.familiar : 'Chưa cập nhật'}>
-                  Phân loại
-                </Item>
-                <Item
-                  extra={value.location ? value.location : 'Chưa cập nhật'}>
-                  Phân bố
-                </Item>
-                <Item
-                  arrow="down"
-                  thumb="https://img.icons8.com/bubbles/250/000000/plus.png"
-                  onClick={() => {}}>
-                  Thông tin thêm
-                </Item>
-                <Item multipleLine>Đặc điểm</Item>
-                <TextareaItem
-                  autoHeight
-                  style={{paddingVertical: 5}}
-                  rows={3}
-                  value={value.characteristics}
-                  editable={false}
-                />
-                <Item multipleLine>Ý nghĩa</Item>
-                <TextareaItem
-                  autoHeight
-                  style={{paddingVertical: 5}}
-                  rows={3}
-                  value={value.meaning}
-                  editable={false}
-                />
-              </List>
-            </ScrollView>
-          </Modal>
-        </View>
-      );
-    })
-    
-  }
 
   renderInfor() {
     const {post, route} = this.props;
@@ -229,24 +161,32 @@ class DetailPostScreen extends React.Component {
     );
   }
   render() {
-    const footerButtons = [
-      {text: 'Hủy', onPress: () => console.log('cancel')},
-      {text: 'Ok', onPress: () => console.log('ok')},
-    ];
-    const {contributes} = this.props;
+    const {contributes,navigation} = this.props;
 
     return (
       <Provider>
+        <View style={styles.viewHeader}>
+          <TouchableOpacity
+            style={styles.btnBack}
+            onPress={() => navigation.goBack()}>
+            <Icon
+              type="font-awesome"
+              name="arrow-left"
+              style={styles.icKind}
+              size={20}
+              color="#fff"
+            />
+          </TouchableOpacity>
+        </View>
         <FlatList
           style={styles.viewFlatList}
           keyExtractor={(item, index) => index.toString()}
           data={contributes}
           scrollEnabled={true}
           renderItem={({item, index}) =>
-            item ? (    
+            item ? (
               <View style={styles.viewList}>
-            
-
+                
                 <View style={styles.viewContribute}>
                   <View style={styles.avatarContribute}>
                     {item.contributedBy.avatar ? (
@@ -268,7 +208,11 @@ class DetailPostScreen extends React.Component {
                     {item.nameVN && (
                       <TouchableOpacity
                         key={item.nameVN}
-                        onPress={() => this.setState({visible: true})}
+                        onPress={() =>
+                          navigation.navigate('Contribute', {
+                            contribute: item,
+                          })
+                        }
                         style={styles.btnViewCB}>
                         <Text style={styles.txtBtnCB}>Xem đóng góp</Text>
                       </TouchableOpacity>
@@ -296,8 +240,8 @@ class DetailPostScreen extends React.Component {
               </View>
             ) : (
               <Text>loading</Text>
-            )}
-          
+            )
+          }
           ListHeaderComponent={this.renderInfor.bind(this)}
           ListFooterComponent={<View style={{marginBottom: 55}} />}
         />

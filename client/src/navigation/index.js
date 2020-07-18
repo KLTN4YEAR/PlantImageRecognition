@@ -18,7 +18,7 @@ import SearchPlantScreen from './../screens/SearchScreen';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ViewInfo from '../screens/ViewInfoScreen';
 import EditInfo from '../screens/EditInfoScreen';
-
+import ContributeScreen from "../screens/ContributeDetailScreen";
 import CreatePostScreen from '../screens/CreatePostScreen';
 
 import DetailPostScreen from '../screens/PostDetailScreen';
@@ -218,6 +218,21 @@ function HomeScreen() {
         }}
         component={AddDetailScreen}
       />
+      <HomeStack.Screen
+        name="Contribute"
+        options={{
+          title: 'Chi tiết đóng góp',
+          headerStyle: {
+            backgroundColor: '#33CC08',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}
+        component={ContributeScreen}
+      />
+
       <HomeStack.Screen
         name="ImageBefore"
         options={{headerShown: false}}
