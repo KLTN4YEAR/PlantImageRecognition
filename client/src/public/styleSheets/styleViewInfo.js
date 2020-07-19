@@ -29,9 +29,25 @@ export const styles = StyleSheet.create({
   },
 
   iconOption: {
-    position: 'absolute',
-    right: 10,
     top: 5,
+    flex: 1,
+    flexDirection: 'row',
+    position: 'absolute',
+    width: '100%',
+  },
+
+  headerName: {
+    width: '85%',
+    justifyContent: 'flex-start',
+    color:'#ffffff',
+    fontSize:12,
+    fontWeight:'bold',
+    padding:10,
+  },
+
+  headerButton: {
+    width: '15%',
+    justifyContent: 'flex-end',
   },
 
   labelTxt: {

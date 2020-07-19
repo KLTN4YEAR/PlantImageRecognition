@@ -4,7 +4,6 @@ export const styles = StyleSheet.create({
   container: {
     backgroundColor: '#303030',
     height: '100%',
-    marginTop: 30,
   },
   viewScroll: {
     backgroundColor: '#303030',
@@ -55,6 +54,7 @@ export const styles = StyleSheet.create({
     alignContent: 'center',
     alignItems: 'center',
     padding: 10,
+    marginBottom:50,
   },
 
   labelTxt: {

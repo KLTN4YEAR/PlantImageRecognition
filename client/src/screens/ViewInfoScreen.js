@@ -78,7 +78,15 @@ class ViewInfo extends React.Component {
         <AvatarCard navigation={navigation} />
 
         <View style={styles.iconOption}>
-          <TouchableOpacity onPress={() => this.RBSheet.open()}>
+          {/* {profile.fullName ? (
+            <Text style={styles.headerName}>{profile.fullName}</Text>
+          ) : (
+            <Text style={styles.headerName}>Chưa cập nhật</Text>
+          )} */}
+          <Text style={styles.headerName} />
+          <TouchableOpacity
+            style={styles.headerButton}
+            onPress={() => this.RBSheet.open()}>
             <Icon
               size={30}
               type="font-awesome"
