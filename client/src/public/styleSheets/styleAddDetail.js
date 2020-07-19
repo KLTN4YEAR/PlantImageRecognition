@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     height: '100%',
-    marginTop: 0,
+    marginTop: 30,
     backgroundColor: '#303030',
     marginBottom: 0,
   },
@@ -124,7 +124,7 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     backgroundColor: '#303032',
     width: '100%',
-    padding:10,
+    padding: 10,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -146,13 +146,13 @@ export const styles = StyleSheet.create({
   },
   btnContribute: {
     backgroundColor: '#33CC08',
-    width: "55%",
+    width: '55%',
     borderRadius: 5,
     justifyContent: 'center',
     alignContent: 'center',
     alignSelf: 'center',
     padding: 3,
-    height:40,
+    height: 40,
   },
 
   txtContribute: {

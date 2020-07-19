@@ -16,7 +16,7 @@ export default class App extends Component {
   }
 
   processOutput({data}) {
-    console.log("dt",data)
+   
     const probs = _.map(data, item => _.round(item / 255.0, 0.02));
     //console.log('probs', data);
     const orderedData = _.chain(data)

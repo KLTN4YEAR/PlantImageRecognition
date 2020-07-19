@@ -9,6 +9,7 @@ export const styles = StyleSheet.create({
   },
   scrollView: {
     backgroundColor: '#303030',
+    marginTop: 30,
   },
   viewHeader: {
     position: 'absolute',
@@ -18,6 +19,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     padding: 10,
+    marginTop: 30,
   },
   viewFlatList: {
     backgroundColor: '#303030',
@@ -277,11 +279,11 @@ export const styles = StyleSheet.create({
   viewList: {
     paddingRight: 10,
     paddingLeft: 10,
-    margin:5
+    margin: 5,
   },
   viewModal: {
     flex: 1,
-    marginTop: 10,
+    marginTop: 30,
     zIndex: 3,
   },
   modalContribute: {

@@ -108,7 +108,7 @@ class ResultCamera extends Component {
     const {route, navigation} = this.props;
     const {source} = this.state;
     return (
-      <SafeAreaView>
+      <SafeAreaView style={{marginTop: 30}}>
         <View style={styles.viewHeader}>
           <TouchableOpacity
             style={styles.btnBack}

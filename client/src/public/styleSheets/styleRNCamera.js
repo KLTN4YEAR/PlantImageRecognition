@@ -5,6 +5,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     backgroundColor: 'black',
+    marginTop: 30,
   },
   viewStep: {
     flex: 1,
@@ -13,8 +14,8 @@ export const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     position: 'absolute',
     top: 10,
-    alignSelf:'flex-start',
-    alignItems:'center',
+    alignSelf: 'flex-start',
+    alignItems: 'center',
     zIndex: 2,
   },
   preview: {

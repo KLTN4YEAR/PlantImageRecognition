@@ -207,6 +207,7 @@ export const styles = StyleSheet.create({
   viewSafeArea: {
     backgroundColor: '#303030',
     flex: 1,
+    marginTop:30,
   },
 
   viewScroll: {

@@ -189,7 +189,7 @@ class DetailPostScreen extends React.Component {
     const {contributes, navigation} = this.props;
 
     return (
-      <Provider>
+      <Provider style={{marginTop: 30}}>
         <View style={styles.viewHeader}>
           <TouchableOpacity
             style={styles.btnBack}

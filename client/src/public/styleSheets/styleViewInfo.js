@@ -4,7 +4,7 @@ export const styles = StyleSheet.create({
   container: {
     backgroundColor: '#303030',
     height: '100%',
-    marginTop: 0,
+    marginTop: 30,
   },
 
   viewInfo: {
@@ -117,7 +117,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     padding: 5,
     flexDirection: 'row',
-    margin:5,
+    margin: 5,
   },
 
   labelEdit: {

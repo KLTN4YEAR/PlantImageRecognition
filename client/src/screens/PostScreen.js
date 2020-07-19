@@ -42,9 +42,9 @@ class PostScreen extends React.Component {
       serverData: [],
       fetching_from_server: false,
     };
-    this.offset = '111111111111';
+    this.offset = 'zzzzzzzzzzzz';
   }
-  
+
   static propTypes = {
     isAuthenticated: PropTypes.bool,
   };
@@ -62,6 +62,7 @@ class PostScreen extends React.Component {
   };
 
   async componentDidMount() {
+    const {navigation} = this.props;
     await this.loadMoreData();
     await this.loadData();
   }
@@ -78,12 +79,12 @@ class PostScreen extends React.Component {
   loadData = async () => {
     const {getInfo} = this.props;
     const data = await auth.isAuthenticated();
-console.log("a",data)
     if (data) {
       this.setState({userInfo: data.user});
       await getInfo(data, data.user._id);
     }
   };
+
   onRefresh = async () => {
     await this.setState({
       loading: false,
@@ -137,7 +138,6 @@ console.log("a",data)
 
   render() {
     const {profile} = this.props;
-
     const {loading, serverData, refreshing, userInfo} = this.state;
 
     return (
@@ -222,10 +222,11 @@ console.log("a",data)
                             </Text>
                             {item.created && (
                               <Text style={styles.txtCreateAt}>
-                                {moment(
-                                  item.created,
-                                  'YYYY-MM-DD HH:mm:ss.SSS[Z]',
-                                )
+                                {moment
+                                  .utc(
+                                    item.created,
+                                    'YYYY-MM-DD HH:mm:ss.SSS[Z]',
+                                  )
                                   .startOf('day')
                                   .fromNow()}
                               </Text>
@@ -264,9 +265,7 @@ console.log("a",data)
                                   iconStyle={styles.labelIconAdd}
                                   color="rgb(242,235,223)"
                                 />
-                                <Text style={styles.labelAdd}>
-                                  Đóng góp
-                                </Text>
+                                <Text style={styles.labelAdd}>Đóng góp</Text>
                               </Col>
                             </TouchableOpacity>
                           </Col>
