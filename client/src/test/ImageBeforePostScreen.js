@@ -85,37 +85,7 @@ class ImagePickerScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {/* <View style={styles.viewStep} >
-          <WingBlank size="lg">
-            <Steps size="small" current={0} direction="vertical">
-              <Step
-                key={0}
-                title="Chọn ảnh"
-                status="progress"
-                size="small"
-              />
-              <Step
-                key={1}
-                title="Phân tích"
-                status="wait"
-                size="small"
-              />
-
-              <Step
-                key={2}
-                title="Hoàn thành"
-                status="wait"
-                size="small"
-              />
-              <Step
-                key={3}
-                title="Đăng"
-                status="wait"
-                size="small"
-              />
-            </Steps>
-          </WingBlank>
-        </View> */}
+    
         <RNCamera
           ref={ref => {
             this.camera = ref;

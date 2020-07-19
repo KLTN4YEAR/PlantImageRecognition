@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     height: '100%',
-    marginTop: 30,
+
     backgroundColor: '#303030',
     marginBottom: 0,
   },
