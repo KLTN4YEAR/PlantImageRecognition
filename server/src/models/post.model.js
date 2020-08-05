@@ -10,7 +10,7 @@ const PostSchema = new Schema({
 
     postedBy: { type: mongoose.Schema.ObjectId, ref: 'User' },
 
-    mentionedPlant: { type: String },
+    mentionedPlant: { type: mongoose.Schema.ObjectId, ref: 'Plant' },
 
     created: { type: Date, default: Date.now },
 })

@@ -16,21 +16,46 @@ class Post {
         $and: [
           {
             _id: {
-              $gt: lastId,
+              $lt: lastId
             }
           }
         ]
       })
       .limit(10)
-      .sort({ _id: 1 })
+      .sort({ 'created': -1 })
       .populate('postedBy', '_id fullName avatar email')
+      .populate('mentionedPlant', '_id nameVN')
     return list_post
   }
 
-  async getInfoPost() {
+  async getListPostUser() {
+    const userId = this.data.userId;
+    const lastId = this.data.lastId;
+
+    const list_post = await this.db.Post
+      .find({
+        postedBy: userId ,
+        $and: [
+          {
+            _id: {
+              $lt: lastId
+            }
+          }
+        ]
+      })
+      .limit(10)
+      .sort({ 'created': -1 })
+      .populate('postedBy', '_id fullName avatar email')
+      .populate('mentionedPlant', '_id nameVN')
+
+    return list_post
+  }
+
+  async getInfo() {
     const postId = this.data.postId;
     return await this.db.Post.findById(postId)
       .populate('postedBy', '_id fullName avatar email')
+      .populate('mentionedPlant', '_id nameVN')
   }
 }
 

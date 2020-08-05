@@ -13,7 +13,7 @@ const UUID = require("uuid-v4");
 const uploadImage = (file, typePlant, plant) => new Promise((resolve, reject) => {
   const { originalname, buffer } = file
   let blob;
-  
+
   if (!plant) {
     blob = bucket.file(`imagePost/${typePlant}/` + originalname.replace(/ /g, "_"))
   }
@@ -47,4 +47,36 @@ const uploadImage = (file, typePlant, plant) => new Promise((resolve, reject) =>
     .end(buffer)
 })
 
-module.exports = uploadImage
+const uploadImagePlant = (file, plant) => new Promise((resolve, reject) => {
+  const { originalname, buffer } = file
+  let blob = bucket.file(`plant/${plant}/` + originalname.replace(/ /g, "_"))
+  let uuid = UUID();
+
+  const metadata = {
+    contentType: file.mimetype,
+    metadata: {
+      firebaseStorageDownloadTokens: uuid
+    }
+  };
+
+  const blobStream = blob.createWriteStream({
+    metadata: metadata,
+    resumable: false
+  });
+
+  blobStream.on('finish', () => {
+    const publicUrl = "https://firebasestorage.googleapis.com/v0/b/" +
+      bucket.name + "/o/" + encodeURIComponent(blob.name) + "?alt=media&token=" + uuid
+    resolve(publicUrl)
+  })
+    .on('error', (err) => {
+      console.log('error: ', err)
+      reject(`Unable to upload image, something went wrong`)
+    })
+    .end(buffer)
+})
+
+module.exports = {
+  uploadImage,
+  uploadImagePlant
+} 
