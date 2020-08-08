@@ -1,12 +1,6 @@
 'use strict';
 import React, {Component} from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {TouchableOpacity, View, Text} from 'react-native';
 import {RNCamera} from 'react-native-camera-tflite';
 import {styles} from '../public/styleSheets/styleRNCamera';
 import {Icon} from 'react-native-elements';
@@ -14,7 +8,29 @@ import ImagePicker from 'react-native-image-crop-picker';
 import Toast from 'react-native-simple-toast';
 
 class ImagePickerScreen extends Component {
-  state = {torchon: RNCamera.Constants.FlashMode.off};
+  state = {torchon: RNCamera.Constants.FlashMode.off, cameraActive: false};
+
+  componentDidMount() {
+    const {isFocused} = this.props;
+    if (isFocused === true) {
+      this.setState({cameraActive: true});
+    }
+  }
+
+
+
+  componentDidUpdate(prevProps) {
+    const {isFocused} = this.props;
+
+    if (isFocused !== prevProps.isFocused) {
+      if (isFocused) {
+        this.setState({cameraActive: true});
+      } else {
+        this.setState({cameraActive: false});
+      }
+    }
+  }
+
   takePicture = async () => {
     if (this.camera) {
       const options = {
@@ -56,6 +72,7 @@ class ImagePickerScreen extends Component {
       cropperToolbarColor: 'white',
       mediaType: 'photo',
     };
+
     ImagePicker.openPicker(options)
       .then(image => {
         navigation.navigate('ResultRNCamera', {
@@ -67,6 +84,7 @@ class ImagePickerScreen extends Component {
         Toast.show('Có lỗi xảy ra!');
       });
   }
+
   toggleTorch() {
     let tstate = this.state.torchon;
     if (tstate == RNCamera.Constants.FlashMode.off) {
@@ -76,76 +94,73 @@ class ImagePickerScreen extends Component {
     }
     this.setState({torchon: tstate});
   }
+
+  renderCamera() {
+    return (
+      <>
+        <RNCamera
+          ref={ref => {
+            this.camera = ref;
+          }}
+          style={styles.preview}
+          type={RNCamera.Constants.Type.back}
+          flashMode={this.state.torchon}
+          androidCameraPermissionOptions={{
+            title: 'Permission to use camera',
+            message: 'We need your permission to use your camera',
+            buttonPositive: 'Ok',
+            buttonNegative: 'Cancel',
+          }}
+          androidRecordAudioPermissionOptions={{
+            title: 'Permission to use audio recording',
+            message: 'We need your permission to use your audio',
+            buttonPositive: 'Ok',
+            buttonNegative: 'Cancel',
+          }}
+        />
+        <View style={styles.viewBtn}>
+          <TouchableOpacity
+            style={styles.btnGallery}
+            onPress={this.toggleTorch.bind(this)}>
+            {this.state.torchon == RNCamera.Constants.FlashMode.off ? (
+              <Icon
+                name="flash-off"
+                type="material"
+                color="#59c393"
+                size={30}
+              />
+            ) : (
+              <Icon name="flash-on" type="material" color="#59c393" size={30} />
+            )}
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={this.takePicture.bind(this)}
+            style={styles.btnCapture}>
+            <Icon
+              raised
+              name="camera"
+              type="font-awesome"
+              color="#59c393"
+              size={35}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.btnGallery}
+            onPress={this.onSelectImage.bind(this)}>
+            <Icon name="image" type="font-awesome" color="#59c393" size={30} />
+          </TouchableOpacity>
+        </View>
+      </>
+    );
+  }
+
   render() {
     const {isFocused} = this.props;
+    const {cameraActive} = this.state;
+
     return (
       <View style={styles.container}>
-        {isFocused && (
-          <>
-            <RNCamera
-              ref={ref => {
-                this.camera = ref;
-              }}
-              style={styles.preview}
-              type={RNCamera.Constants.Type.back}
-              flashMode={this.state.torchon}
-              androidCameraPermissionOptions={{
-                title: 'Permission to use camera',
-                message: 'We need your permission to use your camera',
-                buttonPositive: 'Ok',
-                buttonNegative: 'Cancel',
-              }}
-              androidRecordAudioPermissionOptions={{
-                title: 'Permission to use audio recording',
-                message: 'We need your permission to use your audio',
-                buttonPositive: 'Ok',
-                buttonNegative: 'Cancel',
-              }}
-            />
-            <View style={styles.viewBtn}>
-              <TouchableOpacity
-                style={styles.btnGallery}
-                onPress={this.toggleTorch.bind(this)}>
-                {this.state.torchon == RNCamera.Constants.FlashMode.off ? (
-                  <Icon
-                    name="flash-off"
-                    type="material"
-                    color="#59c393"
-                    size={30}
-                  />
-                ) : (
-                  <Icon
-                    name="flash-on"
-                    type="material"
-                    color="#59c393"
-                    size={30}
-                  />
-                )}
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={this.takePicture.bind(this)}
-                style={styles.btnCapture}>
-                <Icon
-                  raised
-                  name="camera"
-                  type="font-awesome"
-                  color="#59c393"
-                  size={35}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.btnGallery}
-                onPress={this.onSelectImage.bind(this)}>
-                <Icon
-                  name="image"
-                  type="font-awesome"
-                  color="#59c393"
-                  size={30}
-                />
-              </TouchableOpacity>
-            </View>
-          </>
-        )}
+        {cameraActive ? this.renderCamera() : <Text>Đang chờ camera</Text>}
       </View>
     );
   }

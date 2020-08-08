@@ -2,7 +2,7 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-
+import InfoScreen from '../screens/InfoScreen';
 import LoginScreen from './../screens/LoginScreen';
 import PostScreen from '../screens/PostScreen';
 import AddDetailScreen from '../screens/AddDetailScreen';
@@ -45,13 +45,15 @@ function TabScreen() {
       screenOptions={({route}) => ({
         tabBarIcon: ({focused, color, size}) => {
           if (route.name === 'Home') {
-            return  <Icon name="home" color={color} size={35} />;
+            return <Icon name="home" color={color} size={35} />;
           } else if (route.name === 'User') {
             return <Icon name="user" color={color} size={35} />;
           } else if (route.name === 'Camera') {
-            return <Icon name="camera" color={color} size={35} />;
+            return <Icon name="camera" color={color} size={40} />;
           } else if (route.name === 'Search') {
             return <Icon name="search" color={color} size={35} />;
+          } else if (route.name === 'Info') {
+            return <Icon name="info" color={color} size={35} />;
           }
         },
       })}
@@ -61,21 +63,20 @@ function TabScreen() {
         showIcon: true,
         showLabel: false,
         style: {
-          borderTopLeftRadius: 20,
-          borderTopRightRadius: 20,
-          backgroundColor: '#000000',
+          backgroundColor: '#222222',
           position: 'absolute',
           bottom: 0,
           padding: 10,
-          width: "100%",
+          width: '100%',
           zIndex: 8,
-          borderTopColor:'#000',
+          borderTopColor: '#000',
         },
       }}>
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="User" component={UserScreen} />
       <Tab.Screen name="Camera" component={CameraScreen} />
       <Tab.Screen name="Search" component={SearchScreen} />
+      <Tab.Screen name="Info" component={InfoScreen} />
     </Tab.Navigator>
   );
 }

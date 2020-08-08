@@ -5,6 +5,7 @@ export const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: '#303030',
     marginBottom: 38,
+    marginTop: 30,
   },
   viewHeader: {
     position: 'absolute',
@@ -14,6 +15,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     padding: 5,
+    marginTop: 30,
   },
 
   autocompleteContainer: {
