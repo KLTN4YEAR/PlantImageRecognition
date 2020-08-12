@@ -10,7 +10,6 @@ import * as Animatable from 'react-native-animatable';
 import {auth} from '../config/helper';
 import moment from 'moment';
 import localization from 'moment/locale/vi';
-import {contribute} from '../json/contribute';
 import {
   Button,
   Modal,
