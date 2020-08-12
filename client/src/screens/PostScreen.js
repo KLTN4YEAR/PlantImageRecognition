@@ -21,6 +21,7 @@ import {getInfo} from '../action/userAction';
 import * as Animatable from 'react-native-animatable';
 import moment from 'moment';
 import localization from 'moment/locale/vi';
+import {InputItem, List, Toast} from '@ant-design/react-native';
 
 moment.updateLocale('vi', localization);
 
@@ -29,11 +30,8 @@ class PostScreen extends React.Component {
     super(props);
     this.state = {
       userInfo: {
-        token: null,
-        user: {
-          avatar: null,
-          fullName: null,
-        },
+        avatar: null,
+        fullName: null,
       },
 
       refreshing: false,
@@ -44,9 +42,9 @@ class PostScreen extends React.Component {
       serverData: [],
       fetching_from_server: false,
     };
-    this.offset = '111111111111';
+    this.offset = 'zzzzzzzzzzzz';
   }
-  //định nghĩa các prop
+
   static propTypes = {
     isAuthenticated: PropTypes.bool,
   };
@@ -64,19 +62,29 @@ class PostScreen extends React.Component {
   };
 
   async componentDidMount() {
+    const {navigation} = this.props;
     await this.loadMoreData();
     await this.loadData();
+  }
+
+  componentDidUpdate(prevProps) {
+    const {profile} = this.props;
+    if (prevProps.profile !== profile) {
+      if (profile) {
+        this.setState({userInfo: profile});
+      }
+    }
   }
 
   loadData = async () => {
     const {getInfo} = this.props;
     const data = await auth.isAuthenticated();
-
     if (data) {
-      this.setState({userInfo: data});
+      this.setState({userInfo: data.user});
       await getInfo(data, data.user._id);
     }
   };
+
   onRefresh = async () => {
     await this.setState({
       loading: false,
@@ -84,7 +92,7 @@ class PostScreen extends React.Component {
       serverData: [],
       fetching_from_server: false,
     });
-    this.offset = '111111111111';
+    this.offset = 'zzzzzzzzzzzz';
     await this.loadMoreData();
   };
 
@@ -130,18 +138,17 @@ class PostScreen extends React.Component {
 
   render() {
     const {profile} = this.props;
-
     const {loading, serverData, refreshing, userInfo} = this.state;
 
     return (
       <SafeAreaView style={styles.viewSafeArea}>
         <View style={styles.stylesHead}>
           <TouchableOpacity style={styles.imgAva}>
-            {userInfo && userInfo.user.avatar ? (
+            {userInfo && userInfo ? (
               <Avatar
                 rounded
                 source={{
-                  uri: userInfo.user.avatar,
+                  uri: userInfo.avatar,
                 }}
               />
             ) : (
@@ -215,10 +222,11 @@ class PostScreen extends React.Component {
                             </Text>
                             {item.created && (
                               <Text style={styles.txtCreateAt}>
-                                {moment(
-                                  item.created,
-                                  'YYYY-MM-DD HH:mm:ss.SSS[Z]',
-                                )
+                                {moment
+                                  .utc(
+                                    item.created,
+                                    'YYYY-MM-DD HH:mm:ss.SSS[Z]',
+                                  )
                                   .startOf('day')
                                   .fromNow()}
                               </Text>
@@ -245,7 +253,9 @@ class PostScreen extends React.Component {
                             <TouchableOpacity
                               style={styles.touchAdd}
                               onPress={() =>
-                                this.props.navigation.navigate('AddDetail')
+                                this.props.navigation.navigate('AddDetail', {
+                                  post: item,
+                                })
                               }>
                               <Col size={15} style={styles.colBtnAdd}>
                                 <Icon
@@ -255,9 +265,7 @@ class PostScreen extends React.Component {
                                   iconStyle={styles.labelIconAdd}
                                   color="rgb(242,235,223)"
                                 />
-                                <Text style={styles.labelAdd}>
-                                  Thêm thông tin
-                                </Text>
+                                <Text style={styles.labelAdd}>Đóng góp</Text>
                               </Col>
                             </TouchableOpacity>
                           </Col>

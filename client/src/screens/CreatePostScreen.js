@@ -42,7 +42,7 @@ class CreatePostScreen extends ValidationComponent {
       mentionedPlant: null,
       namePlant: null,
       post: {
-        mentionedPlant: '111111111111',
+        mentionedPlant: null,
         namePlant: '',
         content: '',
         plant_images: [''],
@@ -121,14 +121,20 @@ class CreatePostScreen extends ValidationComponent {
       const {route} = this.props;
 
       //const imagePlant = resizedImageUri;
-      post['mentionedPlant'] = this.state.mentionedPlant;
-      post['namePlant'] = this.state.namePlant;
+      if (this.state.mentionedPlant) {
+        post['mentionedPlant'] = this.state.mentionedPlant;
+      }
+      post['namePlant'] = route.params?.nameVN
+        ? route.params?.nameVN
+        : this.state.namePlant;
       post['content'] = this.state.content;
       post['plant_images'] = resizedImageUri;
 
       // create fromData to create post
       let formData = new FormData();
-      formData.append('mentionedPlant', post.mentionedPlant);
+      if (this.state.mentionedPlant) {
+        formData.append('mentionedPlant', post.mentionedPlant);
+      }
       formData.append('namePlant', post.namePlant);
       formData.append('content', post.content);
 

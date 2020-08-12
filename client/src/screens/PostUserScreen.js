@@ -44,7 +44,7 @@ class PostUserScreen extends React.Component {
       serverData: [],
       fetching_from_server: false,
     };
-    this.offset = '111111111111';
+    this.offset = 'zzzzzzzzzzzz';
   }
   //định nghĩa các prop
   static propTypes = {
@@ -244,26 +244,6 @@ class PostUserScreen extends React.Component {
                       </View>
                       <View style={styles.viewBtn}>
                         <Row>
-                          <Col size={1}>
-                            <TouchableOpacity
-                              style={styles.touchAdd}
-                              onPress={() =>
-                                this.props.navigation.navigate('AddDetail')
-                              }>
-                              <Col size={15} style={styles.colBtnAdd}>
-                                <Icon
-                                  size={20}
-                                  type="font-awesome"
-                                  name="edit"
-                                  iconStyle={styles.labelIconAdd}
-                                  color="rgb(242,235,223)"
-                                />
-                                <Text style={styles.labelAdd}>
-                                  Thêm thông tin
-                                </Text>
-                              </Col>
-                            </TouchableOpacity>
-                          </Col>
                           <Col size={1}>
                             <TouchableOpacity
                               style={styles.touchAdd}

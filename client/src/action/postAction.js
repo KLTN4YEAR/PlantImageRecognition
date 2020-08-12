@@ -13,19 +13,15 @@ export const newPost = (credentials, post) => () => {
     },
   };
   const body = post;
-  axios
-    .post(`${API_URL}/api/post/create`, body, config)
-    .then(res => {
-      if (res.status == 200) {
-        Toast.show('Chúc mừng bạn đã đăng thành công!');
-      } else {
-        Toast.show('Bài viết không hợp lệ, vui lòng thử lại!');
-      }
-    })
-    
-    
-    
+  axios.post(`${API_URL}/api/post/create`, body, config).then(res => {
+    if (res.status == 200) {
+      Toast.show('Chúc mừng bạn đã đăng thành công!');
+    } else {
+      Toast.show('Bài viết không hợp lệ, vui lòng thử lại!');
+    }
+  });
 };
+
 export const getPostInfo = (credentials, pid) => {
   const config = {
     headers: {
@@ -40,7 +36,7 @@ export const getPostInfo = (credentials, pid) => {
       .then(response => {
         dispatch({
           type: GET_INFO_POST,
-          payload: response.data.result.post,
+          payload: response.data.result,
         });
       })
       .catch(err => {
@@ -99,3 +95,24 @@ export const getListPostUer = (credentials, offset) => async () => {
       return err;
     });
 };
+
+export const CreateContribute = (credentials, body)=>() => {
+  
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      authorization: 'Bearer ' + credentials.token,
+    },
+  };
+
+  axios.post(`${API_URL}/api/contribute/create`, body, config).then(res => {
+    console.log('a', res);
+    if (res.status == 200) {
+      Toast.show('Cảm ơn bạn đã đóng góp!');
+    } else {
+      Toast.show('Lỗi hệ thống!');
+    }
+  });
+};
+

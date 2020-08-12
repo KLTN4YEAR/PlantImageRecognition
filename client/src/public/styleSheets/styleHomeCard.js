@@ -11,6 +11,7 @@ export const styles = StyleSheet.create({
   viewFlatList: {
     width: '100%',
     padding: 10,
+    marginBottom:50,
   },
 
   stylesHead: {
@@ -206,6 +207,7 @@ export const styles = StyleSheet.create({
   viewSafeArea: {
     backgroundColor: '#303030',
     flex: 1,
+    marginTop:30,
   },
 
   viewScroll: {

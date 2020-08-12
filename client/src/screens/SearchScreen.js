@@ -79,7 +79,7 @@ class SearchScreen extends React.Component {
     return (
       <SafeAreaView style={styles.viewSafeArea}>
         <SearchBar
-          placeholder="Type Here..."
+          placeholder="Nhập tên hoa ở đây..."
           onChangeText={this.updateSearch}
           value={search}
           inputContainerStyle={styles.inputSearchBar}

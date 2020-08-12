@@ -48,6 +48,8 @@ class ViewInfo extends React.Component {
     if (isAuthenticated !== prevProps.isAuthenticated) {
       if (!isAuthenticated) {
         navigation.navigate('Login');
+      } else {
+        this.loadData();
       }
     }
   }
@@ -70,18 +72,27 @@ class ViewInfo extends React.Component {
 
   render() {
     const {navigation, profile} = this.props;
+
     return (
       <ScrollView style={styles.container}>
         <AvatarCard navigation={navigation} />
 
         <View style={styles.iconOption}>
-          <TouchableOpacity onPress={() => this.RBSheet.open()}>
+          {/* {profile.fullName ? (
+            <Text style={styles.headerName}>{profile.fullName}</Text>
+          ) : (
+            <Text style={styles.headerName}>Chưa cập nhật</Text>
+          )} */}
+          <Text style={styles.headerName} />
+          <TouchableOpacity
+            style={styles.headerButton}
+            onPress={() => this.RBSheet.open()}>
             <Icon
               size={30}
               type="font-awesome"
               name="navicon"
               iconStyle={styles.labelIconAdd}
-              color="rgba(64,64,64, 0.8)"
+              color="#f1f1f1"
             />
           </TouchableOpacity>
           <RBSheet

@@ -4,7 +4,7 @@ export const styles = StyleSheet.create({
   container: {
     backgroundColor: '#303030',
     height: '100%',
-    marginTop: 0,
+    marginTop: 30,
   },
 
   viewInfo: {
@@ -29,9 +29,25 @@ export const styles = StyleSheet.create({
   },
 
   iconOption: {
-    position: 'absolute',
-    right: 10,
     top: 5,
+    flex: 1,
+    flexDirection: 'row',
+    position: 'absolute',
+    width: '100%',
+  },
+
+  headerName: {
+    width: '85%',
+    justifyContent: 'flex-start',
+    color:'#ffffff',
+    fontSize:12,
+    fontWeight:'bold',
+    padding:10,
+  },
+
+  headerButton: {
+    width: '15%',
+    justifyContent: 'flex-end',
   },
 
   labelTxt: {
@@ -117,7 +133,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     padding: 5,
     flexDirection: 'row',
-    margin:5,
+    margin: 5,
   },
 
   labelEdit: {

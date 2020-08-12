@@ -71,7 +71,7 @@ class EditInfo extends ValidationComponent {
 
   onValidate() {
     return this.validate({
-      name: {minlength: 4, maxlength: 25, required: true, spacing: true},
+      fullName: {minlength: 4, maxlength: 25, required: true, spacing: true},
       email: {email: true, required: true, spacing: true},
       number: {numbers: true, required: true, spacing: true},
     });
@@ -135,9 +135,9 @@ class EditInfo extends ValidationComponent {
                   onChange={this.onChange}
                 />
                 <Text style={styles.validateMess}>
-                  {this.isFieldInError('name') &&
-                  this.getErrorsInField('name')
-                    ? this.getErrorsInField('name')
+                  {this.isFieldInError('fullName') &&
+                  this.getErrorsInField('fullName')
+                    ? this.getErrorsInField('fullName')
                     : ''}
                 </Text>
 

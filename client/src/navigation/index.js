@@ -2,7 +2,7 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-
+import InfoScreen from '../screens/InfoScreen';
 import LoginScreen from './../screens/LoginScreen';
 import PostScreen from '../screens/PostScreen';
 import AddDetailScreen from '../screens/AddDetailScreen';
@@ -18,7 +18,7 @@ import SearchPlantScreen from './../screens/SearchScreen';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ViewInfo from '../screens/ViewInfoScreen';
 import EditInfo from '../screens/EditInfoScreen';
-
+import ContributeScreen from "../screens/ContributeDetailScreen";
 import CreatePostScreen from '../screens/CreatePostScreen';
 
 import DetailPostScreen from '../screens/PostDetailScreen';
@@ -34,6 +34,7 @@ import ViewPostUser from "../screens/PostUserScreen";
 
 import {useIsFocused} from '@react-navigation/native';
 
+import * as Animatable from 'react-native-animatable';
 
 const Tab = createBottomTabNavigator();
 
@@ -44,35 +45,38 @@ function TabScreen() {
       screenOptions={({route}) => ({
         tabBarIcon: ({focused, color, size}) => {
           if (route.name === 'Home') {
-            return <Icon name="home" color={color} size={28} />;
+            return <Icon name="home" color={color} size={35} />;
           } else if (route.name === 'User') {
-            return <Icon name="user" color={color} size={28} />;
+            return <Icon name="user" color={color} size={35} />;
           } else if (route.name === 'Camera') {
-            return <Icon name="camera" color={color} size={28} />;
+            return <Icon name="camera" color={color} size={40} />;
           } else if (route.name === 'Search') {
-            return <Icon name="search" color={color} size={28} />;
+            return <Icon name="search" color={color} size={35} />;
+          } else if (route.name === 'Info') {
+            return <Icon name="info" color={color} size={35} />;
           }
         },
       })}
       tabBarOptions={{
         activeTintColor: '#33CC08',
-        inactiveTintColor: 'rgba(209,242,194,0.4)',
+        inactiveTintColor: 'rgba(209,242,194,0.2)',
         showIcon: true,
-        tabStyle: {borderRadius: 10},
-        labelStyle: {
-          fontSize: 12,
-          fontFamily: 'Calibri',
-          letterSpacing: 1,
-        },
+        showLabel: false,
         style: {
-          backgroundColor: 'rgb(38,38,38)',
-          borderRadius: 0,
+          backgroundColor: '#222222',
+          position: 'absolute',
+          bottom: 0,
+          padding: 10,
+          width: '100%',
+          zIndex: 8,
+          borderTopColor: '#000',
         },
       }}>
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="User" component={UserScreen} />
       <Tab.Screen name="Camera" component={CameraScreen} />
       <Tab.Screen name="Search" component={SearchScreen} />
+      <Tab.Screen name="Info" component={InfoScreen} />
     </Tab.Navigator>
   );
 }
@@ -121,22 +125,22 @@ const StackCamera = createStackNavigator();
 function CameraScreen() {
   return (
     <StackCamera.Navigator initialRouteName="ImagePicker">
-      <StackUser.Screen
+      <StackCamera.Screen
         name="ImagePicker"
         options={{headerShown: false}}
         component={IMGPickerScreen}
       />
-      <StackUser.Screen
+      <StackCamera.Screen
         name="PlantInfo"
         options={{headerShown: false}}
         component={PlantInfoScreen}
       />
-      <StackUser.Screen
+      <StackCamera.Screen
         name="ResultRNCamera"
         options={{headerShown: false}}
         component={ResultRNCameraScreen}
       />
-      <StackUser.Screen
+      <StackCamera.Screen
         name="ResultCamera"
         options={{
           title: 'Kết quả',
@@ -216,6 +220,21 @@ function HomeScreen() {
         component={AddDetailScreen}
       />
       <HomeStack.Screen
+        name="Contribute"
+        options={{
+          title: 'Chi tiết đóng góp',
+          headerStyle: {
+            backgroundColor: '#33CC08',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}
+        component={ContributeScreen}
+      />
+
+      <HomeStack.Screen
         name="ImageBefore"
         options={{headerShown: false}}
         component={ImageBeforePostScreen}
@@ -229,6 +248,11 @@ function HomeScreen() {
         name="CreatePost"
         options={{headerShown: false}}
         component={CreatePostScreen}
+      />
+      <HomeStack.Screen
+        name="PlantInfo"
+        options={{headerShown: false}}
+        component={PlantInfoScreen}
       />
     </HomeStack.Navigator>
   );

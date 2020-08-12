@@ -58,7 +58,7 @@ class GetInfoPlant extends Component {
         this.setState({
           resizedImageUri: uri,
         });
-        console.log("n",uri)
+  
       })
       .catch(err => {
         console.log(err);
@@ -68,7 +68,6 @@ class GetInfoPlant extends Component {
   render() {
     const {avatarPlant, fName, fId, resizedImageUri} = this.state;
     const {percent, navigation} = this.props;
-    console.log('ne', resizedImageUri);
     return (
       <TouchableOpacity
         style={styles.viewResult}
